@@ -4,348 +4,478 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>cLauXe — AI · Trading · iOS · Ersin Demirdağ</title>
-<meta name="description" content="cLauXe by Ersin Demirdağ — Yapay zeka destekli trading sistemleri ve iOS uygulamaları. Cortex AI, TraderMetrics, FightClub, SağlıkKalkanı.">
-<meta property="og:title" content="cLauXe — Ersin Demirdağ">
-<meta property="og:description" content="AI · Trading Systems · iOS Apps">
+<meta name="description" content="cLauXe by Ersin Demirdağ — AI-powered trading systems, iOS apps. Cortex AI, TraderMetrics, FightClub, SağlıkKalkanı.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <style>
-  :root {
-    --bg: #050816;
-    --bg-2: #0a0e27;
-    --surface: rgba(255,255,255,0.03);
-    --surface-hi: rgba(255,255,255,0.06);
-    --border: rgba(0, 217, 255, 0.15);
-    --border-hi: rgba(0, 217, 255, 0.4);
-    --fg: #e8eaf6;
-    --fg-2: #9ba1bd;
-    --ac: #00d9ff;
-    --hi: #00ff9d;
-    --acc-2: #b46aff;
-    --grad: linear-gradient(135deg, #00d9ff 0%, #b46aff 50%, #00ff9d 100%);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 1.65;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-  /* Animated gradient background */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(0,217,255,0.08), transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(180,106,255,0.08), transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(0,255,157,0.04), transparent 60%);
-    z-index: -2;
-    animation: float 20s ease-in-out infinite alternate;
-  }
-  body::after {
-    content: '';
-    position: fixed; top:0; left:0; right:0; bottom:0;
-    background-image:
-      linear-gradient(rgba(0,217,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,217,255,0.025) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: -1;
-    pointer-events: none;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-  @keyframes float {
-    0%   { transform: translate(0,0) rotate(0deg); }
-    100% { transform: translate(5%,-5%) rotate(20deg); }
-  }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 80px 32px 80px; }
-  /* HERO */
-  .hero { padding: 60px 0 80px; }
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px;
-    border: 1px solid var(--border-hi);
-    border-radius: 999px;
-    background: rgba(0,217,255,0.06);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--ac);
-    margin-bottom: 28px;
-    letter-spacing: 0.5px;
-  }
-  .badge::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--hi);
-    box-shadow: 0 0 8px var(--hi);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(56px, 9vw, 96px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 18px;
-  }
-  .lead {
-    font-size: clamp(18px, 2vw, 22px);
-    color: var(--fg-2);
-    max-width: 600px;
-    margin-bottom: 40px;
-  }
-  .hero-meta {
-    display: flex; gap: 24px; flex-wrap: wrap;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--fg-2);
-  }
-  .hero-meta span::before {
-    content: '◆';
-    color: var(--ac);
-    margin-right: 6px;
-  }
+:root {
+  --bg: #050816;
+  --fg: #e8eaf6;
+  --fg-2: #9ba1bd;
+  --ac: #00d9ff;
+  --hi: #00ff9d;
+  --pp: #b46aff;
+  --pk: #ff3d6e;
+  --grad: linear-gradient(135deg,#00d9ff 0%,#b46aff 50%,#00ff9d 100%);
+  --grad-2: linear-gradient(135deg,#ff3d6e 0%,#b46aff 100%);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--fg);
+  font-family:'Inter',-apple-system,sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* Custom cursor */
+.cursor, .cursor-dot {
+  position:fixed; pointer-events:none; z-index:9999;
+  border-radius:50%;
+  transition:transform 0.1s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  mix-blend-mode:exclusion;
+}
+.cursor {
+  width:32px; height:32px;
+  border:1.5px solid var(--ac);
+  margin:-16px 0 0 -16px;
+}
+.cursor-dot {
+  width:6px; height:6px;
+  background:var(--hi);
+  margin:-3px 0 0 -3px;
+}
+.cursor.hover { width:64px; height:64px; margin:-32px 0 0 -32px; border-color:var(--hi); }
+@media (hover:none) { .cursor, .cursor-dot { display:none; } body { cursor:auto; } }
 
-  /* SECTIONS */
-  section { margin-bottom: 72px; }
-  h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--ac);
-    margin-bottom: 24px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  h2::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--ac);
-    display: inline-block;
-  }
-  /* PROJECT CARDS */
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(0,217,255,0.03) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .card:hover {
-    border-color: var(--border-hi);
-    transform: translateY(-3px);
-    background: var(--surface-hi);
-  }
-  .card:hover::before { opacity: 1; }
-  .card-icon {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ac);
-    margin-bottom: 12px;
-    letter-spacing: 0.1em;
-  }
-  .card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--fg);
-    margin-bottom: 10px;
-  }
-  .card p { color: var(--fg-2); font-size: 15px; }
+/* Three.js canvas */
+#bg-canvas {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  z-index:-2;
+}
+/* Noise overlay */
+body::after {
+  content:''; position:fixed; inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  z-index:-1; pointer-events:none;
+  mix-blend-mode:overlay;
+}
 
-  /* TECH PILLS */
-  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill {
-    padding: 6px 14px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--fg-2);
-    transition: all 0.2s;
-  }
-  .pill:hover { border-color: var(--border-hi); color: var(--ac); }
+.wrap { max-width:1100px; margin:0 auto; padding:80px 32px; position:relative; z-index:1; }
 
-  /* CONTACT */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .contact-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.2s;
-  }
-  .contact-item:hover { border-color: var(--border-hi); }
-  .contact-item .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--fg-2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-  }
-  .contact-item a { color: var(--ac); text-decoration: none; font-size: 15px; word-break: break-all; }
-  .contact-item a:hover { color: var(--hi); }
+/* HERO */
+.hero { min-height:90vh; display:flex; flex-direction:column; justify-content:center; padding:60px 0; }
+.badge {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 18px;
+  border:1px solid rgba(0,217,255,0.3);
+  border-radius:999px;
+  background:rgba(0,217,255,0.05);
+  backdrop-filter:blur(10px);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--ac);
+  margin-bottom:32px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  width:fit-content;
+}
+.badge::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--hi);
+  box-shadow:0 0 12px var(--hi);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
 
-  /* OWNERSHIP STATEMENT */
-  .ownership {
-    background: linear-gradient(135deg, rgba(0,217,255,0.05), rgba(180,106,255,0.05));
-    border: 1px solid var(--border-hi);
-    border-radius: 16px;
-    padding: 32px;
-    margin-top: 24px;
-  }
-  .ownership p { color: var(--fg); font-size: 16px; line-height: 1.7; }
-  .ownership strong { color: var(--ac); }
+h1.glitch {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(70px,12vw,160px);
+  font-weight:700;
+  line-height:0.92;
+  letter-spacing:-0.05em;
+  position:relative;
+  display:inline-block;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  margin-bottom:24px;
+}
+h1.glitch::before, h1.glitch::after {
+  content:attr(data-text);
+  position:absolute; top:0; left:0; width:100%;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  pointer-events:none;
+}
+h1.glitch::before {
+  animation:glitch1 3s infinite linear alternate-reverse;
+  text-shadow:2px 0 var(--pk);
+  clip-path:polygon(0 0,100% 0,100% 45%,0 45%);
+}
+h1.glitch::after {
+  animation:glitch2 2.5s infinite linear alternate-reverse;
+  text-shadow:-2px 0 var(--ac);
+  clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);
+}
+@keyframes glitch1 {
+  0%,100%{transform:translate(0,0)}
+  20%{transform:translate(-2px,1px)}
+  40%{transform:translate(-1px,-1px)}
+  60%{transform:translate(1px,2px)}
+  80%{transform:translate(2px,-1px)}
+}
+@keyframes glitch2 {
+  0%,100%{transform:translate(0,0)}
+  25%{transform:translate(2px,-1px)}
+  50%{transform:translate(-1px,1px)}
+  75%{transform:translate(1px,2px)}
+}
 
-  /* FOOTER */
-  footer {
-    margin-top: 80px; padding-top: 32px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    color: var(--fg-2);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-  }
-  footer a { color: var(--ac); text-decoration: none; }
+.lead {
+  font-size:clamp(18px,2.5vw,26px);
+  color:var(--fg-2);
+  max-width:700px;
+  margin-bottom:48px;
+  font-weight:300;
+  line-height:1.5;
+}
+.lead strong { color:var(--fg); font-weight:500; }
 
-  @media (max-width: 600px) {
-    .wrap { padding: 60px 20px; }
-    h1 { font-size: 56px; }
-    .hero { padding: 32px 0 60px; }
-  }
+.hero-meta {
+  display:flex; gap:32px; flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--fg-2);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+}
+.hero-meta span { display:flex; align-items:center; gap:8px; }
+.hero-meta span::before {
+  content:''; width:24px; height:1px;
+  background:var(--ac);
+}
+
+/* Scroll indicator */
+.scroll-down {
+  position:absolute; bottom:60px; left:50%; transform:translateX(-50%);
+  width:30px; height:50px;
+  border:1.5px solid var(--ac);
+  border-radius:20px;
+  display:flex; justify-content:center;
+}
+.scroll-down::after {
+  content:''; width:4px; height:8px;
+  background:var(--ac);
+  border-radius:2px;
+  margin-top:8px;
+  animation:scroll 1.8s ease infinite;
+}
+@keyframes scroll { 0%{opacity:1;transform:translateY(0)} 80%,100%{opacity:0;transform:translateY(20px)} }
+
+/* SECTIONS */
+section { margin-bottom:120px; opacity:0; transform:translateY(40px); transition:opacity 1s, transform 1s; }
+section.in { opacity:1; transform:translateY(0); }
+
+h2 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.3em;
+  color:var(--ac);
+  margin-bottom:40px;
+  display:flex; align-items:center; gap:16px;
+}
+h2::before {
+  content:''; width:32px; height:1px; background:linear-gradient(90deg,var(--ac),transparent);
+}
+h2 .num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; color:var(--fg-2);
+}
+
+/* MARQUEE TECH */
+.marquee {
+  width:100%; overflow:hidden; mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  margin:48px 0;
+}
+.marquee-inner {
+  display:flex; gap:60px;
+  animation:scroll-x 40s linear infinite;
+  width:max-content;
+}
+.marquee-item {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:48px; font-weight:600;
+  color:var(--fg-2);
+  white-space:nowrap;
+  transition:color 0.3s;
+}
+.marquee-item:hover { color:var(--ac); }
+.marquee-item .dot {
+  display:inline-block; width:10px; height:10px;
+  background:var(--ac); border-radius:50%; margin:0 30px 8px;
+  vertical-align:middle;
+}
+@keyframes scroll-x { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* PROJECTS */
+.projects {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:24px;
+}
+.card {
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:36px 32px;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+  transition:transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s;
+  transform-style:preserve-3d;
+}
+.card::before {
+  content:''; position:absolute; inset:-1px;
+  background:var(--grad);
+  border-radius:24px;
+  opacity:0; transition:opacity 0.4s;
+  z-index:-1;
+}
+.card:hover { border-color:transparent; }
+.card:hover::before { opacity:0.3; }
+.card .num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; color:var(--ac);
+  letter-spacing:0.2em;
+  margin-bottom:20px;
+  display:flex; justify-content:space-between;
+}
+.card h3 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:32px; font-weight:600;
+  margin-bottom:14px;
+  color:var(--fg);
+}
+.card p { color:var(--fg-2); font-size:15px; }
+.card .tags { margin-top:20px; display:flex; flex-wrap:wrap; gap:6px; }
+.card .tags span {
+  padding:4px 10px;
+  background:rgba(0,217,255,0.08);
+  border:1px solid rgba(0,217,255,0.2);
+  border-radius:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--ac);
+}
+
+/* CONTACT */
+.contact-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.contact-item {
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  padding:24px;
+  transition:all 0.3s;
+  position:relative; overflow:hidden;
+}
+.contact-item:hover {
+  background:rgba(0,217,255,0.04);
+  border-color:rgba(0,217,255,0.3);
+  transform:translateY(-4px);
+}
+.contact-item .label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--fg-2);
+  text-transform:uppercase;
+  letter-spacing:0.2em;
+  margin-bottom:8px;
+}
+.contact-item a, .contact-item span { color:var(--fg); font-size:15px; word-break:break-all; text-decoration:none; }
+.contact-item a:hover { color:var(--ac); }
+
+/* OWNERSHIP */
+.ownership {
+  background:linear-gradient(135deg,rgba(0,217,255,0.06),rgba(180,106,255,0.06));
+  border:1px solid rgba(0,217,255,0.25);
+  border-radius:24px;
+  padding:48px;
+  position:relative;
+  overflow:hidden;
+}
+.ownership::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at top right, rgba(0,255,157,0.1), transparent 60%);
+  pointer-events:none;
+}
+.ownership p {
+  font-size:17px; line-height:1.8;
+  position:relative;
+}
+.ownership strong {
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  font-weight:600;
+}
+
+/* FOOTER */
+footer {
+  margin-top:120px; padding-top:48px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+  color:var(--fg-2);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+footer a { color:var(--ac); text-decoration:none; }
+
+/* Big version logo */
+.brand-mark {
+  position:absolute; right:-100px; top:-100px;
+  font-size:600px; font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(0,217,255,0.04);
+  pointer-events:none;
+  user-select:none;
+  z-index:0;
+}
+
+@media (max-width:600px) {
+  .wrap { padding:60px 20px; }
+  .ownership { padding:32px 24px; }
+  .brand-mark { display:none; }
+  .hero-meta { gap:16px; }
+}
 </style>
 </head>
 <body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
 <div class="wrap">
+
+  <span class="brand-mark">cLX</span>
 
   <!-- HERO -->
   <header class="hero">
     <div class="badge">SYSTEM ONLINE · ISTANBUL</div>
-    <h1>cLauXe</h1>
-    <p class="lead">Yapay zekâ destekli trading sistemleri ve iOS uygulamaları.<br>İstanbul'dan, dünya için.</p>
+    <h1 class="glitch" data-text="cLauXe">cLauXe</h1>
+    <p class="lead">
+      Yapay zeka destekli <strong>trading sistemleri</strong>,
+      modern <strong>iOS uygulamaları</strong> ve
+      <strong>otonom yazılım altyapıları</strong> üretiyorum.
+      İstanbul'dan, dünya için.
+    </p>
     <div class="hero-meta">
-      <span>Founded 2024</span>
-      <span>Owner Ersin Demirdağ</span>
-      <span>4 Active Projects</span>
+      <span>FOUNDED 2024</span>
+      <span>OWNER ERSIN DEMIRDAĞ</span>
+      <span>4 ACTIVE PROJECTS</span>
     </div>
+    <div class="scroll-down"></div>
   </header>
 
-  <!-- PROJECTS -->
+  <!-- TECH MARQUEE -->
   <section>
-    <h2>Aktif Projeler</h2>
-    <div class="projects">
-      <div class="card">
-        <div class="card-icon">// CORTEX_AI</div>
-        <h3>Cortex AI</h3>
-        <p>15-katmanlı algoritmik trading karar sistemi. Python, gerçek-zamanlı sinyal işleme, sürekli kalibrasyon.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">// TRADER_METRICS</div>
-        <h3>TraderMetrics</h3>
-        <p>iOS SwiftUI trading günlüğü. Performans analizi, equity curve, drawdown haritaları.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">// FIGHT_CLUB</div>
-        <h3>FightClub</h3>
-        <p>iOS sosyal dövüş sanatları platformu. 24 modül, gamification, güvenlik katmanları.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">// SAGLIK_KALKANI</div>
-        <h3>SağlıkKalkanı</h3>
-        <p>iOS bölgesel hastalık takip uygulaması. Ebeveyn odaklı, MapKit harita, anonim raporlama.</p>
+    <div class="marquee">
+      <div class="marquee-inner">
+        <span class="marquee-item">Python<span class="dot"></span></span>
+        <span class="marquee-item">SwiftUI<span class="dot"></span></span>
+        <span class="marquee-item">Claude AI<span class="dot"></span></span>
+        <span class="marquee-item">MCP<span class="dot"></span></span>
+        <span class="marquee-item">iOS 17+<span class="dot"></span></span>
+        <span class="marquee-item">launchd<span class="dot"></span></span>
+        <span class="marquee-item">SQLite<span class="dot"></span></span>
+        <span class="marquee-item">OAuth<span class="dot"></span></span>
+        <span class="marquee-item">REST API<span class="dot"></span></span>
+        <span class="marquee-item">Python<span class="dot"></span></span>
+        <span class="marquee-item">SwiftUI<span class="dot"></span></span>
+        <span class="marquee-item">Claude AI<span class="dot"></span></span>
+        <span class="marquee-item">MCP<span class="dot"></span></span>
+        <span class="marquee-item">iOS 17+<span class="dot"></span></span>
+        <span class="marquee-item">launchd<span class="dot"></span></span>
+        <span class="marquee-item">SQLite<span class="dot"></span></span>
+        <span class="marquee-item">OAuth<span class="dot"></span></span>
+        <span class="marquee-item">REST API<span class="dot"></span></span>
       </div>
     </div>
   </section>
 
-  <!-- TECH STACK -->
+  <!-- PROJECTS -->
   <section>
-    <h2>Teknoloji</h2>
-    <div class="pills">
-      <span class="pill">Python</span>
-      <span class="pill">Swift / SwiftUI</span>
-      <span class="pill">iOS 17+</span>
-      <span class="pill">Anthropic Claude</span>
-      <span class="pill">Model Context Protocol</span>
-      <span class="pill">macOS launchd</span>
-      <span class="pill">SQLite</span>
-      <span class="pill">REST / OAuth</span>
-      <span class="pill">SwiftUI Animations</span>
-      <span class="pill">Combine</span>
+    <h2><span class="num">01</span>Aktif Projeler</h2>
+    <div class="projects">
+      <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="num">CORTEX_AI<span>2024</span></div>
+        <h3>Cortex AI</h3>
+        <p>15-katmanlı algoritmik trading karar sistemi. Gerçek-zamanlı sinyal işleme, sürekli kalibrasyon, paper-trade altyapısı.</p>
+        <div class="tags"><span>Python</span><span>AI</span><span>Quant</span></div>
+      </div>
+      <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="num">TRADER_METRICS<span>2024</span></div>
+        <h3>TraderMetrics</h3>
+        <p>iOS SwiftUI trading günlüğü. Equity curve, drawdown haritaları, performans analizi, glass morphism UI.</p>
+        <div class="tags"><span>SwiftUI</span><span>iOS 17+</span><span>Charts</span></div>
+      </div>
+      <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="num">FIGHT_CLUB<span>2024</span></div>
+        <h3>FightClub</h3>
+        <p>iOS sosyal dövüş sanatları platformu. 24 modül, gamification, güvenlik katmanları, design system.</p>
+        <div class="tags"><span>SwiftUI</span><span>Supabase</span><span>Social</span></div>
+      </div>
+      <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="num">SAGLIK_KALKANI<span>2025</span></div>
+        <h3>SağlıkKalkanı</h3>
+        <p>iOS bölgesel hastalık takip uygulaması. Ebeveyn odaklı, MapKit harita, anonim raporlama.</p>
+        <div class="tags"><span>SwiftUI</span><span>MapKit</span><span>Health</span></div>
+      </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section>
-    <h2>İletişim</h2>
+    <h2><span class="num">02</span>İletişim</h2>
     <div class="contact-grid">
-      <div class="contact-item">
-        <div class="label">Owner</div>
-        <a>Ersin Demirdağ</a>
-      </div>
-      <div class="contact-item">
-        <div class="label">Email</div>
-        <a>X üzerinden ulaşın</a>
-      </div>
-      <div class="contact-item">
-        <div class="label">X · Personal</div>
-        <a href="https://x.com/ersindemirdag" target="_blank" rel="noopener">@ersindemirdag</a>
-      </div>
-      <div class="contact-item">
-        <div class="label">X · Brand Bot</div>
-        <a href="https://x.com/cLauxed" target="_blank" rel="noopener">@cLauxed</a>
-      </div>
-      <div class="contact-item">
-        <div class="label">GitHub</div>
-        <a href="https://github.com/cLauXe" target="_blank" rel="noopener">github.com/cLauXe</a>
-      </div>
-      <div class="contact-item">
-        <div class="label">Location</div>
-        <a>İstanbul · Türkiye</a>
-      </div>
+      <div class="contact-item"><div class="label">Owner</div><span>Ersin Demirdağ</span></div>
+      <div class="contact-item"><div class="label">Email</div><span>X üzerinden ulaşın</span></div>
+      <div class="contact-item"><div class="label">X · Personal</div><a href="https://x.com/ersindemirdag" target="_blank" rel="noopener">@ersindemirdag</a></div>
+      <div class="contact-item"><div class="label">X · Brand Bot</div><a href="https://x.com/cLauxed" target="_blank" rel="noopener">@cLauxed</a></div>
+      <div class="contact-item"><div class="label">GitHub</div><a href="https://github.com/cLauXe" target="_blank" rel="noopener">github.com/cLauXe</a></div>
+      <div class="contact-item"><div class="label">Location</div><span>İstanbul · Türkiye</span></div>
     </div>
   </section>
 
-  <!-- OWNERSHIP STATEMENT -->
+  <!-- OWNERSHIP -->
   <section>
-    <h2>Marka Sahipliği</h2>
+    <h2><span class="num">03</span>Marka Sahipliği</h2>
     <div class="ownership">
       <p>
-        <strong>cLauXe</strong> markası, <strong>Ersin Demirdağ</strong> tarafından 2024 yılından bu yana
-        yapay zekâ destekli yazılım geliştirme, mobil uygulama tasarımı ve algoritmik trading sistemleri
-        kapsamında aktif olarak kullanılmaktadır. Bu sayfa cLauXe markasının resmî sahipliğini ve
-        faaliyet alanını belgeleyen şirket beyanıdır.
+        <strong>cLauXe</strong> markası, <strong>Ersin Demirdağ</strong> tarafından
+        2024 yılından bu yana yapay zeka destekli yazılım geliştirme, mobil uygulama tasarımı ve
+        algoritmik trading sistemleri kapsamında aktif olarak kullanılmaktadır.
+        Bu sayfa cLauXe markasının resmî sahipliğini ve faaliyet alanını belgeleyen şirket beyanıdır.
       </p>
     </div>
   </section>
@@ -355,5 +485,121 @@
   </footer>
 
 </div>
+
+<script>
+// ===== Three.js particle network =====
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({canvas:document.getElementById('bg-canvas'), alpha:true, antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+camera.position.z = 50;
+
+const N = 200;
+const positions = new Float32Array(N*3);
+const colors = new Float32Array(N*3);
+for(let i=0;i<N;i++){
+  positions[i*3]   = (Math.random()-0.5)*100;
+  positions[i*3+1] = (Math.random()-0.5)*60;
+  positions[i*3+2] = (Math.random()-0.5)*40;
+  const c = Math.random()<0.5 ? [0,0.85,1] : (Math.random()<0.5 ? [0.7,0.41,1] : [0,1,0.6]);
+  colors[i*3]=c[0]; colors[i*3+1]=c[1]; colors[i*3+2]=c[2];
+}
+const geom = new THREE.BufferGeometry();
+geom.setAttribute('position', new THREE.BufferAttribute(positions,3));
+geom.setAttribute('color', new THREE.BufferAttribute(colors,3));
+const mat = new THREE.PointsMaterial({size:0.4, vertexColors:true, transparent:true, opacity:0.8});
+const pts = new THREE.Points(geom, mat);
+scene.add(pts);
+
+// connections (line geometry)
+const lineGeom = new THREE.BufferGeometry();
+const linePositions = new Float32Array(N*N*6);
+const lineColors = new Float32Array(N*N*6);
+const lineMat = new THREE.LineBasicMaterial({vertexColors:true, transparent:true, opacity:0.15});
+const lines = new THREE.LineSegments(lineGeom, lineMat);
+scene.add(lines);
+
+let mouseX=0, mouseY=0;
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+function updateLines(){
+  const pos = pts.geometry.attributes.position.array;
+  let lineIdx=0;
+  for(let i=0;i<N;i++){
+    for(let j=i+1;j<N;j++){
+      const dx=pos[i*3]-pos[j*3], dy=pos[i*3+1]-pos[j*3+1], dz=pos[i*3+2]-pos[j*3+2];
+      const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+      if(dist<8){
+        linePositions[lineIdx]=pos[i*3]; linePositions[lineIdx+1]=pos[i*3+1]; linePositions[lineIdx+2]=pos[i*3+2];
+        linePositions[lineIdx+3]=pos[j*3]; linePositions[lineIdx+4]=pos[j*3+1]; linePositions[lineIdx+5]=pos[j*3+2];
+        const a = (1-dist/8)*0.5;
+        for(let k=0;k<6;k+=3){ lineColors[lineIdx+k]=0; lineColors[lineIdx+k+1]=0.85*a; lineColors[lineIdx+k+2]=a; }
+        lineIdx+=6;
+      }
+    }
+  }
+  lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions.slice(0,lineIdx),3));
+  lineGeom.setAttribute('color', new THREE.BufferAttribute(lineColors.slice(0,lineIdx),3));
+  lineGeom.attributes.position.needsUpdate=true;
+  lineGeom.attributes.color.needsUpdate=true;
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  pts.rotation.y += 0.0008;
+  pts.rotation.x += 0.0003;
+  // mouse parallax
+  camera.position.x += (mouseX*8 - camera.position.x)*0.03;
+  camera.position.y += (-mouseY*8 - camera.position.y)*0.03;
+  camera.lookAt(scene.position);
+  if(Math.random()<0.05) updateLines();
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', ()=>{
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ===== Custom cursor =====
+const cursor = document.querySelector('.cursor');
+const cursorDot = document.querySelector('.cursor-dot');
+let cx=0, cy=0, dx=0, dy=0;
+document.addEventListener('mousemove', e => {
+  dx = e.clientX; dy = e.clientY;
+  cursorDot.style.transform = `translate(${dx}px, ${dy}px)`;
+});
+function tick(){
+  cx += (dx-cx)*0.18; cy += (dy-cy)*0.18;
+  cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+  requestAnimationFrame(tick);
+}
+tick();
+document.querySelectorAll('a, .card, .contact-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// ===== GSAP scroll reveal =====
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('section').forEach(s => {
+  ScrollTrigger.create({
+    trigger: s,
+    start: 'top 80%',
+    onEnter: () => s.classList.add('in'),
+  });
+});
+
+// ===== Tilt =====
+if (typeof VanillaTilt !== 'undefined') {
+  VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {speed:400, glare:true, 'max-glare':0.15});
+}
+</script>
 </body>
 </html>
