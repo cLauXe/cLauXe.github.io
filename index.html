@@ -3,68 +3,356 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>cLauXe — Ersin Demirdağ</title>
+<title>cLauXe — AI · Trading · iOS · Ersin Demirdağ</title>
+<meta name="description" content="cLauXe by Ersin Demirdağ — Yapay zeka destekli trading sistemleri ve iOS uygulamaları. Cortex AI, TraderMetrics, FightClub, SağlıkKalkanı.">
+<meta property="og:title" content="cLauXe — Ersin Demirdağ">
+<meta property="og:description" content="AI · Trading Systems · iOS Apps">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root { --bg:#0a0e27; --fg:#e0e0e0; --ac:#00d9ff; --hi:#00ff88; }
-* { box-sizing:border-box; margin:0; padding:0; }
-body { background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.6; }
-.wrap { max-width:780px; margin:0 auto; padding:60px 24px; }
-h1 { font-size:48px; color:var(--hi); margin-bottom:8px; letter-spacing:-1px; }
-.sub { color:var(--ac); font-size:18px; margin-bottom:40px; }
-h2 { color:var(--ac); font-size:22px; margin:32px 0 12px; border-bottom:1px solid #1a2040; padding-bottom:8px; }
-p { margin-bottom:14px; }
-ul { margin:12px 0 12px 22px; }
-li { margin-bottom:6px; }
-a { color:var(--ac); text-decoration:none; }
-a:hover { color:var(--hi); }
-.tag { display:inline-block; background:#1a2040; color:var(--ac); padding:4px 10px; border-radius:4px; font-size:13px; margin-right:6px; margin-bottom:6px; }
-.footer { margin-top:60px; padding-top:24px; border-top:1px solid #1a2040; color:#888; font-size:13px; }
+  :root {
+    --bg: #050816;
+    --bg-2: #0a0e27;
+    --surface: rgba(255,255,255,0.03);
+    --surface-hi: rgba(255,255,255,0.06);
+    --border: rgba(0, 217, 255, 0.15);
+    --border-hi: rgba(0, 217, 255, 0.4);
+    --fg: #e8eaf6;
+    --fg-2: #9ba1bd;
+    --ac: #00d9ff;
+    --hi: #00ff9d;
+    --acc-2: #b46aff;
+    --grad: linear-gradient(135deg, #00d9ff 0%, #b46aff 50%, #00ff9d 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  /* Animated gradient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(0,217,255,0.08), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(180,106,255,0.08), transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0,255,157,0.04), transparent 60%);
+    z-index: -2;
+    animation: float 20s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background-image:
+      linear-gradient(rgba(0,217,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,217,255,0.025) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  @keyframes float {
+    0%   { transform: translate(0,0) rotate(0deg); }
+    100% { transform: translate(5%,-5%) rotate(20deg); }
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 80px 32px 80px; }
+  /* HERO */
+  .hero { padding: 60px 0 80px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-hi);
+    border-radius: 999px;
+    background: rgba(0,217,255,0.06);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ac);
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+  }
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--hi);
+    box-shadow: 0 0 8px var(--hi);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(56px, 9vw, 96px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 18px;
+  }
+  .lead {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--fg-2);
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .hero-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--fg-2);
+  }
+  .hero-meta span::before {
+    content: '◆';
+    color: var(--ac);
+    margin-right: 6px;
+  }
+
+  /* SECTIONS */
+  section { margin-bottom: 72px; }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ac);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  h2::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--ac);
+    display: inline-block;
+  }
+  /* PROJECT CARDS */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,217,255,0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-3px);
+    background: var(--surface-hi);
+  }
+  .card:hover::before { opacity: 1; }
+  .card-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ac);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+  .card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 10px;
+  }
+  .card p { color: var(--fg-2); font-size: 15px; }
+
+  /* TECH PILLS */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    padding: 6px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--fg-2);
+    transition: all 0.2s;
+  }
+  .pill:hover { border-color: var(--border-hi); color: var(--ac); }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .contact-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .contact-item:hover { border-color: var(--border-hi); }
+  .contact-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .contact-item a { color: var(--ac); text-decoration: none; font-size: 15px; word-break: break-all; }
+  .contact-item a:hover { color: var(--hi); }
+
+  /* OWNERSHIP STATEMENT */
+  .ownership {
+    background: linear-gradient(135deg, rgba(0,217,255,0.05), rgba(180,106,255,0.05));
+    border: 1px solid var(--border-hi);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+  .ownership p { color: var(--fg); font-size: 16px; line-height: 1.7; }
+  .ownership strong { color: var(--ac); }
+
+  /* FOOTER */
+  footer {
+    margin-top: 80px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--fg-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  footer a { color: var(--ac); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 60px 20px; }
+    h1 { font-size: 56px; }
+    .hero { padding: 32px 0 60px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>cLauXe</h1>
-<p class="sub">Yapay Zeka, Trading Sistemleri ve Mobil Uygulama Geliştirme</p>
 
-<h2>Marka Sahibi</h2>
-<p><strong>Ersin Demirdağ</strong> — Şirket sahibi, geliştirici, sistem mimarı.</p>
-<p>Konum: İstanbul, Kartal, Türkiye</p>
-<p>İletişim: <a href="mailto:ersindemirdag@outlook.com">ersindemirdag@outlook.com</a></p>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="badge">SYSTEM ONLINE · ISTANBUL</div>
+    <h1>cLauXe</h1>
+    <p class="lead">Yapay zekâ destekli trading sistemleri ve iOS uygulamaları.<br>İstanbul'dan, dünya için.</p>
+    <div class="hero-meta">
+      <span>Founded 2024</span>
+      <span>Owner Ersin Demirdağ</span>
+      <span>4 Active Projects</span>
+    </div>
+  </header>
 
-<h2>Aktif Projeler</h2>
-<ul>
-<li><strong>Cortex AI</strong> — 15-katmanlı algoritmik trading karar sistemi (Python, AI tabanlı, sürekli kalibrasyon)</li>
-<li><strong>TraderMetrics</strong> — iOS SwiftUI trading günlüğü, performans analizi, dashboard</li>
-<li><strong>FightClub</strong> — iOS SwiftUI sosyal dövüş sanatları platformu</li>
-<li><strong>SağlıkKalkanı</strong> — iOS SwiftUI bölgesel hastalık takip uygulaması (ebeveyn odaklı)</li>
-</ul>
+  <!-- PROJECTS -->
+  <section>
+    <h2>Aktif Projeler</h2>
+    <div class="projects">
+      <div class="card">
+        <div class="card-icon">// CORTEX_AI</div>
+        <h3>Cortex AI</h3>
+        <p>15-katmanlı algoritmik trading karar sistemi. Python, gerçek-zamanlı sinyal işleme, sürekli kalibrasyon.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">// TRADER_METRICS</div>
+        <h3>TraderMetrics</h3>
+        <p>iOS SwiftUI trading günlüğü. Performans analizi, equity curve, drawdown haritaları.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">// FIGHT_CLUB</div>
+        <h3>FightClub</h3>
+        <p>iOS sosyal dövüş sanatları platformu. 24 modül, gamification, güvenlik katmanları.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">// SAGLIK_KALKANI</div>
+        <h3>SağlıkKalkanı</h3>
+        <p>iOS bölgesel hastalık takip uygulaması. Ebeveyn odaklı, MapKit harita, anonim raporlama.</p>
+      </div>
+    </div>
+  </section>
 
-<h2>Teknoloji & Altyapı</h2>
-<p>
-<span class="tag">Python</span>
-<span class="tag">Swift / SwiftUI</span>
-<span class="tag">iOS 17+</span>
-<span class="tag">Anthropic Claude API</span>
-<span class="tag">Model Context Protocol (MCP)</span>
-<span class="tag">macOS launchd otomasyon</span>
-<span class="tag">SQLite</span>
-<span class="tag">REST/HTTP</span>
-</p>
+  <!-- TECH STACK -->
+  <section>
+    <h2>Teknoloji</h2>
+    <div class="pills">
+      <span class="pill">Python</span>
+      <span class="pill">Swift / SwiftUI</span>
+      <span class="pill">iOS 17+</span>
+      <span class="pill">Anthropic Claude</span>
+      <span class="pill">Model Context Protocol</span>
+      <span class="pill">macOS launchd</span>
+      <span class="pill">SQLite</span>
+      <span class="pill">REST / OAuth</span>
+      <span class="pill">SwiftUI Animations</span>
+      <span class="pill">Combine</span>
+    </div>
+  </section>
 
-<h2>Sosyal & Kanallar</h2>
-<ul>
-<li>X (Twitter): <a href="https://x.com/ersindemirdag">@ersindemirdag</a> · <a href="https://x.com/cLauxed">@cLauxed</a></li>
-<li>GitHub: <a href="https://github.com/cLauXe">github.com/cLauXe</a></li>
-</ul>
+  <!-- CONTACT -->
+  <section>
+    <h2>İletişim</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">Owner</div>
+        <a>Ersin Demirdağ</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <a href="mailto:ersindemirdag@outlook.com">ersindemirdag@outlook.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">X · Personal</div>
+        <a href="https://x.com/ersindemirdag" target="_blank" rel="noopener">@ersindemirdag</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">X · Brand Bot</div>
+        <a href="https://x.com/cLauxed" target="_blank" rel="noopener">@cLauxed</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">GitHub</div>
+        <a href="https://github.com/cLauXe" target="_blank" rel="noopener">github.com/cLauXe</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Location</div>
+        <a>İstanbul · Türkiye</a>
+      </div>
+    </div>
+  </section>
 
-<h2>Marka Hakkında</h2>
-<p>
-<strong>cLauXe</strong> markası, Ersin Demirdağ tarafından 2024 yılından bu yana yapay zeka destekli yazılım geliştirme, mobil uygulama ve algoritmik trading sistemleri kapsamında kullanılmaktadır. Bu sayfa cLauXe markasının sahipliğini ve faaliyet alanını belgeleyen resmi şirket beyanıdır.
-</p>
+  <!-- OWNERSHIP STATEMENT -->
+  <section>
+    <h2>Marka Sahipliği</h2>
+    <div class="ownership">
+      <p>
+        <strong>cLauXe</strong> markası, <strong>Ersin Demirdağ</strong> tarafından 2024 yılından bu yana
+        yapay zekâ destekli yazılım geliştirme, mobil uygulama tasarımı ve algoritmik trading sistemleri
+        kapsamında aktif olarak kullanılmaktadır. Bu sayfa cLauXe markasının resmî sahipliğini ve
+        faaliyet alanını belgeleyen şirket beyanıdır.
+      </p>
+    </div>
+  </section>
 
-<div class="footer">
-© 2024-2026 cLauXe. Tüm hakları saklıdır. · Son güncelleme: 2 Mayıs 2026
-</div>
+  <footer>
+    © 2024–2026 cLauXe · Built with discipline · Last updated <a href="https://github.com/cLauXe/cLauXe.github.io">2 May 2026</a>
+  </footer>
 
 </div>
 </body>
