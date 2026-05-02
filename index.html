@@ -32,7 +32,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <style>
 :root {
   --bg: #050816;
@@ -400,22 +399,59 @@ h2 .num {
   letter-spacing:0.15em;
 }
 
-/* TWITTER FEED */
-.twitter-embed-wrap {
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(0,217,255,0.15);
-  border-radius:16px;
-  padding:24px;
-  min-height:200px;
+/* BOT FEED CARD */
+.bot-feed { display:block; }
+.feed-card {
+  display:flex; gap:24px; align-items:center;
+  background:linear-gradient(135deg,rgba(0,217,255,0.06),rgba(180,106,255,0.06));
+  border:1px solid rgba(0,217,255,0.25);
+  border-radius:20px;
+  padding:32px;
+  text-decoration:none;
+  color:var(--fg);
+  transition:all 0.3s;
+  position:relative; overflow:hidden;
 }
-.twitter-embed-wrap iframe { border-radius:12px; }
-.feed-fallback {
-  text-align:center; margin-top:16px;
-  color:var(--fg-2); font-size:13px;
+.feed-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at top right, rgba(0,255,157,0.1), transparent 60%);
+  pointer-events:none;
+}
+.feed-card:hover {
+  border-color:rgba(0,217,255,0.5);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,217,255,0.15);
+}
+.feed-card-icon {
+  width:64px; height:64px; flex-shrink:0;
+  border-radius:50%;
+  background:var(--grad);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:32px; font-weight:700;
+  color:#050816;
+}
+.feed-card-body { flex:1; }
+.feed-card-h {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px; font-weight:600;
+  color:var(--fg);
+  margin-bottom:8px;
+}
+.feed-card-d {
+  color:var(--fg-2);
+  font-size:15px;
+  margin-bottom:12px;
+}
+.feed-card-cta {
   font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--ac);
+  letter-spacing:0.05em;
 }
-.feed-fallback a { color:var(--ac); text-decoration:none; }
-.feed-fallback a:hover { color:var(--hi); }
+@media (max-width:600px) {
+  .feed-card { flex-direction:column; align-items:flex-start; padding:24px; }
+}
 
 /* FOOTER */
 footer {
@@ -579,13 +615,19 @@ footer a { color:var(--ac); text-decoration:none; }
     </div>
   </section>
 
-  <!-- TWITTER FEED -->
+  <!-- BOT FEED -->
   <section>
-    <h2><span class="num">04</span>Bot · @cLauxed Son Atışlar</h2>
-    <div class="twitter-embed-wrap">
-      <a class="twitter-timeline" data-theme="dark" data-tweet-limit="3" data-chrome="noheader nofooter transparent" href="https://twitter.com/cLauxed?ref_src=twsrc%5Etfw">@cLauxed yükleniyor…</a>
+    <h2><span class="num">04</span>@cLauxed · Son Paylaşımlar</h2>
+    <div class="bot-feed">
+      <a href="https://x.com/cLauxed" target="_blank" rel="noopener" class="feed-card">
+        <div class="feed-card-icon">@</div>
+        <div class="feed-card-body">
+          <div class="feed-card-h">@cLauxed</div>
+          <div class="feed-card-d">Otonom · AI destekli içerik · 24 kategori · gün içinde sürekli paylaşım</div>
+          <div class="feed-card-cta">X profilinde gör →</div>
+        </div>
+      </a>
     </div>
-    <p class="feed-fallback">Görmüyorsan: <a href="https://x.com/cLauxed" target="_blank" rel="noopener">x.com/cLauxed</a></p>
   </section>
 
   <!-- OWNERSHIP -->
