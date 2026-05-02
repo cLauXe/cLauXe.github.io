@@ -299,6 +299,17 @@ h2 .num {
   font-size:11px;
   color:var(--ac);
 }
+.card .status {
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+.status-stealth { background:rgba(180,106,255,0.15); color:#b46aff; border:1px solid rgba(180,106,255,0.35); }
+.status-soon    { background:rgba(0,255,157,0.12);  color:#00ff9d; border:1px solid rgba(0,255,157,0.3); }
+.status-dev     { background:rgba(0,217,255,0.12);  color:#00d9ff; border:1px solid rgba(0,217,255,0.3); }
 
 /* CONTACT */
 .contact-grid {
@@ -545,28 +556,20 @@ footer a { color:var(--ac); text-decoration:none; }
     <h2><span class="num">01</span>Aktif Projeler</h2>
     <div class="projects">
       <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
-        <div class="num">CORTEX_AI<span>2024</span></div>
+        <div class="num">01<span class="status status-stealth">STEALTH</span></div>
         <h3>Cortex AI</h3>
-        <p>15-katmanlı algoritmik trading karar sistemi. Gerçek-zamanlı sinyal işleme, sürekli kalibrasyon, paper-trade altyapısı.</p>
-        <div class="tags"><span>Python</span><span>AI</span><span>Quant</span></div>
       </div>
       <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
-        <div class="num">TRADER_METRICS<span>2024</span></div>
+        <div class="num">02<span class="status status-soon">COMING SOON</span></div>
         <h3>TraderMetrics</h3>
-        <p>iOS SwiftUI trading günlüğü. Equity curve, drawdown haritaları, performans analizi, glass morphism UI.</p>
-        <div class="tags"><span>SwiftUI</span><span>iOS 17+</span><span>Charts</span></div>
       </div>
       <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
-        <div class="num">FIGHT_CLUB<span>2024</span></div>
+        <div class="num">03<span class="status status-dev">IN DEVELOPMENT</span></div>
         <h3>FightClub</h3>
-        <p>iOS sosyal dövüş sanatları platformu. 24 modül, gamification, güvenlik katmanları, design system.</p>
-        <div class="tags"><span>SwiftUI</span><span>Supabase</span><span>Social</span></div>
       </div>
       <div class="card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.15">
-        <div class="num">SAGLIK_KALKANI<span>2025</span></div>
+        <div class="num">04<span class="status status-dev">IN DEVELOPMENT</span></div>
         <h3>SağlıkKalkanı</h3>
-        <p>iOS bölgesel hastalık takip uygulaması. Ebeveyn odaklı, MapKit harita, anonim raporlama.</p>
-        <div class="tags"><span>SwiftUI</span><span>MapKit</span><span>Health</span></div>
       </div>
     </div>
   </section>
