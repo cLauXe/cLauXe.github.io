@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>cLauXe — AI · Trading · iOS · Ersin Demirdağ</title>
 <meta name="description" content="cLauXe by Ersin Demirdağ — AI-powered trading systems, iOS apps. Cortex AI, TraderMetrics, FightClub, SağlıkKalkanı.">
+
+<!-- Favicon + iOS icon -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#050816">
+
+<!-- Open Graph (Twitter/Facebook/Slack share preview) -->
+<meta property="og:title" content="cLauXe — AI · Trading · iOS · Innovation">
+<meta property="og:description" content="Yapay zeka destekli trading sistemleri ve iOS uygulamaları. İstanbul'dan, dünya için.">
+<meta property="og:image" content="https://clauxe.github.io/og-image.png">
+<meta property="og:url" content="https://clauxe.github.io">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@cLauxed">
+<meta name="twitter:creator" content="@ersindemirdag">
+<meta name="twitter:title" content="cLauXe — AI · Trading · iOS · Innovation">
+<meta name="twitter:description" content="Yapay zeka destekli trading sistemleri ve iOS uygulamaları.">
+<meta name="twitter:image" content="https://clauxe.github.io/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,6 +32,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <style>
 :root {
   --bg: #050816;
@@ -336,6 +357,66 @@ h2 .num {
   font-weight:600;
 }
 
+/* LIVE STATS */
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+.stat-card {
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(0,217,255,0.15);
+  border-radius:16px;
+  padding:32px 24px;
+  text-align:center;
+  transition:all 0.3s;
+  position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at center top, rgba(0,217,255,0.08), transparent 70%);
+  opacity:0; transition:opacity 0.3s;
+}
+.stat-card:hover {
+  border-color:rgba(0,217,255,0.4);
+  transform:translateY(-4px);
+}
+.stat-card:hover::before { opacity:1; }
+.stat-num {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:56px; font-weight:700;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+  margin-bottom:8px;
+}
+.stat-lbl {
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--fg-2);
+  text-transform:uppercase;
+  letter-spacing:0.15em;
+}
+
+/* TWITTER FEED */
+.twitter-embed-wrap {
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(0,217,255,0.15);
+  border-radius:16px;
+  padding:24px;
+  min-height:200px;
+}
+.twitter-embed-wrap iframe { border-radius:12px; }
+.feed-fallback {
+  text-align:center; margin-top:16px;
+  color:var(--fg-2); font-size:13px;
+  font-family:'JetBrains Mono',monospace;
+}
+.feed-fallback a { color:var(--ac); text-decoration:none; }
+.feed-fallback a:hover { color:var(--hi); }
+
 /* FOOTER */
 footer {
   margin-top:120px; padding-top:48px;
@@ -467,15 +548,54 @@ footer a { color:var(--ac); text-decoration:none; }
     </div>
   </section>
 
+  <!-- LIVE STATS -->
+  <section>
+    <h2><span class="num">03</span>Sistem · Canlı</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" data-target="24">24</div>
+        <div class="stat-lbl">İçerik kategorisi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-target="14">14</div>
+        <div class="stat-lbl">Tweet / gün</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-target="86">86</div>
+        <div class="stat-lbl">Hashtag topic</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-target="4">4</div>
+        <div class="stat-lbl">Aktif launchd job</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-target="15">15</div>
+        <div class="stat-lbl">Cortex katmanı</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24/7</div>
+        <div class="stat-lbl">Otonom çalışma</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWITTER FEED -->
+  <section>
+    <h2><span class="num">04</span>Bot · @cLauxed Son Atışlar</h2>
+    <div class="twitter-embed-wrap">
+      <a class="twitter-timeline" data-theme="dark" data-tweet-limit="3" data-chrome="noheader nofooter transparent" href="https://twitter.com/cLauxed?ref_src=twsrc%5Etfw">@cLauxed yükleniyor…</a>
+    </div>
+    <p class="feed-fallback">Görmüyorsan: <a href="https://x.com/cLauxed" target="_blank" rel="noopener">x.com/cLauxed</a></p>
+  </section>
+
   <!-- OWNERSHIP -->
   <section>
-    <h2><span class="num">03</span>Marka Sahipliği</h2>
+    <h2><span class="num">05</span>Marka Sahipliği</h2>
     <div class="ownership">
       <p>
         <strong>cLauXe</strong> markası, <strong>Ersin Demirdağ</strong> tarafından
         2024 yılından bu yana yapay zeka destekli yazılım geliştirme, mobil uygulama tasarımı ve
         algoritmik trading sistemleri kapsamında aktif olarak kullanılmaktadır.
-        Bu sayfa cLauXe markasının resmî sahipliğini ve faaliyet alanını belgeleyen şirket beyanıdır.
       </p>
     </div>
   </section>
@@ -593,6 +713,31 @@ gsap.utils.toArray('section').forEach(s => {
     trigger: s,
     start: 'top 80%',
     onEnter: () => s.classList.add('in'),
+  });
+});
+
+// ===== Stat counter animation =====
+document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+  const target = parseInt(el.dataset.target, 10);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 90%',
+    once: true,
+    onEnter: () => {
+      let n = 0;
+      const dur = 1500;
+      const step = target / (dur / 16);
+      const tick = () => {
+        n += step;
+        if (n >= target) {
+          el.textContent = target;
+        } else {
+          el.textContent = Math.floor(n);
+          requestAnimationFrame(tick);
+        }
+      };
+      tick();
+    },
   });
 });
 
