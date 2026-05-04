@@ -486,9 +486,9 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   </div>
 
   <aside class="marg-right">
-    <div class="marg-stat"><div class="label" data-tr="Ensemble Sharpe (5y)" data-en="Ensemble Sharpe (5y)">Ensemble Sharpe (5y)</div><div class="value"><span class="count-up" data-target="1.794" data-decimals="3">0</span></div></div>
-    <div class="marg-stat"><div class="label" data-tr="Yıllık getiri (BT)" data-en="Annual return (BT)">Yıllık getiri (BT)</div><div class="value">+%<span class="count-up" data-target="66.26" data-decimals="2">0</span></div></div>
-    <div class="marg-stat"><div class="label" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</div><div class="value">-%<span class="count-up" data-target="17.77" data-decimals="2">0</span></div></div>
+    <div class="marg-stat"><div class="label" data-tr="Ensemble Sharpe (BT)" data-en="Ensemble Sharpe (BT)">Ensemble Sharpe (BT)</div><div class="value"><span class="count-up" data-target="1.846" data-decimals="3">0</span></div></div>
+    <div class="marg-stat"><div class="label" data-tr="Yıllık getiri (BT)" data-en="Annual return (BT)">Yıllık getiri (BT)</div><div class="value">+%<span class="count-up" data-target="70.37" data-decimals="2">0</span></div></div>
+    <div class="marg-stat"><div class="label" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</div><div class="value">-%<span class="count-up" data-target="22.35" data-decimals="2">0</span></div></div>
     <p style="margin-top: 16px;" data-tr="Sharpe — getirinin oynaklığa oranı. Birin üstü iyi, ikinin üstü ender. Bu sayılar geçmişten geliyor; gelecek vaadi değiller." data-en="Sharpe — the ratio of return to volatility. Above one is good, above two is rare. These numbers come from the past; they are not promises about the future.">Sharpe — getirinin oynaklığa oranı. Birin üstü iyi, ikinin üstü ender. Bu sayılar geçmişten geliyor; gelecek vaadi değiller.</p>
   </aside>
 </article>
@@ -521,8 +521,8 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
       <p class="sub" data-tr="BIST için dört stratejilik ensemble." data-en="Four-strategy ensemble for the BIST.">BIST için dört stratejilik ensemble.</p>
       <p class="body" data-tr="Pairs trading, cross-sectional momentum, ortalamaya dönüş ve kalite/değer faktörü. Risk-parite tahsisi, sektör tavanları, walk-forward doğrulama, on dört katmanlı risk gate'i." data-en="Pairs trading, cross-sectional momentum, statistical mean reversion and a quality/value factor sleeve. Risk-parity allocation, sector caps, walk-forward validation, fourteen-layer risk gate.">Pairs trading, cross-sectional momentum, ortalamaya dönüş ve kalite/değer faktörü. Risk-parite tahsisi, sektör tavanları, walk-forward doğrulama, on dört katmanlı risk gate'i.</p>
       <div class="stats-row">
-        <div class="stat"><span class="num">1.79</span><span class="key">Sharpe</span></div>
-        <div class="stat"><span class="num" style="color: var(--accent);">+%66</span><span class="key" data-tr="Yıllık" data-en="Annual">Yıllık</span></div>
+        <div class="stat"><span class="num">1.85</span><span class="key">Sharpe</span></div>
+        <div class="stat"><span class="num" style="color: var(--accent);">+%70</span><span class="key" data-tr="Yıllık" data-en="Annual">Yıllık</span></div>
         <div class="stat"><span class="num">202</span><span class="key" data-tr="Test" data-en="Test">Test</span></div>
       </div>
       <span class="more-hint">↗ <span data-tr="detay" data-en="details">detay</span></span>
@@ -626,13 +626,14 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   <div class="equity-grid">
     <svg class="equity-chart" id="equity-svg" viewBox="0 0 800 280" preserveAspectRatio="none" aria-label="Equity curve"></svg>
     <div class="equity-stats">
-      <div class="row"><span class="key" data-tr="Başlangıç" data-en="Start">Başlangıç</span><span class="val">100,000</span></div>
-      <div class="row"><span class="key" data-tr="Bitiş (V4)" data-en="End (V4)">Bitiş (V4)</span><span class="val up">1,238,419</span></div>
-      <div class="row"><span class="key" data-tr="Bitiş (BIST 100)" data-en="End (BIST 100)">Bitiş (BIST 100)</span><span class="val">956,210</span></div>
-      <div class="row"><span class="key" data-tr="Yıllık V4" data-en="Annual V4">Yıllık V4</span><span class="val up">+%66.26</span></div>
-      <div class="row"><span class="key" data-tr="Yıllık BIST" data-en="Annual BIST">Yıllık BIST</span><span class="val">+%60.71</span></div>
-      <div class="row"><span class="key" data-tr="Sharpe V4" data-en="Sharpe V4">Sharpe V4</span><span class="val up">1.794</span></div>
-      <div class="row"><span class="key" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</span><span class="val down">-%17.77</span></div>
+      <div class="row"><span class="key" data-tr="Başlangıç" data-en="Start">Başlangıç</span><span class="val">100.000</span></div>
+      <div class="row"><span class="key" data-tr="Bitiş (V4)" data-en="End (V4)">Bitiş (V4)</span><span class="val up">1.439.180</span></div>
+      <div class="row"><span class="key" data-tr="Bitiş (BIST 100)*" data-en="End (BIST 100)*">Bitiş (BIST 100)*</span><span class="val">920.000</span></div>
+      <div class="row"><span class="key" data-tr="Yıllık V4" data-en="Annual V4">Yıllık V4</span><span class="val up">+%70.37</span></div>
+      <div class="row"><span class="key" data-tr="Yıllık BIST" data-en="Annual BIST">Yıllık BIST*</span><span class="val">~+%56</span></div>
+      <div class="row"><span class="key" data-tr="Sharpe V4" data-en="Sharpe V4">Sharpe V4</span><span class="val up">1.846</span></div>
+      <div class="row"><span class="key" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</span><span class="val down">-%22.35</span></div>
+      <div class="row" style="border:none; padding-top:8px; opacity:0.6"><span class="key" style="font-size:10px">* BIST yaklaşık</span><span class="val" style="font-size:10px; font-weight:400; font-family:'JetBrains Mono',monospace">2026-04-29</span></div>
     </div>
   </div>
 </section>
@@ -656,18 +657,18 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
     <div class="sim-results">
       <div class="sim-card sim-card-v4">
         <div class="sim-tag" data-tr="Cortex V4 portföyü" data-en="Cortex V4 portfolio">Cortex V4 portföyü</div>
-        <div class="sim-final" id="sim-v4">1.238.419 TL</div>
-        <div class="sim-delta up" id="sim-v4-delta">+1.138.419 TL · ×12.38</div>
-        <div class="sim-meta" data-tr="yıllık +%66,26 · Sharpe 1,794 · Maks. düşüş -%17,77" data-en="annual +66.26% · Sharpe 1.794 · max drawdown -17.77%">yıllık +%66,26 · Sharpe 1,794 · Maks. düşüş -%17,77</div>
+        <div class="sim-final" id="sim-v4">1.439.180 TL</div>
+        <div class="sim-delta up" id="sim-v4-delta">+1.339.180 TL · ×14,39</div>
+        <div class="sim-meta" data-tr="yıllık +%70,37 · Sharpe 1,846 · Maks. düşüş -%22,35" data-en="annual +70.37% · Sharpe 1.846 · max drawdown -22.35%">yıllık +%70,37 · Sharpe 1,846 · Maks. düşüş -%22,35</div>
       </div>
       <div class="sim-card sim-card-bist">
-        <div class="sim-tag" data-tr="BIST 100 (kıyas)" data-en="BIST 100 (benchmark)">BIST 100 (kıyas)</div>
-        <div class="sim-final" id="sim-bist">956.210 TL</div>
-        <div class="sim-delta" id="sim-bist-delta">+856.210 TL · ×9.56</div>
-        <div class="sim-meta" data-tr="yıllık +%60,71 · Maks. düşüş ~-%34" data-en="annual +60.71% · max drawdown ~-34%">yıllık +%60,71 · Maks. düşüş ~-%34</div>
+        <div class="sim-tag" data-tr="BIST 100 (yaklaşık kıyas)" data-en="BIST 100 (approx benchmark)">BIST 100 (yaklaşık kıyas)</div>
+        <div class="sim-final" id="sim-bist">920.000 TL</div>
+        <div class="sim-delta" id="sim-bist-delta">+820.000 TL · ×9,20</div>
+        <div class="sim-meta" data-tr="yıllık ~+%56 · ham endeks (temettü hariç)" data-en="annual ~+56% · raw index (ex-dividend)">yıllık ~+%56 · ham endeks (temettü hariç)</div>
       </div>
     </div>
-    <div class="sim-disclaimer" data-tr="* Hesaplama 2021-01-01 → 2026-01-01 arası backtest çarpanları üzerinden yapılır (V4: ×12,38, BIST 100: ×9,56). Komisyon, slippage, vergi backtest'e dahildir. Yatırım tavsiyesi değildir." data-en="* Calculation uses 2021-01-01 → 2026-01-01 backtest multipliers (V4: ×12.38, BIST 100: ×9.56). Commission, slippage, tax included in backtest. Not investment advice.">* Hesaplama 2021-01-01 → 2026-01-01 arası backtest çarpanları üzerinden yapılır (V4: ×12,38, BIST 100: ×9,56). Komisyon, slippage, vergi backtest'e dahildir. Yatırım tavsiyesi değildir.</div>
+    <div class="sim-disclaimer" data-tr="* V4 sayıları gerçek backtest dosyamızdan: state/backtest_last.json (2026-04-29 hesaplaması). Çarpan ×14,39 = (1+%70,37)^5. Komisyon ve slippage backtest'te dahildir; vergi dahil değildir. BIST 100 kıyası yaklaşık ham endeks değişimidir. Yatırım tavsiyesi değildir; hipotetik backtest hesabıdır." data-en="* V4 numbers from our actual backtest file: state/backtest_last.json (computed 2026-04-29). Multiplier ×14.39 = (1+70.37%)^5. Commission and slippage included in backtest; tax not included. BIST 100 benchmark is approximate raw index change. Not investment advice; hypothetical backtest figure.">* V4 sayıları gerçek backtest dosyamızdan: state/backtest_last.json (2026-04-29 hesaplaması). Çarpan ×14,39 = (1+%70,37)^5. Komisyon ve slippage backtest'te dahildir; vergi dahil değildir. BIST 100 kıyası yaklaşık ham endeks değişimidir. Yatırım tavsiyesi değildir; hipotetik backtest hesabıdır.</div>
   </div>
 </section>
 
@@ -676,10 +677,10 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   <h2 class="serif" data-tr="2026, on sekizinci hafta" data-en="2026, eighteenth week">2026, on sekizinci hafta</h2>
   <div class="digest-grid">
     <div class="digest-item">
-      <div class="num"><span class="count-up" data-target="5">0</span></div>
+      <div class="num"><span class="count-up" data-target="4">0</span></div>
       <div class="key" data-tr="Tweet bugün" data-en="Tweets today">Tweet bugün</div>
       <div class="sub-key" data-tr="3'ü makro veri" data-en="3 macro">3'ü makro veri</div>
-      <span class="tooltip" data-tr="// 5 tweet · 11:25 → 12:31" data-en="// 5 tweets · 11:25 → 12:31">// 5 tweet · 11:25 → 12:31</span>
+      <span class="tooltip" data-tr="// otomatik, council onaylı" data-en="// auto, council-approved">// otomatik, council onaylı</span>
     </div>
     <div class="digest-item">
       <div class="num accent">+%<span class="count-up" data-target="4.18" data-decimals="2">0</span></div>
@@ -706,10 +707,10 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
       <span class="tooltip">// walk-forward, OOS</span>
     </div>
     <div class="digest-item">
-      <div class="num">x<span class="count-up" data-target="12.38" data-decimals="2">0</span></div>
+      <div class="num">×<span class="count-up" data-target="14.39" data-decimals="2">0</span></div>
       <div class="key" data-tr="Sermaye çarpanı" data-en="Capital multiplier">Sermaye çarpanı</div>
       <div class="sub-key" data-tr="5 yılda backtest" data-en="5 years, backtest">5 yılda backtest</div>
-      <span class="tooltip" data-tr="// 100k → 1,238k" data-en="// 100k → 1,238k">// 100k → 1,238k</span>
+      <span class="tooltip" data-tr="// 100k → 1.439k" data-en="// 100k → 1,439k">// 100k → 1.439k</span>
     </div>
     <div class="digest-item">
       <div class="num accent"><span class="count-up" data-target="40">0</span></div>
@@ -1016,8 +1017,8 @@ const ALL_SCENARIOS = [
   {
     label: { tr: "Cortex V4 backtest", en: "Cortex V4 backtest" },
     text: {
-      tr: "Bir sistem 5 yıl gerçek BIST verisinde Sharpe 1.79 ve yıllık +%66 üretiyor. Walk-forward overfit 0.47, Monte Carlo P50 +%75. Bu sisteme 100.000 TL koymak ister misin?",
-      en: "A system delivers Sharpe 1.79 and +66% annual on five years of BIST data. Walk-forward overfit 0.47, Monte Carlo P50 +75%. Would you commit 100,000 TL?",
+      tr: "Bir sistem 5 yıllık BIST backtest'te Sharpe 1.85 ve yıllık +%70 üretiyor. Walk-forward OOS Sharpe 1.96, Monte Carlo P50 +%74, kayıp olasılığı %3. Bu sisteme 100.000 TL koymak ister misin?",
+      en: "A system delivers Sharpe 1.85 and +70% annual on a 5-year BIST backtest. Walk-forward OOS Sharpe 1.96, Monte Carlo P50 +74%, loss prob 3%. Would you commit 100,000 TL?",
     },
     council: [
       { name: "Codex", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Survivorship bias şüphesi. 3 ay canlı + 60+ işlem gerekli.", en: "Survivorship doubt. 3 months live + 60+ trades needed." } },
@@ -1291,8 +1292,8 @@ const MODAL_DATA = {
   cortex: {
     titleTr: 'Cortex V4', titleEn: 'Cortex V4',
     subTr: 'Niceliksel Portföy Motoru · BIST', subEn: 'Quantitative Portfolio Engine · BIST',
-    bodyTr: `<p>Cortex V4, dört bağımsız stratejinin oylarını risk-parite ile birleştiren bir portföy motorudur. Kararlar her gün 18:45'te yenilenir.</p><h4>Stratejiler</h4><ul><li><strong>Pairs trading</strong> — kointegrasyon, Engle-Granger, Sharpe 1.34</li><li><strong>Cross-sectional momentum</strong> — 12-1 ay, top decile, Sharpe 1.46</li><li><strong>Statistical mean reversion</strong> — Z-score 60g, Sharpe 1.00</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B kompozit, Sharpe 1.78</li></ul><h4>Risk Gate (14 katman)</h4><p>L1 Halt · L2 Drawdown · L3 Period Kill · L4 Rule Set · L5-6 Pre-gate + Pipeline · L7 Edge · L8 Scorecard · L9 Confidence · L10 Friction · L11 Regime · L12 Concentration · L13 Sizing · L14 LLM Auditor</p><h4>Doğrulama</h4><p>Walk-forward 15 pencere, OOS Sharpe 1.985. Monte Carlo 1000 yol, P50 +%75.78, kayıp olasılığı %2.7.</p><h4>Mevcut durum</h4><p>Paper-trade. Forward-test sürüyor. Drawdown halt eşiği -%20.</p>`,
-    bodyEn: `<p>Cortex V4 fuses four independent strategies via risk parity. Decisions refresh every day at 18:45.</p><h4>Strategies</h4><ul><li><strong>Pairs trading</strong> — cointegration, Engle-Granger, Sharpe 1.34</li><li><strong>Cross-sectional momentum</strong> — 12-1 month, top decile, Sharpe 1.46</li><li><strong>Statistical mean reversion</strong> — 60d Z-score, Sharpe 1.00</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B composite, Sharpe 1.78</li></ul><h4>Risk Gate (14 layers)</h4><p>Halt · Drawdown · Period Kill · Rule Set · Pre-gate · Pipeline · Edge · Scorecard · Confidence · Friction · Regime · Concentration · Sizing · LLM Auditor</p><h4>Validation</h4><p>Walk-forward 15 windows, OOS Sharpe 1.985. Monte Carlo 1000 paths, P50 +75.78%, loss prob 2.7%.</p><h4>Current</h4><p>Paper-trade. Forward-test in progress. Drawdown halt at -20%.</p>`,
+    bodyTr: `<p>Cortex V4, dört bağımsız stratejinin oylarını risk-parite ile birleştiren bir portföy motorudur. Kararlar her gün 18:45'te yenilenir.</p><h4>Stratejiler (backtest Sharpe)</h4><ul><li><strong>Pairs trading</strong> — kointegrasyon, Engle-Granger, Sharpe 0.69</li><li><strong>Cross-sectional momentum</strong> — 12-1 ay, top decile, Sharpe 2.07</li><li><strong>Statistical mean reversion</strong> — Z-score 60g, Sharpe 1.17</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B kompozit, Sharpe 1.73</li><li><strong>Ensemble (risk-parite)</strong> — Sharpe 1.85, yıllık +%70.37, maks. düşüş -%22.35, kazanma %61.34</li></ul><h4>Risk Gate (14 katman)</h4><p>L1 Halt · L2 Drawdown · L3 Period Kill · L4 Rule Set · L5-6 Pre-gate + Pipeline · L7 Edge · L8 Scorecard · L9 Confidence · L10 Friction · L11 Regime · L12 Concentration · L13 Sizing · L14 LLM Auditor</p><h4>Doğrulama</h4><p>Walk-forward 15 pencere, pooled OOS Sharpe 1.96, yıllık +%60.05. Monte Carlo 1000 yol, P50 +%74.04, kayıp olasılığı %3.0.</p><h4>Mevcut durum</h4><p>Paper-trade. Forward-test sürüyor. Drawdown halt eşiği -%20. <em>Veri: state/backtest_last.json (2026-04-29).</em></p>`,
+    bodyEn: `<p>Cortex V4 fuses four independent strategies via risk parity. Decisions refresh every day at 18:45.</p><h4>Strategies (backtest Sharpe)</h4><ul><li><strong>Pairs trading</strong> — cointegration, Engle-Granger, Sharpe 0.69</li><li><strong>Cross-sectional momentum</strong> — 12-1 month, top decile, Sharpe 2.07</li><li><strong>Statistical mean reversion</strong> — 60d Z-score, Sharpe 1.17</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B composite, Sharpe 1.73</li><li><strong>Ensemble (risk parity)</strong> — Sharpe 1.85, annual +70.37%, max drawdown -22.35%, win rate 61.34%</li></ul><h4>Risk Gate (14 layers)</h4><p>Halt · Drawdown · Period Kill · Rule Set · Pre-gate · Pipeline · Edge · Scorecard · Confidence · Friction · Regime · Concentration · Sizing · LLM Auditor</p><h4>Validation</h4><p>Walk-forward 15 windows, pooled OOS Sharpe 1.96, annual +60.05%. Monte Carlo 1000 paths, P50 +74.04%, loss prob 3.0%.</p><h4>Current</h4><p>Paper-trade. Forward-test in progress. Drawdown halt at -20%. <em>Source: state/backtest_last.json (2026-04-29).</em></p>`,
     tags: ['Python', 'FastAPI', 'QuantStats', 'pandas', 'numpy', 'borsa-mcp'],
     actions: [{ labelTr: 'Canlı panel', labelEn: 'Live panel', href: 'https://cortex.ersindemirdag.com' }, { labelTr: '@cLauxed', labelEn: '@cLauxed', href: 'https://x.com/cLauxed' }],
   },
@@ -1410,7 +1411,7 @@ document.addEventListener('keydown', (e) => {
 const COMMANDS = {
   help: () => "available: help, council, v4, digest, source, who, tweets, lang, theme, clear, exit",
   council: () => "Codex · DeepSeek · Qwen 14B · Qwen-smart · Qwen-coder · Hermes-4. HMAC-SHA256 signed.",
-  v4: () => "Cortex V4 · Sharpe 1.79 · Yearly +66% · MDD -17% · 5y BIST. State: paper-trade, 3/20.",
+  v4: () => "Cortex V4 · Sharpe 1.85 · Yearly +70% · MDD -22% · 5y BIST. State: paper-trade, forward-test in progress.",
   digest: () => "tweets today: " + document.querySelector('#digest .digest-item .count-up')?.dataset.target + ", 251 council rounds (HMAC), 202/202 tests, 40 launchd jobs.",
   source: () => "Python · FastAPI · QuantStats · SwiftUI · vanilla JS · launchd · borsa-mcp · fastmcp.",
   who: () => "@cLauxed — Ersin Demirdağ. A small parliament of probabilistic minds.",
@@ -1683,8 +1684,8 @@ updateWeather();
 renderHmac();
 
 // CAPITAL SIMULATOR
-const SIM_V4_MULT = 12.38419;
-const SIM_BIST_MULT = 9.5621;
+const SIM_V4_MULT = 14.3918;
+const SIM_BIST_MULT = 9.20;
 function fmtTL(n) {
   return Math.round(n).toLocaleString('tr-TR') + ' TL';
 }
