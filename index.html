@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="Quant trading, autonomous agents, AI-native engineering. By Ersin Demirdağ.">
 <meta name="twitter:image" content="/banner.png">
 <meta name="author" content="Ersin Demirdağ">
-<meta name="keywords" content="quant trading, BIST, autonomous AI agent, council, HMAC, walk-forward backtest, fastmcp, Cortex V4, TraderMetrics">
+<meta name="keywords" content="autonomous AI agent, 6-AI council, HMAC, iOS apps, indie projects, Ersin Demirdağ">
 <link rel="canonical" href="https://clauxe.com">
 <link rel="icon" href="/profile.png" type="image/png">
 <script type="application/ld+json">
@@ -45,10 +45,16 @@
     }
   ]
 }
+// INIT
+applyLang(STATE.lang);
+applyTheme(STATE.theme);
+drawEquity();
+window.addEventListener('resize', drawEquity);
+
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   /* light (kraft / day press) */
@@ -78,8 +84,9 @@
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg); color: var(--ink);
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(16px, 1.1vw, 18px); line-height: 1.55; overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: clamp(15px, 1.05vw, 17px); line-height: 1.6; overflow-x: hidden;
+  font-feature-settings: 'cv11', 'ss01';
   transition: background 0.4s, color 0.4s;
   background-image:
     radial-gradient(circle at 20% 80%, transparent 0%, rgba(0,0,0,0.02) 100%),
@@ -90,8 +97,8 @@ body {
     radial-gradient(circle at 70% 30%, rgba(255,255,255,0.015) 0%, transparent 60%),
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.04'/></svg>");
 }
-.serif { font-family: 'Playfair Display', Georgia, serif; }
-.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
+.serif { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.9em; }
 
 /* CONTROL BAR */
 .control-bar {
@@ -134,17 +141,12 @@ body {
   border-bottom: 1px solid var(--rule); position: relative;
 }
 .title-block h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 900; font-size: clamp(56px, 14vw, 200px);
   line-height: 0.85; letter-spacing: -0.04em;
   position: relative; display: inline-block;
 }
-.title-block h1::after {
-  content: '_'; display: inline-block;
-  color: var(--accent); animation: blink 1s steps(2) infinite;
-  margin-left: 0.05em;
-}
-@keyframes blink { 50% { opacity: 0; } }
+/* blink cursor kaldirildi — kurumsal sakinlik */
 .title-block .subtitle { margin-top: 12px; font-style: italic; font-size: clamp(14px, 1.2vw, 18px); color: var(--ink-2); }
 .meta-line {
   display: flex; justify-content: space-between; padding: 8px 5vw;
@@ -171,26 +173,25 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   font-size: clamp(10px, 1.1vw, 11px); color: var(--ink-faded); line-height: 1.7;
 }
 .lead .marg-left .pull-num {
-  font-family: 'Playfair Display', serif; font-size: clamp(48px, 8vw, 72px); font-weight: 900;
+  font-family: 'Inter', system-ui, sans-serif; font-size: clamp(48px, 8vw, 72px); font-weight: 800;
   line-height: 0.9; color: var(--accent); margin-bottom: 8px;
-  display: inline-block; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block; letter-spacing: -0.03em;
 }
-.lead .marg-left:hover .pull-num { transform: rotate(-3deg) scale(1.05); }
 .lead .marg-right p { margin-bottom: 12px; }
 .lead .lead-body h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(26px, 5vw, 48px); font-weight: 700;
   line-height: 1.05; margin-bottom: 16px;
 }
 .lead .lead-body .dropcap::first-letter {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 900; font-size: 5em; float: left;
   line-height: 0.8; margin: 0.05em 0.1em -0.1em 0; color: var(--accent);
 }
 .lead .lead-body p { margin-bottom: 14px; font-size: clamp(15px, 1.3vw, 17px); }
 .lead .marg-stat { border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); padding: 10px 0; margin: 12px 0; }
 .lead .marg-stat .label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; }
-.lead .marg-stat .value { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 36px); font-weight: 900; line-height: 1; margin-top: 4px; }
+.lead .marg-stat .value { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 900; line-height: 1; margin-top: 4px; }
 .count-up { display: inline-block; }
 
 .section-divider { text-align: center; padding: 28px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 32px; }
@@ -204,7 +205,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 
 .game-section { padding: 60px 0; border-bottom: 1px solid var(--rule); }
 .game-section h2 {
-  font-family: 'Playfair Display', serif; font-size: clamp(32px, 7vw, 64px);
+  font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 7vw, 64px);
   font-weight: 900; line-height: 0.95; margin-bottom: 8px;
 }
 .game-section .lede { font-style: italic; font-size: clamp(15px, 1.5vw, 19px); color: var(--ink-2); margin-bottom: 32px; max-width: 600px; }
@@ -218,10 +219,9 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .timer-bar { width: 80px; height: 4px; background: var(--bg-2); position: relative; border-radius: 2px; overflow: hidden; }
 .timer-bar.active::after {
   content: ''; position: absolute; left: 0; top: 0; height: 100%;
-  background: var(--accent); animation: timer 8s linear forwards;
+  background: var(--accent); width: 100%; opacity: 0.5;
 }
-@keyframes timer { from { width: 100%; } to { width: 0; } }
-.game-card .scenario { font-family: 'Playfair Display', serif; font-size: clamp(18px, 2.5vw, 24px); line-height: 1.3; margin-bottom: 16px; }
+.game-card .scenario { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(18px, 2.5vw, 24px); line-height: 1.3; margin-bottom: 16px; }
 .game-buttons { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .game-buttons button {
   background: var(--bg); border: 1.5px solid var(--rule);
@@ -241,12 +241,12 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .reveal .ai-row:last-child { border-bottom: none; }
 .reveal .ai-row .ai-name { font-weight: 700; }
 .reveal .ai-row .ai-verdict { color: var(--accent); font-weight: 700; }
-.reveal .verdict { margin-top: 14px; font-family: 'EB Garamond', serif; font-size: clamp(14px, 1.4vw, 16px); font-style: italic; padding: 14px; background: var(--bg-2); border-left: 3px solid var(--accent); }
+.reveal .verdict { margin-top: 14px; font-family: 'Inter', system-ui, sans-serif; font-size: clamp(14px, 1.4vw, 16px); font-style: italic; padding: 14px; background: var(--bg-2); border-left: 3px solid var(--accent); }
 .reveal .market-result { margin-top: 12px; padding: 12px; background: var(--ink); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
 .reveal .market-result strong { color: var(--accent); }
 
 .streak-display { margin-top: 24px; text-align: center; padding: 16px; border: 1px solid var(--rule); background: var(--bg); }
-.streak-num { font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 64px); font-weight: 900; color: var(--accent); display: block; line-height: 1; }
+.streak-num { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(40px, 8vw, 64px); font-weight: 900; color: var(--accent); display: block; line-height: 1; }
 .streak-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 8px; }
 .badges { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
 .badge {
@@ -263,11 +263,11 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .specimen { border-right: 2px solid var(--rule); border-bottom: 2px solid var(--rule); padding: clamp(20px, 3vw, 28px); background: var(--bg); position: relative; cursor: pointer; transition: all 0.3s; }
 .specimen:hover, .specimen:focus { background: var(--bg-2); transform: translateY(-2px); }
 .specimen .spec-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 8px; }
-.specimen h3 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 36px); font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.specimen h3 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(28px, 4vw, 36px); font-weight: 900; line-height: 1; margin-bottom: 4px; }
 .specimen .sub { font-style: italic; color: var(--ink-2); margin-bottom: 16px; font-size: clamp(14px, 1.3vw, 16px); }
 .specimen .body { font-size: clamp(13px, 1.3vw, 15px); line-height: 1.5; margin-bottom: 18px; }
 .specimen .stats-row { display: flex; gap: 18px; border-top: 1px solid var(--rule); padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; flex-wrap: wrap; }
-.specimen .stats-row .stat .num { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 24px); font-weight: 700; display: block; line-height: 1; }
+.specimen .stats-row .stat .num { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 24px); font-weight: 700; display: block; line-height: 1; }
 .specimen .stats-row .stat .key { text-transform: uppercase; letter-spacing: 0.15em; font-size: 9px; color: var(--ink-faded); }
 .specimen .corner { position: absolute; top: 12px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); }
 .specimen .more-hint { position: absolute; bottom: 12px; right: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); opacity: 0; transition: opacity 0.3s; }
@@ -276,13 +276,13 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; padding: 5vw; z-index: 100; animation: fade-in 0.3s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .modal-overlay.shown { display: flex; }
 .modal { background: var(--bg); border: 2px solid var(--rule); max-width: 720px; width: 100%; max-height: 90vh; overflow-y: auto; padding: clamp(24px, 4vw, 40px); position: relative; }
-.modal h3 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.modal h3 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; line-height: 1; margin-bottom: 4px; }
 .modal .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: 1.5px solid var(--rule); padding: 8px 12px; font-family: 'JetBrains Mono', monospace; cursor: pointer; font-size: 12px; min-width: 44px; min-height: 44px; color: var(--ink); }
 .modal .modal-close:hover { background: var(--ink); color: var(--bg); }
 .modal .modal-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 24px; }
 .modal .modal-body { font-size: clamp(15px, 1.4vw, 17px); line-height: 1.65; }
 .modal .modal-body p { margin-bottom: 16px; }
-.modal .modal-body h4 { font-family: 'Playfair Display', serif; font-size: 22px; margin: 24px 0 8px; font-weight: 700; }
+.modal .modal-body h4 { font-family: 'Inter', system-ui, sans-serif; font-size: 22px; margin: 24px 0 8px; font-weight: 700; }
 .modal .modal-body ul { margin-left: 24px; margin-bottom: 16px; }
 .modal .modal-body li { margin-bottom: 6px; }
 .modal .modal-body code { background: var(--bg-2); padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
@@ -294,7 +294,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 
 /* DRAWDOWN MRI — Codex Sprint 1 */
 .dd-mri { padding: 60px 0; border-bottom: 1px solid var(--rule); }
-.dd-mri h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
+.dd-mri h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
 .dd-mri .lede { font-style: italic; color: var(--ink-2); margin-bottom: 32px; max-width: 600px; font-size: clamp(15px, 1.5vw, 18px); }
 .dd-control { display: grid; grid-template-columns: 1fr; gap: 24px; }
 .dd-slider-row { background: var(--bg); border: 1px solid var(--rule); padding: clamp(20px, 3vw, 32px); }
@@ -318,7 +318,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .dd-stops .stop:hover, .dd-stops .stop.active { color: var(--accent); font-weight: 700; }
 .dd-chart { width: 100%; height: clamp(180px, 28vw, 260px); margin: 24px 0; }
 .dd-question { background: var(--bg-2); border-left: 3px solid var(--accent); padding: 16px; margin: 16px 0; }
-.dd-question h4 { font-family: 'Playfair Display', serif; font-size: clamp(18px, 2vw, 22px); font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
+.dd-question h4 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(18px, 2vw, 22px); font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
 .dd-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 .dd-buttons button {
   background: var(--bg); border: 1.5px solid var(--rule);
@@ -335,13 +335,13 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 
 /* VETO LIBRARY */
 .veto-library { padding: 60px 0; border-bottom: 1px solid var(--rule); }
-.veto-library h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
+.veto-library h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
 .veto-library .lede { font-style: italic; color: var(--ink-2); margin-bottom: 32px; max-width: 600px; font-size: clamp(15px, 1.5vw, 18px); }
 .veto-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
 .veto-card { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px; background: var(--bg); position: relative; }
 .veto-card .veto-num { position: absolute; top: 8px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); }
 .veto-card .veto-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 8px; }
-.veto-card h4 { font-family: 'Playfair Display', serif; font-size: clamp(18px, 2vw, 22px); line-height: 1.2; margin-bottom: 8px; font-weight: 700; }
+.veto-card h4 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(18px, 2vw, 22px); line-height: 1.2; margin-bottom: 8px; font-weight: 700; }
 .veto-card p { font-size: clamp(13px, 1.3vw, 14px); line-height: 1.5; color: var(--ink-2); }
 .veto-card .veto-by { margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); }
 
@@ -350,18 +350,18 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .weather-grid { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; }
 @media (max-width: 600px) { .weather-grid { grid-template-columns: 1fr; text-align: center; } }
 .weather-icon { font-size: clamp(80px, 14vw, 140px); line-height: 1; filter: grayscale(0.2); }
-.weather-text h3 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 36px); font-weight: 700; line-height: 1.1; margin-bottom: 8px; }
+.weather-text h3 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 700; line-height: 1.1; margin-bottom: 8px; }
 .weather-text .regime { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 12px; }
 .weather-text p { font-style: italic; color: var(--ink-2); font-size: clamp(14px, 1.4vw, 17px); }
 
 /* SIMULATOR */
 .simulator { padding: 60px 0; border-bottom: 1px solid var(--rule); }
-.simulator h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
+.simulator h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
 .simulator .lede { font-style: italic; color: var(--ink-2); margin-bottom: 32px; max-width: 700px; font-size: clamp(15px, 1.5vw, 18px); }
 .sim-grid { display: flex; flex-direction: column; gap: 24px; }
 .sim-input-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 20px; background: var(--bg-2); border: 1px solid var(--rule); border-radius: 4px; }
 .sim-input-row label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.08em; flex-basis: 100%; }
-.sim-input-row input { flex: 1 1 200px; padding: 14px 16px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); border-radius: 3px; font-family: 'Playfair Display', serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; outline: none; transition: border-color 0.2s; }
+.sim-input-row input { flex: 1 1 200px; padding: 14px 16px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); border-radius: 3px; font-family: 'Inter', system-ui, sans-serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; outline: none; transition: border-color 0.2s; }
 .sim-input-row input:focus { border-color: var(--accent); }
 .sim-presets { display: flex; gap: 6px; flex-wrap: wrap; }
 .sim-preset { padding: 10px 14px; background: transparent; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.15s; }
@@ -372,15 +372,15 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .sim-card-v4 { border-left: 3px solid var(--teal); }
 .sim-card-bist { border-left: 3px solid var(--ink-faded); }
 .sim-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faded); margin-bottom: 12px; }
-.sim-final { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; line-height: 1; color: var(--ink); margin-bottom: 8px; transition: color 0.3s; }
+.sim-final { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; line-height: 1; color: var(--ink); margin-bottom: 8px; transition: color 0.3s; }
 .sim-card-v4 .sim-final { color: var(--teal); }
 .sim-delta { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-2); margin-bottom: 12px; }
 .sim-delta.up { color: var(--teal); }
-.sim-meta { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--ink-faded); font-style: italic; }
+.sim-meta { font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: var(--ink-faded); font-style: italic; }
 .sim-disclaimer { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); padding: 12px 0; border-top: 1px dotted var(--rule); }
 
 .track-record { padding: 60px 0; border-bottom: 1px solid var(--rule); }
-.track-record h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
+.track-record h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 0.95; margin-bottom: 12px; }
 .track-record .lede { font-style: italic; color: var(--ink-2); margin-bottom: 32px; max-width: 600px; }
 .equity-chart { width: 100%; height: clamp(180px, 30vw, 280px); }
 .equity-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; align-items: center; }
@@ -389,16 +389,16 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .equity-stats .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted var(--ink-faded); }
 .equity-stats .row:last-child { border: none; }
 .equity-stats .row .key { color: var(--ink-faded); }
-.equity-stats .row .val { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; color: var(--ink); }
+.equity-stats .row .val { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 18px; color: var(--ink); }
 .equity-stats .row .val.up { color: var(--teal); }
 .equity-stats .row .val.down { color: var(--accent); }
 
 .digest { padding: 60px 0; border-bottom: 1px solid var(--rule); }
-.digest h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 64px); font-weight: 900; line-height: 0.95; margin-bottom: 32px; }
+.digest h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(32px, 6vw, 64px); font-weight: 900; line-height: 0.95; margin-bottom: 32px; }
 .digest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
 .digest-item { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(16px, 2.5vw, 20px); position: relative; cursor: help; transition: background 0.2s; }
 .digest-item:hover { background: var(--bg-2); }
-.digest-item .num { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 56px); font-weight: 900; line-height: 0.9; color: var(--ink); }
+.digest-item .num { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(40px, 6vw, 56px); font-weight: 900; line-height: 0.9; color: var(--ink); }
 .digest-item .num.accent { color: var(--accent); }
 .digest-item .key { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; margin-top: 8px; color: var(--ink-faded); }
 .digest-item .sub-key { font-size: clamp(11px, 1.2vw, 12px); color: var(--ink-2); margin-top: 4px; font-style: italic; }
@@ -406,7 +406,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .digest-item:hover .tooltip { opacity: 1; }
 
 .newsletter { padding: 60px 0; border-bottom: 1px solid var(--rule); text-align: center; }
-.newsletter h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 900; margin-bottom: 8px; }
+.newsletter h2 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(28px, 5vw, 48px); font-weight: 900; margin-bottom: 8px; }
 .newsletter .lede { font-style: italic; color: var(--ink-2); margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
 .newsletter form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto; flex-wrap: wrap; }
 .newsletter input { flex: 1; min-width: 200px; padding: 14px 16px; border: 1.5px solid var(--rule); background: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); min-height: 48px; }
@@ -422,18 +422,94 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 .terminal-line { margin: 4px 0; line-height: 1.5; }
 .terminal-output { color: #c8bea8; margin-left: 12px; white-space: pre-wrap; }
 
-.colophon { padding: 40px 0 24px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.15em; border-top: 4px double var(--rule); }
-.colophon a { color: var(--ink); border-bottom: 1px solid var(--accent); text-decoration: none; padding: 4px 0; min-height: 32px; display: inline-block; }
+.colophon { padding: 48px 0 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); border-top: 1px solid var(--rule); }
+.colophon a { color: var(--ink); border-bottom: 1px solid var(--accent); text-decoration: none; padding: 2px 0; }
 .colophon a:hover { color: var(--accent); }
-.colophon .links { margin-top: 16px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
-.colophon .konami-hint { margin-top: 24px; font-style: italic; text-transform: none; letter-spacing: 0; font-family: 'EB Garamond', serif; font-size: clamp(12px, 1.3vw, 14px); color: var(--ink-faded); }
+.colophon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+.colophon-col h5 { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 12px; font-weight: 500; }
+.colophon-col p, .colophon-col li { font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: var(--ink-2); line-height: 1.55; margin-bottom: 6px; text-transform: none; letter-spacing: 0; }
+.colophon-col ul { list-style: none; padding: 0; }
+.colophon-col li a { font-family: 'Inter', system-ui, sans-serif; font-size: 13px; }
+.colophon-disclaimer { margin-top: 24px; padding: 20px 24px; background: var(--bg-2); border-left: 3px solid var(--accent); font-family: 'Inter', system-ui, sans-serif; font-size: 12px; line-height: 1.6; color: var(--ink-2); text-transform: none; letter-spacing: 0; }
+.colophon-disclaimer strong { color: var(--ink); font-weight: 600; }
+.colophon-bottom { margin-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; }
+.colophon .konami-hint { margin-top: 12px; font-style: italic; text-transform: none; letter-spacing: 0; font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: var(--ink-faded); text-align: center; }
 .konami-hint code { background: var(--ink); color: var(--bg); padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; margin: 0 1px; }
 
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 14px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; border: 2px solid var(--accent); z-index: 200; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 14px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; border: 2px solid var(--accent); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; }
 .toast.shown { opacity: 1; transform: translateX(-50%) translateY(-8px); }
 
 .confetti { position: fixed; pointer-events: none; z-index: 150; width: 8px; height: 8px; }
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--accent); z-index: 90; transition: width 0.1s; }
+
+/* CTA Grid — Beta listesi, Twitter follow, mailto */
+.cta-section { padding: 60px 0; border-bottom: 1px solid var(--rule); text-align: center; }
+.cta-section h2 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; font-size: clamp(28px, 5vw, 44px); line-height: 1.1; margin-bottom: 12px; }
+.cta-section .lede { font-size: clamp(15px, 1.3vw, 17px); color: var(--ink-2); max-width: 600px; margin: 0 auto 32px; }
+.cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 900px; margin: 0 auto; }
+.cta-card {
+  background: var(--bg); border: 1px solid var(--rule); padding: 28px 24px;
+  text-decoration: none; color: var(--ink); display: flex; flex-direction: column;
+  transition: background 0.2s, border-color 0.2s;
+}
+.cta-card:hover { background: var(--bg-2); border-color: var(--accent); }
+.cta-card .cta-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);
+  margin-bottom: 12px;
+}
+.cta-card h4 { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: clamp(18px, 2vw, 22px); line-height: 1.25; margin-bottom: 8px; letter-spacing: -0.015em; }
+.cta-card p { font-size: 14px; color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+.cta-card .cta-action { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); margin-top: auto; text-transform: uppercase; letter-spacing: 0.15em; }
+.cta-card .cta-action::after { content: ' →'; transition: transform 0.2s; display: inline-block; }
+.cta-card:hover .cta-action::after { transform: translateX(4px); }
+
+/* Hermes-safe BIG WARNING strip — niceliksel kanit bolumlerin USTUNE */
+.proof-warning {
+  background: #2a1810; color: #f4d4a0; padding: 18px 24px;
+  border-left: 4px solid #c4452d; border-radius: 2px;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.55;
+  margin: 24px 0 32px 0;
+}
+[data-theme="light"] .proof-warning { background: #fef3e2; color: #5a3a1a; border-left-color: #c4452d; }
+.proof-warning strong { color: var(--accent); font-weight: 700; }
+.proof-warning .pw-title {
+  display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);
+  margin-bottom: 8px; font-weight: 600;
+}
+.proof-warning ul { margin: 8px 0 0 18px; padding: 0; }
+.proof-warning li { margin: 4px 0; }
+
+/* Reserved class — su an kullanilmiyor */
+.secondary-section { display: none; }
+body.show-secondary .secondary-section { display: block; }
+.more-toggle {
+  display: flex; justify-content: center; padding: 32px 0; border-bottom: 1px solid var(--rule);
+}
+.more-toggle button {
+  background: var(--bg); border: 1px solid var(--rule); color: var(--ink);
+  padding: 14px 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.18em; cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.more-toggle button:hover { background: var(--ink); color: var(--bg); }
+body.show-secondary .more-toggle button::before { content: '— '; }
+body:not(.show-secondary) .more-toggle button::before { content: '+ '; }
+
+/* Data freshness badge */
+.freshness {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--ink-faded); margin-bottom: 12px;
+  padding: 4px 8px; border: 1px solid var(--rule); background: var(--bg);
+  border-radius: 2px;
+}
+.freshness::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); display: inline-block;
+}
 </style>
 </head>
 <body>
@@ -451,10 +527,8 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 <header class="masthead">
   <div class="vol" data-tr="Cilt I · No. 4 · 2026 May 04 · Pazartesi" data-en="Vol. I · No. 4 · 2026 May 04 · Monday">Cilt I · No. 4 · 2026 May 04 · Pazartesi</div>
   <nav class="nav-links">
-    <a href="#wager" data-tr="Bahis" data-en="Wager">Bahis</a>
-    <a href="#specimens" data-tr="Örnekler" data-en="Specimens">Örnekler</a>
-    <a href="#track" data-tr="Geçmiş" data-en="Track Record">Geçmiş</a>
-    <a href="#digest" data-tr="Özet" data-en="Digest">Özet</a>
+    <a href="#specimens" data-tr="Projeler" data-en="Projects">Projeler</a>
+    <a href="#colophon" data-tr="Hakkımda" data-en="About">Hakkımda</a>
   </nav>
   <div class="vol" data-tr="İstanbul · haftalık" data-en="Istanbul · weekly">İstanbul · haftalık</div>
 </header>
@@ -475,7 +549,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   <aside class="marg-left">
     <div class="pull-num">02</div>
     <div data-tr='4 Mayıs 2026, saat onda TÜİK Nisan enflasyonunu açıkladı. Sistem haberi <span style="color: var(--accent); font-weight: 700;">beş saniyede</span> yakaladı, yetmiş saniyede onayladı; tweet 12:30 da çıktı.' data-en='On 4 May 2026 at ten in the morning the Turkish statistical office released April inflation. The system caught the headline in <span style="color: var(--accent); font-weight: 700;">five seconds</span>, approved it in seventy, and posted a tweet at 12:30.'>4 Mayıs 2026, saat onda TÜİK Nisan enflasyonunu açıkladı. Sistem haberi <span style="color: var(--accent); font-weight: 700;">beş saniyede</span> yakaladı, yetmiş saniyede onayladı; tweet 12:30 da çıktı.</div>
-    <div style="margin-top: 16px; font-style: italic; font-family: 'EB Garamond', serif;" data-tr="— Bu sayfanın altyapısını yirmi konsey oyu kurdu." data-en="— Twenty council votes built the scaffolding of this page.">— Bu sayfanın altyapısını yirmi konsey oyu kurdu.</div>
+    <div style="margin-top: 16px; font-style: italic; font-family: 'Inter', system-ui, sans-serif;" data-tr="— Bu sayfanın altyapısını yirmi konsey oyu kurdu." data-en="— Twenty council votes built the scaffolding of this page.">— Bu sayfanın altyapısını yirmi konsey oyu kurdu.</div>
   </aside>
 
   <div class="lead-body">
@@ -486,30 +560,25 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   </div>
 
   <aside class="marg-right">
-    <div class="marg-stat"><div class="label" data-tr="Ensemble Sharpe (BT)" data-en="Ensemble Sharpe (BT)">Ensemble Sharpe (BT)</div><div class="value"><span class="count-up" data-target="1.846" data-decimals="3">0</span></div></div>
-    <div class="marg-stat"><div class="label" data-tr="Yıllık getiri (BT)" data-en="Annual return (BT)">Yıllık getiri (BT)</div><div class="value">+%<span class="count-up" data-target="70.37" data-decimals="2">0</span></div></div>
-    <div class="marg-stat"><div class="label" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</div><div class="value">-%<span class="count-up" data-target="22.35" data-decimals="2">0</span></div></div>
-    <p style="margin-top: 16px;" data-tr="Sharpe — getirinin oynaklığa oranı. Birin üstü iyi, ikinin üstü ender. Bu sayılar geçmişten geliyor; gelecek vaadi değiller." data-en="Sharpe — the ratio of return to volatility. Above one is good, above two is rare. These numbers come from the past; they are not promises about the future.">Sharpe — getirinin oynaklığa oranı. Birin üstü iyi, ikinin üstü ender. Bu sayılar geçmişten geliyor; gelecek vaadi değiller.</p>
+    <div class="freshness" data-tr="Şu an · 2026-05-05" data-en="Right now · 2026-05-05">Şu an · 2026-05-05</div>
+    <div style="margin-bottom: 18px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-faded); margin-bottom: 4px;" data-tr="İnşa edilen" data-en="In build">İnşa edilen</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 24px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;" data-tr="5 uygulama" data-en="5 apps">5 uygulama</div>
+      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-top: 4px;" data-tr="quant motoru, iOS defter, otonom Twitter, sağlık radarı, sosyal dövüş" data-en="quant engine, iOS journal, autonomous twitter, health radar, combat social">quant motoru, iOS defter, otonom Twitter, sağlık radarı, sosyal dövüş</div>
+    </div>
+    <div style="margin-bottom: 18px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-faded); margin-bottom: 4px;" data-tr="Karar veren" data-en="Decision making">Karar veren</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 24px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;" data-tr="6 AI konseyi" data-en="6-AI council">6 AI konseyi</div>
+      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-top: 4px;" data-tr="HMAC-SHA256 imzalı, override yasak, geriye dönüp değiştirilemez" data-en="HMAC-SHA256 signed, no override, immutable history">HMAC-SHA256 imzalı, override yasak, geriye dönüp değiştirilemez</div>
+    </div>
+    <div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-faded); margin-bottom: 4px;" data-tr="Şu an çalışan" data-en="Currently running">Şu an çalışan</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 24px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;">@cLauxed</div>
+      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-top: 4px;" data-tr="Gün içinde otonom yayın yapıyor — 6 AI'nın yazdığı, 6 AI'nın denetlediği tweet'ler" data-en="Posts autonomously throughout the day — tweets written by 6 AIs, reviewed by 6 AIs">Gün içinde otonom yayın yapıyor — 6 AI'nın yazdığı, 6 AI'nın denetlediği tweet'ler</div>
+    </div>
   </aside>
 </article>
 
-<section id="wager" class="game-section">
-  <div class="section-divider"><span class="label" data-tr="// Bir bahis oyunu" data-en="// A wager">// Bir bahis oyunu</span></div>
-  <h2 class="serif" data-tr="Sen olsan bu fikre para koyar mıydın?" data-en="Would you bet on this?">Sen olsan bu fikre para koyar mıydın?</h2>
-  <p class="lede" data-tr="Üç senaryo, üç karar. <strong>Long, short ya da pas.</strong> Sekiz saniyen var; çok uzun düşünmek piyasa değildir. Sonra altı modelin ne dediğine, gerçekte ne olduğuna birlikte bakarız." data-en="Three scenarios, three decisions. <strong>Long, short, or pass.</strong> Eight seconds — overthinking is not a market move. Then we look together at what six models said, and what actually happened.">Üç senaryo, üç karar. <strong>Long, short ya da pas.</strong> Sekiz saniyen var; çok uzun düşünmek piyasa değildir. Sonra altı modelin ne dediğine, gerçekte ne olduğuna birlikte bakarız.</p>
-  <div id="game-container"></div>
-  <div class="streak-display">
-    <span class="streak-num" id="streak-num">0</span>
-    <span class="streak-label" data-tr="Konseyle aynı yere baktığın tur" data-en="Rounds in agreement with the council">Konseyle aynı yere baktığın tur</span>
-    <div class="badges">
-      <span class="badge" id="badge-1" data-tr="İlk oy" data-en="First vote">İlk oy</span>
-      <span class="badge" id="badge-3" data-tr="Üç isabet" data-en="Three hits">Üç isabet</span>
-      <span class="badge" id="badge-5" data-tr="Beş isabet" data-en="Five hits">Beş isabet</span>
-      <span class="badge" id="badge-streak" data-tr="Üst üste üç" data-en="Three streak">Üst üste üç</span>
-      <span class="badge gold" id="badge-perfect" data-tr="Konseyin aynısı" data-en="Council twin">Konseyin aynısı</span>
-    </div>
-  </div>
-</section>
 
 <section id="specimens" class="specimens">
   <div class="section-divider"><span class="label" data-tr="// Karar Örnekleri — tıkla" data-en="// Decision Specimens — click">// Karar Örnekleri — tıkla</span></div>
@@ -521,9 +590,9 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
       <p class="sub" data-tr="BIST için dört stratejilik ensemble." data-en="Four-strategy ensemble for the BIST.">BIST için dört stratejilik ensemble.</p>
       <p class="body" data-tr="Pairs trading, cross-sectional momentum, ortalamaya dönüş ve kalite/değer faktörü. Risk-parite tahsisi, sektör tavanları, walk-forward doğrulama, on dört katmanlı risk gate'i." data-en="Pairs trading, cross-sectional momentum, statistical mean reversion and a quality/value factor sleeve. Risk-parity allocation, sector caps, walk-forward validation, fourteen-layer risk gate.">Pairs trading, cross-sectional momentum, ortalamaya dönüş ve kalite/değer faktörü. Risk-parite tahsisi, sektör tavanları, walk-forward doğrulama, on dört katmanlı risk gate'i.</p>
       <div class="stats-row">
-        <div class="stat"><span class="num">1.85</span><span class="key">Sharpe</span></div>
-        <div class="stat"><span class="num" style="color: var(--accent);">+%70</span><span class="key" data-tr="Yıllık" data-en="Annual">Yıllık</span></div>
-        <div class="stat"><span class="num">202</span><span class="key" data-tr="Test" data-en="Test">Test</span></div>
+        <div class="stat"><span class="num">Python</span><span class="key">Stack</span></div>
+        <div class="stat"><span class="num">BIST</span><span class="key" data-tr="Pazar" data-en="Market">Pazar</span></div>
+        <div class="stat"><span class="num" style="color: var(--accent);">Dev</span><span class="key" data-tr="Aşama" data-en="Stage">Aşama</span></div>
       </div>
       <span class="more-hint">↗ <span data-tr="detay" data-en="details">detay</span></span>
     </div>
@@ -533,7 +602,7 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
       <div class="spec-label" data-tr="iOS · TestFlight" data-en="iOS · TestFlight">iOS · TestFlight</div>
       <h3 class="serif">TraderMetrics</h3>
       <p class="sub" data-tr="Skor tutanlar için trading defteri." data-en="A trading journal for those who keep score.">Skor tutanlar için trading defteri.</p>
-      <p class="body" data-tr="İşlem defteri, equity eğrisi, drawdown ısı haritası, sektör döngüsü. Glass morphism dark UI. iOS 17+, SwiftUI, native Charts. İki dil — Türkçe ve İngilizce." data-en="Trade ledger, equity curve, drawdown heatmap, sector cycle. Glass morphism dark UI. iOS 17+, SwiftUI, native Charts. Two languages — Turkish and English.">İşlem defteri, equity eğrisi, drawdown ısı haritası, sektör döngüsü. Glass morphism dark UI. iOS 17+, SwiftUI, native Charts. İki dil — Türkçe ve İngilizce.</p>
+      <p class="body" data-tr="Kişisel kayıt için hazırlanan bir iOS defteri. Premium dark tema, cam efektleri, native grafikler. iOS 17+ · SwiftUI · iki dil (TR + EN)." data-en="An iOS journal for personal records. Premium dark theme, glass effects, native charts. iOS 17+ · SwiftUI · two languages (TR + EN).">Kişisel kayıt için hazırlanan bir iOS defteri. Premium dark tema, cam efektleri, native grafikler. iOS 17+ · SwiftUI · iki dil (TR + EN).</p>
       <div class="stats-row">
         <div class="stat"><span class="num">SwiftUI</span><span class="key">Stack</span></div>
         <div class="stat"><span class="num">2</span><span class="key" data-tr="Dil" data-en="Lang">Dil</span></div>
@@ -556,246 +625,38 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
       <span class="more-hint">↗ <span data-tr="detay" data-en="details">detay</span></span>
     </div>
 
-    <div class="specimen" data-modal="council">
+    <div class="specimen" data-modal="saglik">
       <span class="corner">// 04</span>
-      <div class="spec-label" data-tr="Mimari" data-en="Architecture">Mimari</div>
-      <h3 class="serif" data-tr="Altı kişilik konsey" data-en="6-AI Council">Altı kişilik konsey</h3>
-      <p class="sub" data-tr="Olasılıklı zihinlerden küçük bir parlamento." data-en="A small parliament of probabilistic minds.">Olasılıklı zihinlerden küçük bir parlamento.</p>
-      <p class="body" data-tr="Codex, DeepSeek, Qwen 14B, Qwen-smart, Qwen-coder, Hermes-4. Her karar HMAC-SHA256 imzalı. Üç-yedi onay normal akış; bir DUR düşünmeyi gerektirir; üst üste üç DUR insanı çağırır." data-en="Codex, DeepSeek, Qwen 14B, Qwen-smart, Qwen-coder, Hermes-4. Every ruling HMAC-SHA256 signed. Three-of-seven is normal flow; one VETO calls for a pause; three in a row calls for a human.">Codex, DeepSeek, Qwen 14B, Qwen-smart, Qwen-coder, Hermes-4. Her karar HMAC-SHA256 imzalı. Üç-yedi onay normal akış; bir DUR düşünmeyi gerektirir; üst üste üç DUR insanı çağırır.</p>
+      <div class="spec-label" data-tr="iOS · Halk Sağlığı" data-en="iOS · Public Health">iOS · Halk Sağlığı</div>
+      <h3 class="serif">SağlıkKalkanı</h3>
+      <p class="sub" data-tr="Ebeveyn için bölgesel salgın radarı." data-en="A regional outbreak radar for parents.">Ebeveyn için bölgesel salgın radarı.</p>
+      <p class="body" data-tr="MapKit haritada anonim raporlama; çocuk profilleri yaş+aşı durumu ile; 6 hastalık takibi; mevsimsel takvim. Glass morphism pastel tasarım — panik yaratmadan bilgilendirir." data-en="Anonymous reporting on MapKit; child profiles with age + vaccine status; 6-disease tracking; seasonal calendar. Glass morphism pastel design — informs without alarm.">MapKit haritada anonim raporlama; çocuk profilleri yaş+aşı durumu ile; 6 hastalık takibi; mevsimsel takvim. Glass morphism pastel tasarım — panik yaratmadan bilgilendirir.</p>
       <div class="stats-row">
-        <div class="stat"><span class="num">6</span><span class="key" data-tr="Üye" data-en="Member">Üye</span></div>
-        <div class="stat"><span class="num">SHA-256</span><span class="key" data-tr="İmza" data-en="Sign">İmza</span></div>
-        <div class="stat"><span class="num" style="color: var(--accent);">∞</span><span class="key" data-tr="Audit" data-en="Audit">Audit</span></div>
+        <div class="stat"><span class="num">SwiftUI</span><span class="key">Stack</span></div>
+        <div class="stat"><span class="num">6</span><span class="key" data-tr="Hastalık" data-en="Disease">Hastalık</span></div>
+        <div class="stat"><span class="num" style="color: var(--accent);">Beta</span><span class="key" data-tr="Hazırlık" data-en="Prep">Hazırlık</span></div>
       </div>
+      <div style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.1em;" data-tr="// gizli geliştirme · TestFlight kapalı" data-en="// private build · TestFlight closed">// gizli geliştirme · TestFlight kapalı</div>
+      <span class="more-hint">↗ <span data-tr="detay" data-en="details">detay</span></span>
+    </div>
+
+    <div class="specimen" data-modal="fightclub">
+      <span class="corner">// 05</span>
+      <div class="spec-label" data-tr="iOS · Sosyal" data-en="iOS · Social">iOS · Sosyal</div>
+      <h3 class="serif">FightClub</h3>
+      <p class="sub" data-tr="Dövüş sporları için sosyal ağ." data-en="A social network for combat sports.">Dövüş sporları için sosyal ağ.</p>
+      <p class="body" data-tr="24 modül: profil, antrenman defteri, video paylaşım, sparring eşleşme, gamification. Supabase backend, SSL pinning, jailbreak tespiti. Tasarım sistemi W3C tokens üzerine kurulu." data-en="24 modules: profile, training journal, video share, sparring match, gamification. Supabase backend, SSL pinning, jailbreak detection. Design system on W3C tokens.">24 modül: profil, antrenman defteri, video paylaşım, sparring eşleşme, gamification. Supabase backend, SSL pinning, jailbreak tespiti. Tasarım sistemi W3C tokens üzerine kurulu.</p>
+      <div class="stats-row">
+        <div class="stat"><span class="num">24</span><span class="key" data-tr="Modül" data-en="Module">Modül</span></div>
+        <div class="stat"><span class="num">SwiftUI</span><span class="key">Stack</span></div>
+        <div class="stat"><span class="num" style="color: var(--accent);">Beta</span><span class="key" data-tr="Hazırlık" data-en="Prep">Hazırlık</span></div>
+      </div>
+      <div style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.1em;" data-tr="// gizli geliştirme · davet ile" data-en="// private build · invite only">// gizli geliştirme · davet ile</div>
       <span class="more-hint">↗ <span data-tr="detay" data-en="details">detay</span></span>
     </div>
   </div>
 </section>
 
-<!-- VOLATILITY WEATHER -->
-<section class="weather">
-  <div class="section-divider"><span class="label" data-tr="// Piyasa hava durumu" data-en="// Market weather">// Piyasa hava durumu</span></div>
-  <div class="weather-grid">
-    <div class="weather-icon" id="weather-icon">🌫</div>
-    <div class="weather-text">
-      <h3 id="weather-title" data-tr="Sisli — düşük volatilite, BIST yatay" data-en="Foggy — low volatility, BIST flat">Sisli — düşük volatilite, BIST yatay</h3>
-      <div class="regime" id="weather-regime">REGIME: CHOP / RANGE-BOUND</div>
-      <p id="weather-note" data-tr="V4 sistemi mean-reversion stratejisini ön plana alıyor; momentum sleeve'i pasif. Sektör rotasyonu yavaş." data-en="V4 leans on mean-reversion; momentum sleeve passive. Sector rotation slow.">V4 sistemi mean-reversion stratejisini ön plana alıyor; momentum sleeve'i pasif. Sektör rotasyonu yavaş.</p>
-    </div>
-  </div>
-</section>
-
-<!-- DRAWDOWN MRI — Codex Sprint 1 -->
-<section id="dd-mri" class="dd-mri">
-  <div class="section-divider"><span class="label" data-tr="// Drawdown MRI" data-en="// Drawdown MRI">// Drawdown MRI</span></div>
-  <h2 class="serif" data-tr="Düşüş geldiğinde dayanır mıydın?" data-en="Could you sit through a drawdown?">Düşüş geldiğinde dayanır mıydın?</h2>
-  <p class="lede" data-tr="Portföy siteleri hep kazancı gösterir. Burada tersine bak: -5'ten -%40'a kadar düşüşü oynat, kendine sor. Çıkar mıydın? Çoğu insan çıkar — sonra geri dönmek için tepeyi bekler. Sistem beklemez, kuralı vardır." data-en="Portfolio sites always show gains. Look the other way here: replay drawdowns from -5% to -40%, ask yourself. Would you exit? Most do — then wait for the peak to come back. The system does not wait; it has rules.">Portföy siteleri hep kazancı gösterir. Burada tersine bak: -5'ten -%40'a kadar düşüşü oynat, kendine sor. Çıkar mıydın? Çoğu insan çıkar — sonra geri dönmek için tepeyi bekler. Sistem beklemez, kuralı vardır.</p>
-
-  <div class="dd-control">
-    <div class="dd-slider-row">
-      <div class="dd-slider-label">
-        <span data-tr="Düşüş seviyesi" data-en="Drawdown depth">Düşüş seviyesi</span>
-        <span class="current"><span id="dd-current">-15%</span></span>
-      </div>
-      <input type="range" min="5" max="40" step="5" value="15" class="dd-slider" id="dd-slider" aria-label="Drawdown level">
-      <div class="dd-stops">
-        <span class="stop" data-val="5">-5%</span>
-        <span class="stop" data-val="10">-10%</span>
-        <span class="stop" data-val="15">-15%</span>
-        <span class="stop" data-val="25">-25%</span>
-        <span class="stop" data-val="40">-40%</span>
-      </div>
-      <svg class="dd-chart" id="dd-chart" viewBox="0 0 800 260" preserveAspectRatio="none" aria-label="Drawdown simulation"></svg>
-      <div class="dd-question">
-        <h4 id="dd-question" data-tr="Bu noktada sistemden çıkar mıydın?" data-en="Would you exit at this point?">Bu noktada sistemden çıkar mıydın?</h4>
-        <div class="dd-buttons">
-          <button data-pick="exit" data-tr="Evet, çıkardım" data-en="Yes, I'd exit">Evet, çıkardım</button>
-          <button data-pick="hold" data-tr="Hayır, beklerdim" data-en="No, I'd hold">Hayır, beklerdim</button>
-          <button data-pick="add" data-tr="Tam tersi, eklerdim" data-en="Opposite, I'd add">Tam tersi, eklerdim</button>
-        </div>
-        <div class="dd-reveal" id="dd-reveal"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="track" class="track-record">
-  <div class="section-divider"><span class="label" data-tr="// Geçmiş performans" data-en="// Proven track record">// Geçmiş performans</span></div>
-  <h2 class="serif" data-tr="Beş yıl, 1257 işlem günü, bir eğri." data-en="Five years, 1257 trading days, one curve.">Beş yıl, 1257 işlem günü, bir eğri.</h2>
-  <p class="lede" data-tr="Cortex V4'ün 2021–2026 ensemble portföy eğrisi. Aynı dönemde BIST 100 ne yapmış, yan yana koyduk. <em>Geçmiş, gelecek için söz vermez.</em>" data-en="Cortex V4's 2021–2026 ensemble equity curve, with the BIST 100 placed alongside. <em>The past does not promise the future.</em>">Cortex V4'ün 2021–2026 ensemble portföy eğrisi. Aynı dönemde BIST 100 ne yapmış, yan yana koyduk. <em>Geçmiş, gelecek için söz vermez.</em></p>
-  <div class="equity-grid">
-    <svg class="equity-chart" id="equity-svg" viewBox="0 0 800 280" preserveAspectRatio="none" aria-label="Equity curve"></svg>
-    <div class="equity-stats">
-      <div class="row"><span class="key" data-tr="Başlangıç" data-en="Start">Başlangıç</span><span class="val">100.000</span></div>
-      <div class="row"><span class="key" data-tr="Bitiş (V4)" data-en="End (V4)">Bitiş (V4)</span><span class="val up">1.439.180</span></div>
-      <div class="row"><span class="key" data-tr="Bitiş (BIST 100)*" data-en="End (BIST 100)*">Bitiş (BIST 100)*</span><span class="val">920.000</span></div>
-      <div class="row"><span class="key" data-tr="Yıllık V4" data-en="Annual V4">Yıllık V4</span><span class="val up">+%70.37</span></div>
-      <div class="row"><span class="key" data-tr="Yıllık BIST" data-en="Annual BIST">Yıllık BIST*</span><span class="val">~+%56</span></div>
-      <div class="row"><span class="key" data-tr="Sharpe V4" data-en="Sharpe V4">Sharpe V4</span><span class="val up">1.846</span></div>
-      <div class="row"><span class="key" data-tr="Maks. düşüş" data-en="Max drawdown">Maks. düşüş</span><span class="val down">-%22.35</span></div>
-      <div class="row" style="border:none; padding-top:8px; opacity:0.6"><span class="key" style="font-size:10px">* BIST yaklaşık</span><span class="val" style="font-size:10px; font-weight:400; font-family:'JetBrains Mono',monospace">2026-04-29</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- CAPITAL SIMULATOR -->
-<section id="simulator" class="simulator">
-  <div class="section-divider"><span class="label" data-tr="// Sermaye simülatörü" data-en="// Capital simulator">// Sermaye simülatörü</span></div>
-  <h2 class="serif" data-tr="5 yıl önce başlasaydın, bugün ne olurdu?" data-en="If you'd started 5 years ago, where would you be today?">5 yıl önce başlasaydın, bugün ne olurdu?</h2>
-  <p class="lede" data-tr="Sermayeni gir. 2021–2026 backtest'imize göre Cortex V4 portföyünde duraydın bugünkü değerini göster. Aynı dönemde BIST 100'ün ne yaptığını yan yana koy. <em>Geçmiş gelecek için söz vermez — bu hipotetik bir hesaptır.</em>" data-en="Enter your capital. See what it would be worth today if held in our Cortex V4 portfolio across the 2021–2026 backtest, with BIST 100 placed alongside. <em>The past does not promise the future — this is a hypothetical.</em>">Sermayeni gir. 2021–2026 backtest'imize göre Cortex V4 portföyünde duraydın bugünkü değerini göster. Aynı dönemde BIST 100'ün ne yaptığını yan yana koy. <em>Geçmiş gelecek için söz vermez — bu hipotetik bir hesaptır.</em></p>
-  <div class="sim-grid">
-    <div class="sim-input-row">
-      <label for="sim-amount" data-tr="Başlangıç sermayesi (TL)" data-en="Starting capital (TL)">Başlangıç sermayesi (TL)</label>
-      <input type="number" id="sim-amount" min="1000" max="10000000" step="1000" value="100000" inputmode="numeric">
-      <div class="sim-presets">
-        <button type="button" class="sim-preset" data-amt="50000">50k</button>
-        <button type="button" class="sim-preset" data-amt="100000">100k</button>
-        <button type="button" class="sim-preset" data-amt="500000">500k</button>
-        <button type="button" class="sim-preset" data-amt="1000000">1M</button>
-      </div>
-    </div>
-    <div class="sim-results">
-      <div class="sim-card sim-card-v4">
-        <div class="sim-tag" data-tr="Cortex V4 portföyü" data-en="Cortex V4 portfolio">Cortex V4 portföyü</div>
-        <div class="sim-final" id="sim-v4">1.439.180 TL</div>
-        <div class="sim-delta up" id="sim-v4-delta">+1.339.180 TL · ×14,39</div>
-        <div class="sim-meta" data-tr="yıllık +%70,37 · Sharpe 1,846 · Maks. düşüş -%22,35" data-en="annual +70.37% · Sharpe 1.846 · max drawdown -22.35%">yıllık +%70,37 · Sharpe 1,846 · Maks. düşüş -%22,35</div>
-      </div>
-      <div class="sim-card sim-card-bist">
-        <div class="sim-tag" data-tr="BIST 100 (yaklaşık kıyas)" data-en="BIST 100 (approx benchmark)">BIST 100 (yaklaşık kıyas)</div>
-        <div class="sim-final" id="sim-bist">920.000 TL</div>
-        <div class="sim-delta" id="sim-bist-delta">+820.000 TL · ×9,20</div>
-        <div class="sim-meta" data-tr="yıllık ~+%56 · ham endeks (temettü hariç)" data-en="annual ~+56% · raw index (ex-dividend)">yıllık ~+%56 · ham endeks (temettü hariç)</div>
-      </div>
-    </div>
-    <div class="sim-disclaimer" data-tr="* V4 sayıları gerçek backtest dosyamızdan: state/backtest_last.json (2026-04-29 hesaplaması). Çarpan ×14,39 = (1+%70,37)^5. Komisyon ve slippage backtest'te dahildir; vergi dahil değildir. BIST 100 kıyası yaklaşık ham endeks değişimidir. Yatırım tavsiyesi değildir; hipotetik backtest hesabıdır." data-en="* V4 numbers from our actual backtest file: state/backtest_last.json (computed 2026-04-29). Multiplier ×14.39 = (1+70.37%)^5. Commission and slippage included in backtest; tax not included. BIST 100 benchmark is approximate raw index change. Not investment advice; hypothetical backtest figure.">* V4 sayıları gerçek backtest dosyamızdan: state/backtest_last.json (2026-04-29 hesaplaması). Çarpan ×14,39 = (1+%70,37)^5. Komisyon ve slippage backtest'te dahildir; vergi dahil değildir. BIST 100 kıyası yaklaşık ham endeks değişimidir. Yatırım tavsiyesi değildir; hipotetik backtest hesabıdır.</div>
-  </div>
-</section>
-
-<section id="digest" class="digest">
-  <div class="section-divider"><span class="label" data-tr="// Bu hafta CLAUXE ne gördü?" data-en="// What CLAUXE saw this week">// Bu hafta CLAUXE ne gördü?</span></div>
-  <h2 class="serif" data-tr="2026, on sekizinci hafta" data-en="2026, eighteenth week">2026, on sekizinci hafta</h2>
-  <div class="digest-grid">
-    <div class="digest-item">
-      <div class="num"><span class="count-up" data-target="4">0</span></div>
-      <div class="key" data-tr="Tweet bugün" data-en="Tweets today">Tweet bugün</div>
-      <div class="sub-key" data-tr="3'ü makro veri" data-en="3 macro">3'ü makro veri</div>
-      <span class="tooltip" data-tr="// otomatik, council onaylı" data-en="// auto, council-approved">// otomatik, council onaylı</span>
-    </div>
-    <div class="digest-item">
-      <div class="num accent">+%<span class="count-up" data-target="4.18" data-decimals="2">0</span></div>
-      <div class="key" data-tr="TÜİK Nisan TÜFE" data-en="TUIK Apr CPI">TÜİK Nisan TÜFE</div>
-      <div class="sub-key" data-tr="aylık, hızlandı" data-en="monthly, faster">aylık, hızlandı</div>
-      <span class="tooltip" data-tr="// Mart %1.94 → Nisan %4.18" data-en="// Mar 1.94% → Apr 4.18%">// Mart %1.94 → Nisan %4.18</span>
-    </div>
-    <div class="digest-item">
-      <div class="num"><span class="count-up" data-target="251">0</span></div>
-      <div class="key" data-tr="Konsey turu" data-en="Council rounds">Konsey turu</div>
-      <div class="sub-key" data-tr="HMAC imzalı" data-en="HMAC signed">HMAC imzalı</div>
-      <span class="tooltip">// council_decisions.jsonl</span>
-    </div>
-    <div class="digest-item">
-      <div class="num"><span class="count-up" data-target="202">0</span></div>
-      <div class="key" data-tr="Test PASS" data-en="Tests PASS">Test PASS</div>
-      <div class="sub-key">%89.08 coverage</div>
-      <span class="tooltip">// pytest --cov=src</span>
-    </div>
-    <div class="digest-item">
-      <div class="num accent">5y</div>
-      <div class="key" data-tr="Backtest dönemi" data-en="Backtest period">Backtest dönemi</div>
-      <div class="sub-key" data-tr="2021–2026, 1257 gün" data-en="2021–2026, 1257 days">2021–2026, 1257 gün</div>
-      <span class="tooltip">// walk-forward, OOS</span>
-    </div>
-    <div class="digest-item">
-      <div class="num">×<span class="count-up" data-target="14.39" data-decimals="2">0</span></div>
-      <div class="key" data-tr="Sermaye çarpanı" data-en="Capital multiplier">Sermaye çarpanı</div>
-      <div class="sub-key" data-tr="5 yılda backtest" data-en="5 years, backtest">5 yılda backtest</div>
-      <span class="tooltip" data-tr="// 100k → 1.439k" data-en="// 100k → 1,439k">// 100k → 1.439k</span>
-    </div>
-    <div class="digest-item">
-      <div class="num accent"><span class="count-up" data-target="40">0</span></div>
-      <div class="key">launchd</div>
-      <div class="sub-key" data-tr="7/24 otonom" data-en="7/24 auto">7/24 otonom</div>
-      <span class="tooltip">// macOS daemons</span>
-    </div>
-    <div class="digest-item">
-      <div class="num"><span class="count-up" data-target="12">0</span></div>
-      <div class="key" data-tr="Twitter modülü" data-en="Twitter module">Twitter modülü</div>
-      <div class="sub-key" data-tr="tek mimari" data-en="one stack">tek mimari</div>
-      <span class="tooltip">// council, repair, dup…</span>
-    </div>
-  </div>
-</section>
-
-<!-- VETO LIBRARY -->
-<section class="veto-library">
-  <div class="section-divider"><span class="label" data-tr="// VETO Kütüphanesi" data-en="// VETO Library">// VETO Kütüphanesi</span></div>
-  <h2 class="serif" data-tr="Sistem ne zaman 'hayır' der?" data-en="When does the system say 'no'?">Sistem ne zaman 'hayır' der?</h2>
-  <p class="lede" data-tr="Onayladığı her tweet'in ardında, daha önce reddettiği üç tane var. İşte gerçek VETO örnekleri — anonimleştirilmiş, içerik gizli, sebep açık." data-en="Behind every approved tweet there are three rejected ones. Real VETO examples here — anonymized, content hidden, reason in the open.">Onayladığı her tweet'in ardında, daha önce reddettiği üç tane var. İşte gerçek VETO örnekleri — anonimleştirilmiş, içerik gizli, sebep açık.</p>
-  <div class="veto-list">
-    <div class="veto-card">
-      <span class="veto-num">// 01</span>
-      <div class="veto-tag" data-tr="Üst düzey iddia" data-en="Superlative claim">Üst düzey iddia</div>
-      <h4 data-tr='"Günün en hareketli hissesi"' data-en='"Top mover of the day"'>"Günün en hareketli hissesi"</h4>
-      <p data-tr="Sıralama iddiası kanıt ister. Sayı doğru olabilir; iddiayı destekleyen evrensel bir karşılaştırma yok." data-en="A ranking claim asks for proof. The number may be right; the universal comparison is missing.">Sıralama iddiası kanıt ister. Sayı doğru olabilir; iddiayı destekleyen evrensel bir karşılaştırma yok.</p>
-      <div class="veto-by">// 4 of 6 voted DUR · Codex, Hermes, Qwen-smart, DeepSeek</div>
-    </div>
-    <div class="veto-card">
-      <span class="veto-num">// 02</span>
-      <div class="veto-tag" data-tr="Kategori uyumsuz" data-en="Category mismatch">Kategori uyumsuz</div>
-      <h4 data-tr='"Savaş gerilimi ile zorlanan ülke"' data-en='"Country strained by war tension"'>"Savaş gerilimi ile zorlanan ülke"</h4>
-      <p data-tr="Jeopolitik içerik 'ekonomik veri' kategorisinde yer almaz. Hassasiyet artıyor, kategori değiştirilmeli." data-en="Geopolitical content does not belong in 'economic data' category. Sensitivity rises, category must change.">Jeopolitik içerik 'ekonomik veri' kategorisinde yer almaz. Hassasiyet artıyor, kategori değiştirilmeli.</p>
-      <div class="veto-by">// 2 of 6 voted DUR · Claude-haiku, Codex</div>
-    </div>
-    <div class="veto-card">
-      <span class="veto-num">// 03</span>
-      <div class="veto-tag" data-tr="Sayısal tutarsızlık" data-en="Numeric inconsistency">Sayısal tutarsızlık</div>
-      <h4 data-tr='"Hisse %7.08 yükseldi · %5.6 hareket"' data-en='"Stock up 7.08% · 5.6% move"'>"Hisse %7.08 yükseldi · %5.6 hareket"</h4>
-      <p data-tr="Aynı sembol için iki farklı yüzde, ikisi de aynı bağlamda. Cortex'ten %7.08, Tavily'den %5.6 — sistem kendisiyle çelişiyor." data-en="Two different percentages for the same symbol in the same sentence. From cortex 7.08, from Tavily 5.6 — the system contradicting itself.">Aynı sembol için iki farklı yüzde, ikisi de aynı bağlamda. Cortex'ten %7.08, Tavily'den %5.6 — sistem kendisiyle çelişiyor.</p>
-      <div class="veto-by">// 3 of 6 voted DUR · pre-tweet check + Codex + Hermes</div>
-    </div>
-    <div class="veto-card">
-      <span class="veto-num">// 04</span>
-      <div class="veto-tag" data-tr="Yatırım tavsiyesi" data-en="Investment advice">Yatırım tavsiyesi</div>
-      <h4 data-tr='"Bu hisse mutlaka yükselecek"' data-en='"This stock must go up"'>"Bu hisse mutlaka yükselecek"</h4>
-      <p data-tr="'Mutlaka', 'kesin', 'garanti' — kanıtlanamaz iddia, finansal hesabın üstünde regülasyon riski yaratır. Otomatik DUR." data-en="'Must', 'certain', 'guaranteed' — unprovable, creates regulatory risk on a finance account. Auto-DUR.">'Mutlaka', 'kesin', 'garanti' — kanıtlanamaz iddia, finansal hesabın üstünde regülasyon riski yaratır. Otomatik DUR.</p>
-      <div class="veto-by">// 6 of 6 voted DUR · all members</div>
-    </div>
-    <div class="veto-card">
-      <span class="veto-num">// 05</span>
-      <div class="veto-tag" data-tr="Yazım hatası" data-en="Typo">Yazım hatası</div>
-      <h4 data-tr='"kazanlarını" → "kazançlarını"' data-en='"earnings" misspelled'>"kazanlarını" → "kazançlarını"</h4>
-      <p data-tr="Türkçe yumuşatma hatası. Bu tür VETO retry-with-fix ile geçiyor: model sebebi alır, düzeltir, ikinci tur council'a sunulur." data-en="Turkish softening typo. This kind of VETO passes via retry-with-fix: model receives the reason, corrects, second-round council.">Türkçe yumuşatma hatası. Bu tür VETO retry-with-fix ile geçiyor: model sebebi alır, düzeltir, ikinci tur council'a sunulur.</p>
-      <div class="veto-by">// 1 of 6 voted DUR · Codex spelled it out</div>
-    </div>
-    <div class="veto-card">
-      <span class="veto-num">// 06</span>
-      <div class="veto-tag" data-tr="Eski içerik" data-en="Stale content">Eski içerik</div>
-      <h4 data-tr='Nokia N8 lansmanı (2010)' data-en='Nokia N8 launch (2010)'>Nokia N8 lansmanı (2010)</h4>
-      <p data-tr="Tavily indeksinde duran 16 yıllık haber. Date filter eksikliği birkaç saatte yakalandı: topic='news' + days=7 + score>=0.65 ile çözüldü." data-en="A 16-year-old item lingering in Tavily's index. Caught within hours via topic='news' + days=7 + score>=0.65.">Tavily indeksinde duran 16 yıllık haber. Date filter eksikliği birkaç saatte yakalandı: topic='news' + days=7 + score>=0.65 ile çözüldü.</p>
-      <div class="veto-by">// 0 of 6 — Ersin caught it manually</div>
-    </div>
-  </div>
-</section>
-
-<!-- HMAC CHAIN VIEWER — Sprint 4 -->
-<section style="padding: 60px 0; border-bottom: 1px solid var(--rule);">
-  <div class="section-divider"><span class="label" data-tr="// HMAC zinciri — proof of truth" data-en="// HMAC chain — proof of truth">// HMAC zinciri — proof of truth</span></div>
-  <h2 class="serif" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 900; line-height: 1; margin-bottom: 12px;" data-tr="Her kararın altında bir imza var." data-en="Every ruling has a signature.">Her kararın altında bir imza var.</h2>
-  <p style="font-style: italic; color: var(--ink-2); margin-bottom: 24px; max-width: 640px; font-size: clamp(14px, 1.4vw, 17px);" data-tr="Konsey toplandığında her oy HMAC-SHA256 ile imzalanır ve bir zincire eklenir. Geriye dönüp değiştirilemez. Aşağıda son sekiz toplantı — ne tartışıldığını söylemiyoruz, sadece olduğunu kanıtlıyoruz." data-en="When the council convenes, every vote is signed with HMAC-SHA256 and added to a chain. It cannot be edited later. Below, the last eight sessions — we do not say what was debated, only that it was.">Konsey toplandığında her oy HMAC-SHA256 ile imzalanır ve bir zincire eklenir. Geriye dönüp değiştirilemez. Aşağıda son sekiz toplantı — ne tartışıldığını söylemiyoruz, sadece olduğunu kanıtlıyoruz.</p>
-  <div id="hmac-list" style="font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 1.1vw, 12px); border-top: 1px solid var(--rule);" role="list" aria-label="HMAC chain"></div>
-</section>
-
-<section class="newsletter">
-  <div class="section-divider"><span class="label" data-tr="// Abone ol" data-en="// Subscribe">// Abone ol</span></div>
-  <h2 class="serif" data-tr="Pazar sabahı bir özet, kutuna düşsün." data-en="A short read every Sunday morning.">Pazar sabahı bir özet, kutuna düşsün.</h2>
-  <p class="lede" data-tr="Haftanın Cortex performansı, konsey kararları, yeni kod parçaları ve birkaç senaryo. Spam yok, sponsorluk yok; zaten Twitter'da bile az konuşuyoruz." data-en="The week's Cortex performance, council rulings, fresh code, and a few scenarios. No spam, no sponsors; we barely tweet anyway.">Haftanın Cortex performansı, konsey kararları, yeni kod parçaları ve birkaç senaryo. Spam yok, sponsorluk yok; zaten Twitter'da bile az konuşuyoruz.</p>
-  <form id="newsletter-form" onsubmit="return submitNewsletter(event)">
-    <input type="email" placeholder="ad@domain.com" required aria-label="E-posta">
-    <button type="submit" data-tr="Abone Ol" data-en="Subscribe">Abone Ol</button>
-  </form>
-  <div class="privacy" data-tr="// double opt-in · istediğin an çıkış · sadece pazar" data-en="// double opt-in · unsubscribe anytime · sundays only">// double opt-in · istediğin an çıkış · sadece pazar</div>
-</section>
 
 <div id="terminal" class="terminal">
   <div class="terminal-line"><span class="prompt">clauxe ~ $</span> <span style="color: #c8bea8;">welcome. type 'help' or 'council' or 'v4'.</span></div>
@@ -808,13 +669,13 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   <div class="section-divider"><span class="label" data-tr="// Defterin Sahibi" data-en="// The Notebook's Keeper">// Defterin Sahibi</span></div>
   <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: start; max-width: 900px;">
     <div>
-      <div style="width: 100%; aspect-ratio: 1; background: var(--bg-2); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: clamp(48px, 10vw, 96px); font-weight: 900; color: var(--accent);">E</div>
+      <div style="width: 100%; aspect-ratio: 1; background: var(--bg-2); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: 'Inter', system-ui, sans-serif; font-size: clamp(48px, 10vw, 96px); font-weight: 900; color: var(--accent);">E</div>
       <div style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.15em;">Ersin Demirdağ · İstanbul</div>
     </div>
     <div>
-      <p style="font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 32px); line-height: 1.3; font-weight: 700; margin-bottom: 16px;" data-tr="Bu defteri, mühendisliğin anlamını piyasada sınamak için tutuyorum." data-en="I keep this notebook to test what engineering means in a market.">Bu defteri, mühendisliğin anlamını piyasada sınamak için tutuyorum.</p>
-      <p style="font-family: 'EB Garamond', serif; font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7; color: var(--ink-2); margin-bottom: 12px;" data-tr="On yıl süre boyunca yazılım, beş yıl trader, son üç yıl AI ile yan yana çalıştım. Cortex'i, TraderMetrics'i, @cLauxed'i — buradaki her şeyi — kazanç için değil, dürüstlük için inşa ettim. Pazar gerçek; sayılar gerçek; sistem hata da yapıyor, doğru da yapıyor — hepsi ortada." data-en="A decade in software, five years trading, three years working alongside AI. I built Cortex, TraderMetrics, @cLauxed — everything here — not for gain, but for honesty. The market is real, the numbers are real, the system makes mistakes and gets things right — all of it stays in the open.">On yıl süre boyunca yazılım, beş yıl trader, son üç yıl AI ile yan yana çalıştım. Cortex'i, TraderMetrics'i, @cLauxed'i — buradaki her şeyi — kazanç için değil, dürüstlük için inşa ettim. Pazar gerçek; sayılar gerçek; sistem hata da yapıyor, doğru da yapıyor — hepsi ortada.</p>
-      <p style="font-family: 'EB Garamond', serif; font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7; color: var(--ink-2); font-style: italic;" data-tr='— "Sezgi ile aritmetiğin kesiştiği yerde durmaya çalışıyoruz."' data-en='— "We try to stand where intuition meets arithmetic."'>— "Sezgi ile aritmetiğin kesiştiği yerde durmaya çalışıyoruz."</p>
+      <p style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(22px, 3vw, 32px); line-height: 1.3; font-weight: 700; margin-bottom: 16px;" data-tr="Bu defteri, mühendisliğin anlamını piyasada sınamak için tutuyorum." data-en="I keep this notebook to test what engineering means in a market.">Bu defteri, mühendisliğin anlamını piyasada sınamak için tutuyorum.</p>
+      <p style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7; color: var(--ink-2); margin-bottom: 12px;" data-tr="On yıl süre boyunca yazılım, beş yıl trader, son üç yıl AI ile yan yana çalıştım. Cortex'i, TraderMetrics'i, @cLauxed'i — buradaki her şeyi — kazanç için değil, dürüstlük için inşa ettim. Pazar gerçek; sayılar gerçek; sistem hata da yapıyor, doğru da yapıyor — hepsi ortada." data-en="A decade in software, five years trading, three years working alongside AI. I built Cortex, TraderMetrics, @cLauxed — everything here — not for gain, but for honesty. The market is real, the numbers are real, the system makes mistakes and gets things right — all of it stays in the open.">On yıl süre boyunca yazılım, beş yıl trader, son üç yıl AI ile yan yana çalıştım. Cortex'i, TraderMetrics'i, @cLauxed'i — buradaki her şeyi — kazanç için değil, dürüstlük için inşa ettim. Pazar gerçek; sayılar gerçek; sistem hata da yapıyor, doğru da yapıyor — hepsi ortada.</p>
+      <p style="font-family: 'Inter', system-ui, sans-serif; font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7; color: var(--ink-2); font-style: italic;" data-tr='— "Sezgi ile aritmetiğin kesiştiği yerde durmaya çalışıyoruz."' data-en='— "We try to stand where intuition meets arithmetic."'>— "Sezgi ile aritmetiğin kesiştiği yerde durmaya çalışıyoruz."</p>
     </div>
   </div>
 </section>
@@ -834,38 +695,38 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 12px;">
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="Quant" data-en="Quant">Quant</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">pandas · numpy · scipy</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">statsmodels · QuantStats</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">pandas · numpy · scipy</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">statsmodels · QuantStats</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="Veri analizi, walk-forward, backtest" data-en="Data analysis, walk-forward, backtest">Veri analizi, walk-forward, backtest</div>
     </div>
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="Web / API" data-en="Web / API">Web / API</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">FastAPI · uvicorn</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">httpx · pydantic</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">FastAPI · uvicorn</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">httpx · pydantic</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="API katmanı, validation" data-en="API layer, validation">API katmanı, validation</div>
     </div>
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="AI / MCP" data-en="AI / MCP">AI / MCP</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">fastmcp · ollama</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">anthropic · openai</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">fastmcp · ollama</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">anthropic · openai</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="Council, MCP server, dil modelleri" data-en="Council, MCP server, language models">Council, MCP server, dil modelleri</div>
     </div>
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="Veri kaynakları" data-en="Data sources">Veri kaynakları</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">yfinance · borsa-mcp</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">Tavily · gnews</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">yfinance · borsa-mcp</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">Tavily · gnews</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="Piyasa, ekonomik takvim, haber" data-en="Market, economic calendar, news">Piyasa, ekonomik takvim, haber</div>
     </div>
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="Test / Kalite" data-en="Test / Quality">Test / Kalite</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">pytest · mypy</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">coverage · ruff</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">pytest · mypy</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">coverage · ruff</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="202 test, %89 coverage, strict" data-en="202 tests, 89% coverage, strict">202 test, %89 coverage, strict</div>
     </div>
     <div style="border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px;">
       <div style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; font-size: 10px; margin-bottom: 8px;" data-tr="iOS" data-en="iOS">iOS</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">SwiftUI · Charts</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.4;">Combine</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">SwiftUI · Charts</div>
+      <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4;">Combine</div>
       <div style="margin-top: 8px; color: var(--ink-faded); font-size: 11px;" data-tr="TraderMetrics — kişisel trading defteri" data-en="TraderMetrics — personal trading journal">TraderMetrics — kişisel trading defteri</div>
     </div>
   </div>
@@ -873,14 +734,45 @@ main { padding: 0 5vw 60px; max-width: 1400px; margin: 0 auto; }
 </section>
 
 <footer id="colophon" class="colophon">
-  <div data-tr="CLAUXE · Cilt I, 2026 — Tasarım ve mühendislik:" data-en="CLAUXE · Vol. I, 2026 — Designed and engineered by">CLAUXE · Cilt I, 2026 — Tasarım ve mühendislik:</div>
-  <div><a href="https://x.com/cLauxed" target="_blank">@cLauxed</a></div>
-  <div class="links">
-    <a href="https://x.com/cLauxed" target="_blank">@cLauxed</a>
-    <a href="#wager" data-tr="Bahis" data-en="Wager">Bahis</a>
-    <a href="#track" data-tr="Geçmiş" data-en="Track">Geçmiş</a>
-    <a href="javascript:void(0)" onclick="document.getElementById('terminal').classList.add('visible'); document.getElementById('terminal-input').focus();">Terminal</a>
+  <div class="colophon-grid">
+    <div class="colophon-col">
+      <h5 data-tr="Defter" data-en="Notebook">Defter</h5>
+      <p data-tr="CLAUXE · Cilt I · 2026" data-en="CLAUXE · Vol. I · 2026">CLAUXE · Cilt I · 2026</p>
+      <p data-tr="Niceliksel bir defter — otonom sistemler, piyasa mekaniği ve mühendislik üzerine." data-en="A quantitative notebook — on autonomous systems, market mechanics, and engineering.">Niceliksel bir defter — otonom sistemler, piyasa mekaniği ve mühendislik üzerine.</p>
+    </div>
+    <div class="colophon-col">
+      <h5 data-tr="Bağlan" data-en="Connect">Bağlan</h5>
+      <ul>
+        <li><a href="https://x.com/cLauxed" target="_blank" rel="noopener">@cLauxed (Twitter)</a></li>
+        <li data-tr="Ersin Demirdağ · İstanbul" data-en="Ersin Demirdağ · Istanbul">Ersin Demirdağ · İstanbul</li>
+      </ul>
+    </div>
+    <div class="colophon-col">
+      <h5 data-tr="Sayfalar" data-en="Pages">Sayfalar</h5>
+      <ul>
+        <li><a href="#specimens" data-tr="Projeler" data-en="Projects">Projeler</a></li>
+        <li><a href="javascript:void(0)" onclick="document.getElementById('terminal').classList.add('visible'); document.getElementById('terminal-input').focus();" data-tr="Gizli terminal" data-en="Hidden terminal">Gizli terminal</a></li>
+      </ul>
+    </div>
+    <div class="colophon-col">
+      <h5 data-tr="Kaynak" data-en="Source">Kaynak</h5>
+      <ul>
+        <li data-tr="Vanilla HTML / CSS / JS" data-en="Vanilla HTML / CSS / JS">Vanilla HTML / CSS / JS</li>
+        <li data-tr="Framework yok, build yok" data-en="No framework, no build">Framework yok, build yok</li>
+        <li><a href="javascript:void(0)" onclick="document.getElementById('terminal').classList.add('visible'); document.getElementById('terminal-input').focus();" data-tr="Gizli terminal" data-en="Hidden terminal">Gizli terminal</a></li>
+      </ul>
+    </div>
   </div>
+
+  <div class="colophon-disclaimer">
+    <p data-tr="<strong>Bu site bir yatırım/danışmanlık hizmeti değildir.</strong> Yalnızca geliştirilmekte olan kişisel projelerin tanıtımı ve eğlenceli bir uğrak yeri olarak hazırlanmıştır." data-en="<strong>This site is not an investment or advisory service.</strong> It is solely a showcase of personal projects in development and a place to spend a fun few minutes."><strong>Bu site bir yatırım/danışmanlık hizmeti değildir.</strong> Yalnızca geliştirilmekte olan kişisel projelerin tanıtımı ve eğlenceli bir uğrak yeri olarak hazırlanmıştır.</p>
+  </div>
+
+  <div class="colophon-bottom">
+    <span data-tr="© 2026 Ersin Demirdağ · Tüm haklar saklıdır" data-en="© 2026 Ersin Demirdağ · All rights reserved">© 2026 Ersin Demirdağ · Tüm haklar saklıdır</span>
+    <span data-tr="Son güncelleme: 5 Mayıs 2026" data-en="Last updated: 5 May 2026">Son güncelleme: 5 Mayıs 2026</span>
+  </div>
+
   <div class="konami-hint" data-tr="↑ ↑ ↓ ↓ ← → ← → B A — bir terminal gizlidir." data-en="↑ ↑ ↓ ↓ ← → ← → B A — a terminal is hidden.">↑ ↑ ↓ ↓ ← → ← → B A — bir terminal gizlidir.</div>
 </footer>
 
@@ -914,7 +806,6 @@ function applyLang(lang) {
     b.classList.toggle('active', b.dataset.val === lang);
   });
   // Re-render game scenario
-  if (typeof scenarioIndex !== 'undefined' && scenarioIndex < SCENARIOS.length) renderScenario(scenarioIndex);
 }
 
 function applyTheme(theme) {
@@ -935,6 +826,27 @@ document.querySelectorAll('.control-bar button').forEach(b => {
     if (b.dataset.action === 'theme') applyTheme(b.dataset.val);
   });
 });
+
+// MORE CONTENT TOGGLE — secondary sections
+(function() {
+  const btn = document.getElementById('more-toggle-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const expanded = document.body.classList.toggle('show-secondary');
+    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    if (expanded) {
+      const trText = 'Daha az';
+      const enText = 'Show less';
+      btn.dataset.tr = trText; btn.dataset.en = enText;
+      btn.textContent = STATE.lang === 'tr' ? trText : enText;
+    } else {
+      const trText = 'Daha fazla içerik';
+      const enText = 'More content';
+      btn.dataset.tr = trText; btn.dataset.en = enText;
+      btn.textContent = STATE.lang === 'tr' ? trText : enText;
+    }
+  });
+})();
 
 // SCROLL PROGRESS
 window.addEventListener('scroll', () => {
@@ -1005,286 +917,11 @@ function drawEquity() {
   html += `<path d="${v4Path}" fill="url(#v4grad)"/>`;
   html += `<path d="${path(bist)}" stroke="${ink}" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>`;
   html += `<path d="${path(v4)}" stroke="${accent}" stroke-width="2.5" fill="none"/>`;
-  html += `<text x="${W-P-8}" y="${y(v4[N-1])-8}" font-family="Playfair Display" font-size="13" font-weight="700" fill="${accent}" text-anchor="end">Cortex V4</text>`;
-  html += `<text x="${W-P-8}" y="${y(bist[N-1])+18}" font-family="Playfair Display" font-size="11" fill="${ink}" text-anchor="end">BIST 100</text>`;
+  html += `<text x="${W-P-8}" y="${y(v4[N-1])-8}" font-family="Inter" font-size="13" font-weight="700" fill="${accent}" text-anchor="end">Cortex V4</text>`;
+  html += `<text x="${W-P-8}" y="${y(bist[N-1])+18}" font-family="Inter" font-size="11" fill="${ink}" text-anchor="end">BIST 100</text>`;
   html += `<text x="${P}" y="${H-8}" font-family="JetBrains Mono" font-size="9" fill="${inkFaded}">2021</text>`;
   html += `<text x="${W-P}" y="${H-8}" font-family="JetBrains Mono" font-size="9" fill="${inkFaded}" text-anchor="end">2026</text>`;
   svg.innerHTML = html;
-}
-
-// WAGER — 6 senaryo havuzu, her ziyarette 3 random
-const ALL_SCENARIOS = [
-  {
-    label: { tr: "Cortex V4 backtest", en: "Cortex V4 backtest" },
-    text: {
-      tr: "Bir sistem 5 yıllık BIST backtest'te Sharpe 1.85 ve yıllık +%70 üretiyor. Walk-forward OOS Sharpe 1.96, Monte Carlo P50 +%74, kayıp olasılığı %3. Bu sisteme 100.000 TL koymak ister misin?",
-      en: "A system delivers Sharpe 1.85 and +70% annual on a 5-year BIST backtest. Walk-forward OOS Sharpe 1.96, Monte Carlo P50 +74%, loss prob 3%. Would you commit 100,000 TL?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Survivorship bias şüphesi. 3 ay canlı + 60+ işlem gerekli.", en: "Survivorship doubt. 3 months live + 60+ trades needed." } },
-      { name: "DeepSeek", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "10k TL pilot. yfinance gecikmeli + earnings yok.", en: "10k TL pilot. yfinance lag + no earnings filter." } },
-      { name: "Qwen 14B", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Broker entegrasyonu yok. Tail hedge eksik.", en: "No broker integration. Tail hedge missing." } },
-      { name: "Qwen-smart", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Pilot 10k. Veri kalitesi tam çözülmedi.", en: "10k pilot. Data quality unresolved." } },
-      { name: "Qwen-coder", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Survivorship + statik slippage = optimistik.", en: "Survivorship + static slippage = too rosy." } },
-      { name: "Hermes-4", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "10k pilot, V5 sonrası tam sermaye.", en: "10k pilot, full capital after V5." } },
-    ],
-    verdict: { tr: "Konsey beş 'pas' bir 'sat'. Şu haliyle hayır, küçük pilot dışında.", en: "Five pass, one short. Not yet at full size — small pilot only." },
-    market: { tr: "Sistem sahibi: 4 May 2026 itibariyle paper-trade, gerçek para sıfır. Forward-test 3/20.", en: "Owner: as of 4 May 2026 paper-trade only, zero real capital. Forward-test 3/20." },
-  },
-  {
-    label: { tr: "02 / TÜİK enflasyon haberi", en: "02 / TUIK inflation print" },
-    text: {
-      tr: "Saat 10:00, TÜİK Nisan TÜFE'yi açıkladı: aylık %4,18, yıllık %32,37. Beklenti aylık %3,5 idi. Türk Lirası ne yapar?",
-      en: "10:00 AM, TUIK released April CPI: 4.18% MoM, 32.37% YoY. Expectation was 3.5% MoM. What does the Turkish Lira do?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "SAT TRY", en: "SHORT TRY" }, note: { tr: "Beklentinin üstü, faiz yetersizlik sinyali.", en: "Above expectation, rate insufficiency signal." } },
-      { name: "DeepSeek", verdict: { tr: "SAT TRY", en: "SHORT TRY" }, note: { tr: "Kısa vadede kur baskısı artar.", en: "Short-term FX pressure rises." } },
-      { name: "Qwen 14B", verdict: { tr: "SAT TRY", en: "SHORT TRY" }, note: { tr: "Reel faiz negatif kalırsa TL dayanamaz.", en: "Negative real rates → TL cannot hold." } },
-      { name: "Qwen-smart", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "TCMB tepkisi belirleyici. Bekle.", en: "TCMB reaction decides. Wait." } },
-      { name: "Qwen-coder", verdict: { tr: "SAT TRY", en: "SHORT TRY" }, note: { tr: "Rakam beklenti üstü, TL net olumsuz.", en: "Print above expectation, TL net negative." } },
-      { name: "Hermes-4", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Tek veri ile döviz pozisyonu riskli.", en: "One print is thin basis for FX trade." } },
-    ],
-    verdict: { tr: "Konsey dört 'sat' iki 'pas'. Çoğunluk kur baskısı bekliyor.", en: "Four short, two pass. Majority expects FX pressure." },
-    market: { tr: "Açıklama sonrası USD/TRY ortalama +%0.6 yukarı, EUR/TRY +%0.8 (T+1 saat).", en: "After release, USD/TRY +0.6%, EUR/TRY +0.8% (T+1 hour)." },
-  },
-  {
-    label: { tr: "03 / Bir tweet'in kaderi", en: "03 / The fate of a tweet" },
-    text: {
-      tr: "Bir AI sistemi tweet üretti: 'Günün en hareketli hissesi: MSTR +7.08%'. Bu metni yayımlar mıydın?",
-      en: "An AI produced a tweet: 'Top mover of the day: MSTR +7.08%'. Would you publish this?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "DUR", en: "VETO" }, note: { tr: "'En hareketli' superlatif iddia, doğrulama gerekir.", en: "'Top mover' is a superlative claim needing proof." } },
-      { name: "DeepSeek", verdict: { tr: "DUR", en: "VETO" }, note: { tr: "Sıralama iddiası kaynaksız.", en: "Ranking claim is unsourced." } },
-      { name: "Qwen 14B", verdict: { tr: "OK", en: "OK" }, note: { tr: "Sayı doğru, kaynak cortex.", en: "Number correct, sourced from cortex." } },
-      { name: "Qwen-smart", verdict: { tr: "DUR", en: "VETO" }, note: { tr: "'En hareketli' iddia destek istiyor.", en: "'Top mover' claim wants backing." } },
-      { name: "Qwen-coder", verdict: { tr: "OK", en: "OK" }, note: { tr: "Veri sistemden, doğrulama otomatik.", en: "Data internal, validation automatic." } },
-      { name: "Hermes-4", verdict: { tr: "DUR", en: "VETO" }, note: { tr: "Superlatif ifade içeriyor.", en: "Contains superlative." } },
-    ],
-    verdict: { tr: "Konsey dört 'dur'. Tweet 'Dikkat çeken hareket: MSTR' olarak düzeltildi, yeniden gönderildi.", en: "Four veto. Rewritten as 'Notable move: MSTR' and resubmitted." },
-    market: { tr: "Düzeltme sonrası tweet APPROVED (79.62s) → AUTO-POSTED 11:25:33.", en: "After fix: APPROVED (79.62s) → AUTO-POSTED 11:25:33." },
-  },
-  {
-    label: { tr: "Fed FOMC sonrası", en: "After FOMC" },
-    text: {
-      tr: "Fed faiz oranını beklenmedik şekilde 50 baz puan indirdi. Powell konuşmasında 'data-dependent' dedi. SP 500 vadelileri %1.2 yukarı. Şu an gerçek pozisyon: ?",
-      en: "Fed cut rates by an unexpected 50 bps. Powell said 'data-dependent' in the press conference. S&P 500 futures up 1.2%. Real position now: ?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "AL SP500", en: "LONG SP500" }, note: { tr: "Sürpriz indirim risk-on sinyali, momentum devam eder.", en: "Surprise cut is risk-on, momentum continues." } },
-      { name: "DeepSeek", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Vadeliler yukarı ama 50bp 'panic cut' olabilir, dikkat.", en: "Futures up but 50bps may be a panic cut, caution." } },
-      { name: "Qwen 14B", verdict: { tr: "AL SP500", en: "LONG SP500" }, note: { tr: "Tarihsel olarak ilk indirim sonrası 3 ay yukarı.", en: "Historically markets rally 3 months after first cut." } },
-      { name: "Qwen-smart", verdict: { tr: "AL ALTIN", en: "LONG GOLD" }, note: { tr: "Faiz indirimi USD zayıflatır, altın yön gösterici.", en: "Cut weakens USD, gold benefits." } },
-      { name: "Qwen-coder", verdict: { tr: "AL SP500", en: "LONG SP500" }, note: { tr: "Risk-on rejim aktif.", en: "Risk-on regime active." } },
-      { name: "Hermes-4", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "'Data-dependent' belirsizlik, sonraki rakam beklenmeli.", en: "'Data-dependent' is ambiguous, wait for next print." } },
-    ],
-    verdict: { tr: "Üç 'al SP500', iki 'pas', bir 'al altın'. Çoğunluk risk-on, ama panic cut riski göz ardı edilmemeli.", en: "Three long SP500, two pass, one long gold. Majority risk-on, but panic-cut risk not ignored." },
-    market: { tr: "Tarihsel ortalama: ilk Fed indirimi sonrası 3 ay SP500 +%4.2, altın +%6.8.", en: "Historical avg: 3 months after first Fed cut, SP500 +4.2%, gold +6.8%." },
-  },
-  {
-    label: { tr: "AI hisse balonu", en: "AI stock bubble" },
-    text: {
-      tr: "Nvidia P/E 85'e çıktı. CEO 'AI inanılmaz boyutta', 12 ay öncesindeki tahmininin 4 katı revenue projeksiyonu yapıyor. Sektör analistleri 'fiyat hâlâ ucuz' diyor. Sen ne dersin?",
-      en: "Nvidia P/E reached 85. CEO calls AI 'extraordinary scale', revenue projection now 4x last year's. Analysts say 'still cheap'. You say?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "P/E 85 + 4x revenue projection = 2000 dot-com déjà vu.", en: "P/E 85 + 4x revenue projection — dot-com déjà vu." } },
-      { name: "DeepSeek", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Balon olabilir ama timing zor; momentum sürebilir.", en: "Could be a bubble but timing is hard; momentum may persist." } },
-      { name: "Qwen 14B", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Analist 'ucuz' dediğinde tepe yakın.", en: "When analysts say 'cheap', the top is near." } },
-      { name: "Qwen-smart", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Bubble içinde long/short ikisi de tehlikeli.", en: "Inside a bubble, both long and short are dangerous." } },
-      { name: "Qwen-coder", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Klasik valuation aşırılığı.", en: "Classic valuation excess." } },
-      { name: "Hermes-4", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Sürdürülemez P/E, geri çekilme yakın.", en: "Unsustainable P/E, pullback near." } },
-    ],
-    verdict: { tr: "Dört 'sat', iki 'pas'. Konsey balon sinyali görüyor — ama timing'i kimse veremez.", en: "Four short, two pass. Council sees a bubble signal — but no one calls the timing." },
-    market: { tr: "Bu senaryonun gerçek karşılığı 2000-Mart Nasdaq tepesi. Tepe sonrası 2.5 yılda -%78.", en: "Real-world parallel: March 2000 Nasdaq peak. After peak: -78% in 2.5 years." },
-  },
-  {
-    label: { tr: "Türk Lirası rüzgârı", en: "Turkish Lira move" },
-    text: {
-      tr: "TCMB beklenmedik şekilde 250bp faiz artırdı. USD/TRY 30dk içinde -%3 düştü. Açık döviz pozisyonu olan ne yapmalı? Stop-loss mı, devam mı?",
-      en: "TCMB hiked rates by an unexpected 250bps. USD/TRY dropped -3% in 30 minutes. Open FX positions: stop-loss or hold?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Tek hareket trend belirlemez. Birkaç gün izlemek gerekir.", en: "One move does not set a trend. Watch for a few days." } },
-      { name: "DeepSeek", verdict: { tr: "AL TRY", en: "LONG TRY" }, note: { tr: "Hawkish surprise, kısa vadede TL güçlü.", en: "Hawkish surprise, TL strong short term." } },
-      { name: "Qwen 14B", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "TCMB güvenilirlik testi, ek hamle bekle.", en: "TCMB credibility test, wait for follow-up." } },
-      { name: "Qwen-smart", verdict: { tr: "AL TRY", en: "LONG TRY" }, note: { tr: "Reel faiz net pozitif, TL akışı güçlenir.", en: "Real rate net positive, TL inflows strengthen." } },
-      { name: "Qwen-coder", verdict: { tr: "AL TRY", en: "LONG TRY" }, note: { tr: "Surprise hike → TL talebi.", en: "Surprise hike → TL demand." } },
-      { name: "Hermes-4", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Politika değişikliği belirsizlik, döviz pozisyonu riskli.", en: "Policy shift creates ambiguity, FX position risky." } },
-    ],
-    verdict: { tr: "Üç 'al TL', üç 'pas'. Eşit bölünme — bu da bir cevap.", en: "Three long TL, three pass. Even split — itself an answer." },
-    market: { tr: "Sürpriz hike sonrası ortalama 2 hafta TL güçlü, 3. hafta itibariyle dengelenir.", en: "After a surprise hike, TL strong on average for 2 weeks, balances by week 3." },
-  },
-  {
-    label: { tr: "Bitcoin 100K geçti", en: "Bitcoin past 100K" },
-    text: {
-      tr: "Bitcoin ilk kez $100,000 üzerinde. ETF'lere haftalık $2.5 milyar para girişi. Sosyal medyada FOMO peak. Şu an pozisyon almak ister misin?",
-      en: "Bitcoin above $100,000 for the first time. ETFs receiving $2.5B weekly inflows. Social media FOMO peak. Do you take a position now?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "FOMO peak'te giren genelde tepede alır.", en: "Buying at FOMO peak usually means buying the top." } },
-      { name: "DeepSeek", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Strong inflow ama eğri dik, geri çekilme riski.", en: "Strong inflows but the curve is steep, pullback risk." } },
-      { name: "Qwen 14B", verdict: { tr: "AL", en: "LONG" }, note: { tr: "Trend güçlü, momentum devam edebilir.", en: "Trend strong, momentum may continue." } },
-      { name: "Qwen-smart", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "DCA ile küçük pozisyon, FOMO satın alma değil.", en: "Small DCA, not a FOMO buy." } },
-      { name: "Qwen-coder", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Risk/reward bu seviyede zayıf.", en: "Risk/reward weak at this level." } },
-      { name: "Hermes-4", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Klasik dağıtım fazı sinyalleri var.", en: "Classic distribution-phase signals present." } },
-    ],
-    verdict: { tr: "Dört 'pas', bir 'al', bir 'sat'. Konsey beklemekte ısrarlı.", en: "Four pass, one long, one short. Council is firmly on the sidelines." },
-    market: { tr: "FOMO peak sonrası tarihsel olarak BTC -%30 (3-6 hafta). 2017 Aralık ve 2021 Kasım örnekleri.", en: "After FOMO peak, BTC historically -30% within 3-6 weeks (Dec 2017, Nov 2021)." },
-  },
-  {
-    label: { tr: "BIST 100 zorlu kapanış", en: "BIST 100 tough close" },
-    text: {
-      tr: "BIST 100 günü -%4.2 kapattı, son 2 saatte ağır satışlar. Yarın açılışta 'kuvvetli düşüş' bekleniyor. Pozisyonun var: ne yaparsın?",
-      en: "BIST 100 closed -4.2%, heavy selling in last two hours. 'Strong drop' expected at tomorrow's open. You're long: what now?",
-    },
-    council: [
-      { name: "Codex", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Tek günlük hareket strateji bozmaz, kuralı izle.", en: "One day does not break a strategy, follow the rule." } },
-      { name: "DeepSeek", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Heavy selling momentum aşağı yönlü.", en: "Heavy selling, momentum down." } },
-      { name: "Qwen 14B", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Plan dahilinde stop-loss yoksa pozisyona dokunma.", en: "If stop is not hit, do not touch the position." } },
-      { name: "Qwen-smart", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Duygusal karar zamanı değil, plan zamanı.", en: "Not a moment for emotion, a moment for the plan." } },
-      { name: "Qwen-coder", verdict: { tr: "SAT", en: "SHORT" }, note: { tr: "Kapital koruma öncelik.", en: "Capital preservation first." } },
-      { name: "Hermes-4", verdict: { tr: "PAS", en: "PASS" }, note: { tr: "Drawdown halt eşiğini test etmeden satma.", en: "Do not sell before drawdown halt is hit." } },
-    ],
-    verdict: { tr: "Dört 'pas', iki 'sat'. Çoğunluk: 'plan dahilinde, devam'.", en: "Four pass, two short. Majority: 'within the plan, hold'." },
-    market: { tr: "BIST -%4 günler sonrası 5 gün içinde tepki: %+2.5 ortalama (last 5y data).", en: "After BIST -4% days, 5-day rebound averages +2.5% (last 5y data)." },
-  },
-];
-
-// Random 3 senaryo
-function shuffleScenarios() {
-  const arr = [...ALL_SCENARIOS];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr.slice(0, 3);
-}
-let SCENARIOS = shuffleScenarios();
-
-let scenarioIndex = 0;
-let streakCount = parseInt(localStorage.getItem("clauxe_streak") || "0");
-let alignedCount = parseInt(localStorage.getItem("clauxe_aligned") || "0");
-let timerInterval = null;
-
-document.getElementById('streak-num').textContent = streakCount;
-updateBadges();
-
-function updateBadges() {
-  const total = parseInt(localStorage.getItem("clauxe_aligned") || "0");
-  const played = parseInt(localStorage.getItem("clauxe_played") || "0");
-  if (played >= 1) document.getElementById('badge-1').classList.add('unlocked');
-  if (total >= 3) document.getElementById('badge-3').classList.add('unlocked');
-  if (total >= 5) document.getElementById('badge-5').classList.add('unlocked');
-  if (streakCount >= 3) document.getElementById('badge-streak').classList.add('unlocked');
-  if (streakCount >= SCENARIOS.length) document.getElementById('badge-perfect').classList.add('unlocked');
-}
-
-function tt(obj) { return obj[STATE.lang] || obj.tr; }
-
-function renderScenario(idx) {
-  const sc = SCENARIOS[idx];
-  if (!sc) return renderEnd();
-  const container = document.getElementById('game-container');
-  const labels = { long: { tr: '⬆ AL · LONG', en: '⬆ LONG' }, short: { tr: '⬇ SAT · SHORT', en: '⬇ SHORT' }, pass: { tr: '— BEKLE · PAS', en: '— PASS' } };
-  container.innerHTML = `
-    <div class="game-card">
-      <div class="scenario-label">
-        <span>${STATE.lang === 'tr' ? 'Senaryo' : 'Scenario'} ${tt(sc.label)}</span>
-        <span class="timer-bar active" id="timer-${idx}"></span>
-      </div>
-      <div class="scenario serif">${tt(sc.text)}</div>
-      <div class="game-buttons">
-        <button data-pick="long">${tt(labels.long)}</button>
-        <button data-pick="short">${tt(labels.short)}</button>
-        <button data-pick="pass">${tt(labels.pass)}</button>
-      </div>
-      <div class="reveal" id="reveal-${idx}"></div>
-    </div>
-  `;
-  container.querySelectorAll('button').forEach(b => {
-    b.addEventListener('click', () => onPick(idx, b.dataset.pick, b));
-  });
-  clearTimeout(timerInterval);
-  timerInterval = setTimeout(() => {
-    const tb = document.getElementById(`timer-${idx}`);
-    if (tb) tb.classList.remove('active');
-  }, 8000);
-}
-
-function onPick(idx, pick, btn) {
-  clearTimeout(timerInterval);
-  document.querySelectorAll('.game-buttons button').forEach(b => b.disabled = true);
-  btn.classList.add('selected');
-  const sc = SCENARIOS[idx];
-  const reveal = document.getElementById(`reveal-${idx}`);
-  const userPick = pick.toLowerCase();
-  const matchScore = sc.council.filter(a => {
-    const v = (a.verdict.en || '').toLowerCase();
-    return v.includes(userPick) || userPick.includes(v.split(/[\s/]/)[0]);
-  }).length;
-  const aligned = matchScore >= Math.ceil(sc.council.length / 2);
-  if (aligned) {
-    streakCount++; alignedCount++;
-    localStorage.setItem("clauxe_streak", streakCount);
-    localStorage.setItem("clauxe_aligned", alignedCount);
-    document.getElementById('streak-num').textContent = streakCount;
-    showToast(STATE.lang === 'tr' ? '🎯 Konseyle aynı düşündün' : '🎯 You agreed with the council');
-    spawnConfetti();
-  } else {
-    streakCount = 0;
-    localStorage.setItem("clauxe_streak", 0);
-    document.getElementById('streak-num').textContent = streakCount;
-    showToast(STATE.lang === 'tr' ? '// Konseyden ayrı düştün' : '// You diverged from the council');
-  }
-  localStorage.setItem("clauxe_played", parseInt(localStorage.getItem("clauxe_played") || "0") + 1);
-  updateBadges();
-
-  let html = `<div style="font-weight:700; margin-bottom:10px;">// ${STATE.lang === 'tr' ? 'Konsey kararı:' : 'Council ruling:'}</div>`;
-  sc.council.forEach(a => {
-    html += `<div class="ai-row"><span class="ai-name">${a.name}</span><span class="ai-verdict">${tt(a.verdict)}</span></div>`;
-  });
-  html += `<div style="margin-top:14px; font-size:11px; color: var(--ink-faded);">// ${STATE.lang === 'tr' ? 'Notlar:' : 'Notes:'}</div>`;
-  sc.council.forEach(a => {
-    html += `<div style="font-size:11px; padding:4px 0; color: var(--ink-2);">${a.name}: ${tt(a.note)}</div>`;
-  });
-  html += `<div class="verdict">${tt(sc.verdict)}</div>`;
-  if (sc.market) html += `<div class="market-result"><strong>// ${STATE.lang === 'tr' ? 'Gerçek piyasa sonucu:' : 'Actual market outcome:'}</strong> ${tt(sc.market)}</div>`;
-  const verdictText = aligned
-    ? (STATE.lang === 'tr' ? '<strong style="color: var(--accent);">— Konseyle aynı düştün.</strong>' : '<strong style="color: var(--accent);">— You aligned with the council.</strong>')
-    : (STATE.lang === 'tr' ? '<em>— Onlar farklı düşünmüş.</em>' : '<em>— They saw it differently.</em>');
-  const nextLabel = idx < SCENARIOS.length - 1 ? (STATE.lang === 'tr' ? 'Sıradaki ↓' : 'Next ↓') : (STATE.lang === 'tr' ? 'Bitir →' : 'Finish →');
-  // Tweet share — Sprint 2 (cd_1777901369_45da)
-  const shareText = STATE.lang === 'tr'
-    ? `Sezgim CLAUXE konseyiyle ${alignedCount}/${SCENARIOS.length} kez örtüştü. Sen de dene:`
-    : `My intuition matched the CLAUXE council ${alignedCount}/${SCENARIOS.length} times. Try it:`;
-  const shareUrl = encodeURIComponent('https://clauxe.com#wager');
-  const tweetIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${shareUrl}&via=cLauxed`;
-  const shareLabel = STATE.lang === 'tr' ? 'Tweet\'le ↗' : 'Tweet it ↗';
-  html += `<div style="margin-top:14px; text-align:right;">${verdictText}
-    <a href="${tweetIntent}" target="_blank" rel="noopener" style="margin-left:8px; background: transparent; color: var(--accent); border: 1.5px solid var(--accent); padding: 8px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; min-height: 40px; text-decoration: none; display: inline-block;">${shareLabel}</a>
-    <button id="next-btn" style="margin-left:8px; background: var(--ink); color: var(--bg); border: none; padding: 10px 20px; font-family: inherit; font-size: 11px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; min-height: 40px;">${nextLabel}</button>
-  </div>`;
-  // Council Theater (Sprint 4): typewriter animation
-  animateCouncilReveal(reveal, sc, aligned);
-}
-
-function renderEnd() {
-  const container = document.getElementById('game-container');
-  const tt2 = (tr, en) => STATE.lang === 'tr' ? tr : en;
-  container.innerHTML = `
-    <div class="game-card" style="text-align: center; padding: 48px 28px;">
-      <div class="scenario-label" style="justify-content:center;"><span>// ${tt2('son', 'end')}</span></div>
-      <div class="scenario serif" style="margin-bottom: 24px;">${tt2(`Üçü bitti. Konseyle ${alignedCount}/${SCENARIOS.length} kez aynı yere baktın.`, `All three done. You aligned with the council ${alignedCount}/${SCENARIOS.length} times.`)}</div>
-      <p style="max-width: 480px; margin: 0 auto; font-style: italic; color: var(--ink-2);">${tt2('Bu bir sınav değil, ayardır. Sezgiyle sistemin aynı tarafa baktığı yer var mı, onu yokluyor.', "Not a test — a calibration. It checks whether intuition and the system look the same way somewhere.")}</p>
-      <button id="restart-btn" style="margin-top: 24px; background: var(--ink); color: var(--bg); border: none; padding: 12px 24px; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; min-height: 44px;">${tt2('Baştan oyna', 'Play again')}</button>
-    </div>
-  `;
-  document.getElementById('restart-btn').addEventListener('click', () => {
-    scenarioIndex = 0; renderScenario(0);
-    window.scrollTo({ top: document.querySelector('#wager').offsetTop - 80, behavior: 'smooth' });
-  });
 }
 
 // MODALS
@@ -1292,18 +929,18 @@ const MODAL_DATA = {
   cortex: {
     titleTr: 'Cortex V4', titleEn: 'Cortex V4',
     subTr: 'Niceliksel Portföy Motoru · BIST', subEn: 'Quantitative Portfolio Engine · BIST',
-    bodyTr: `<p>Cortex V4, dört bağımsız stratejinin oylarını risk-parite ile birleştiren bir portföy motorudur. Kararlar her gün 18:45'te yenilenir.</p><h4>Stratejiler (backtest Sharpe)</h4><ul><li><strong>Pairs trading</strong> — kointegrasyon, Engle-Granger, Sharpe 0.69</li><li><strong>Cross-sectional momentum</strong> — 12-1 ay, top decile, Sharpe 2.07</li><li><strong>Statistical mean reversion</strong> — Z-score 60g, Sharpe 1.17</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B kompozit, Sharpe 1.73</li><li><strong>Ensemble (risk-parite)</strong> — Sharpe 1.85, yıllık +%70.37, maks. düşüş -%22.35, kazanma %61.34</li></ul><h4>Risk Gate (14 katman)</h4><p>L1 Halt · L2 Drawdown · L3 Period Kill · L4 Rule Set · L5-6 Pre-gate + Pipeline · L7 Edge · L8 Scorecard · L9 Confidence · L10 Friction · L11 Regime · L12 Concentration · L13 Sizing · L14 LLM Auditor</p><h4>Doğrulama</h4><p>Walk-forward 15 pencere, pooled OOS Sharpe 1.96, yıllık +%60.05. Monte Carlo 1000 yol, P50 +%74.04, kayıp olasılığı %3.0.</p><h4>Mevcut durum</h4><p>Paper-trade. Forward-test sürüyor. Drawdown halt eşiği -%20. <em>Veri: state/backtest_last.json (2026-04-29).</em></p>`,
-    bodyEn: `<p>Cortex V4 fuses four independent strategies via risk parity. Decisions refresh every day at 18:45.</p><h4>Strategies (backtest Sharpe)</h4><ul><li><strong>Pairs trading</strong> — cointegration, Engle-Granger, Sharpe 0.69</li><li><strong>Cross-sectional momentum</strong> — 12-1 month, top decile, Sharpe 2.07</li><li><strong>Statistical mean reversion</strong> — 60d Z-score, Sharpe 1.17</li><li><strong>Quality/value factor</strong> — ROE+FCF+P/B composite, Sharpe 1.73</li><li><strong>Ensemble (risk parity)</strong> — Sharpe 1.85, annual +70.37%, max drawdown -22.35%, win rate 61.34%</li></ul><h4>Risk Gate (14 layers)</h4><p>Halt · Drawdown · Period Kill · Rule Set · Pre-gate · Pipeline · Edge · Scorecard · Confidence · Friction · Regime · Concentration · Sizing · LLM Auditor</p><h4>Validation</h4><p>Walk-forward 15 windows, pooled OOS Sharpe 1.96, annual +60.05%. Monte Carlo 1000 paths, P50 +74.04%, loss prob 3.0%.</p><h4>Current</h4><p>Paper-trade. Forward-test in progress. Drawdown halt at -20%. <em>Source: state/backtest_last.json (2026-04-29).</em></p>`,
-    tags: ['Python', 'FastAPI', 'QuantStats', 'pandas', 'numpy', 'borsa-mcp'],
-    actions: [{ labelTr: 'Canlı panel', labelEn: 'Live panel', href: 'https://cortex.ersindemirdag.com' }, { labelTr: '@cLauxed', labelEn: '@cLauxed', href: 'https://x.com/cLauxed' }],
+    bodyTr: `<p>Cortex V4 — BIST için dört bağımsız stratejinin oyunu birleştiren araştırma amaçlı bir motor. Kararlar 14 katmanlı bir risk kapısından geçer.</p><h4>Mimari özet</h4><ul><li>Dört strateji (eşleşmeli, momentum, ortalamaya dönüş, kalite/değer)</li><li>Risk parite ile portföy birleştirme</li><li>14 katmanlı risk gate (halt, rejim, sektör, vb.)</li><li>Walk-forward + Monte Carlo doğrulama</li><li>Otomatik kararlar HMAC-SHA256 ile imzalanır</li></ul><h4>Mevcut aşama</h4><p>Geliştirme aşamasında. Kapalı dev. Public deploy yok.</p>`,
+    bodyEn: `<p>Cortex V4 — a research-only engine that fuses four independent BIST strategies. Decisions pass through a 14-layer risk gate.</p><h4>Architecture summary</h4><ul><li>Four strategies (pairs, momentum, mean-revert, quality/value)</li><li>Risk-parity portfolio combination</li><li>14-layer risk gate (halt, regime, sector, etc.)</li><li>Walk-forward + Monte Carlo validation</li><li>Automated rulings signed with HMAC-SHA256</li></ul><h4>Current stage</h4><p>In development. Private build. No public deploy.</p>`,
+    tags: ['Python', 'FastAPI', 'pandas', 'numpy'],
+    actions: [{ labelTr: '@cLauxed', labelEn: '@cLauxed', href: 'https://x.com/cLauxed' }],
   },
   trader: {
     titleTr: 'TraderMetrics', titleEn: 'TraderMetrics',
     subTr: 'Trading Defteri · iOS', subEn: 'Trading Journal · iOS',
-    bodyTr: `<p>TraderMetrics, kişisel trading performansını ölçmek için iOS uygulamasıdır. Glass morphism dark UI, native Charts entegrasyonu.</p><h4>Özellikler</h4><ul><li>İşlem CRUD (al, sat, hedef, stop)</li><li>Equity eğrisi canlı grafik</li><li>Drawdown ısı haritası</li><li>Win rate, profit factor, Sharpe analytics</li><li>Sektör döngüsü görsel takibi</li><li>İki dil — Türkçe + İngilizce</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Swift 5.9</code> · <code>Charts</code></p>`,
-    bodyEn: `<p>TraderMetrics is an iOS app to measure personal trading performance. Glass morphism dark UI, native Charts.</p><h4>Features</h4><ul><li>Trade CRUD (buy, sell, target, stop)</li><li>Equity curve live chart</li><li>Drawdown heatmap</li><li>Win rate, profit factor, Sharpe analytics</li><li>Sector cycle visual tracking</li><li>Two languages — Turkish + English</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Swift 5.9</code> · <code>Charts</code></p>`,
-    tags: ['SwiftUI', 'iOS 17+', 'Charts', 'Localization'],
-    actions: [{ labelTr: 'TestFlight (yakında)', labelEn: 'TestFlight (soon)', href: '#' }],
+    bodyTr: `<p>TraderMetrics — kişisel kayıt tutmaya yardımcı olan bir iOS defteri. Glass morphism dark UI, iki dil.</p><h4>Tasarım notları</h4><ul><li>Premium dark tema · cam efektleri</li><li>Native Charts entegrasyonu</li><li>İki dil: TR + EN</li><li>Veri tamamen lokal cihazda</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Swift 5.9</code></p><h4>Aşama</h4><p>Kapalı geliştirme. Public TestFlight yok.</p>`,
+    bodyEn: `<p>TraderMetrics — an iOS journal that helps you keep your own records. Glass morphism dark UI, two languages.</p><h4>Design notes</h4><ul><li>Premium dark theme · glass effects</li><li>Native Charts integration</li><li>Two languages: TR + EN</li><li>Data is fully local on-device</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Swift 5.9</code></p><h4>Stage</h4><p>Private build. No public TestFlight.</p>`,
+    tags: ['SwiftUI', 'iOS 17+', 'Charts'],
+    actions: [],
   },
   agent: {
     titleTr: '@cLauxed', titleEn: '@cLauxed',
@@ -1312,6 +949,22 @@ const MODAL_DATA = {
     bodyEn: `<p>@cLauxed is an autonomous Twitter agent. Every tweet is approved by a 6-AI pre-publish council. Auto-fix on typos, human approval on content doubt.</p><h4>12-module architecture</h4><ul><li><code>autopilot</code> — schedule + slot category (10 tweets/day, BIST sync)</li><li><code>council_gate</code> — 4-AI publish approval (3/4 OK + 1 VETO tolerated)</li><li><code>tweet_repair</code> — typo VETO retry-with-fix</li><li><code>breaking_macro_watcher</code> — borsa-mcp economic calendar</li><li><code>health_check</code> — 24h silence alarm</li><li><code>rate_limit_guard</code> — 45/15min + 1400/24h buffer</li><li><code>duplicate_check</code> — 3-gram 70% jaccard, 24h window</li><li><code>veto_streak</code> — 3-in-a-row VETO → council-of-councils iMessage</li><li><code>evergreen_helper</code> — 50 prepared tweets, 30d cooldown</li><li><code>engagement_collector</code> — daily 23:30, 7d rolling avg</li></ul><h4>Today (4 May 2026)</h4><p>5 tweets · 20 council rounds · 0 misfires.</p>`,
     tags: ['Python', 'fastmcp', 'Tavily', 'borsa-mcp', 'launchd', '6-AI'],
     actions: [{ labelTr: '@cLauxed', labelEn: '@cLauxed', href: 'https://x.com/cLauxed' }],
+  },
+  saglik: {
+    titleTr: 'SağlıkKalkanı', titleEn: 'SağlıkKalkanı',
+    subTr: 'Bölgesel Salgın Radarı · iOS', subEn: 'Regional Outbreak Radar · iOS',
+    bodyTr: `<p>Ebeveynler için bir uygulama. MapKit haritada kullanıcılar bölgelerinde gördükleri yaygın çocuk hastalıklarını anonim raporlar; uygulama mevsimsel dağılımı ısı haritası gibi gösterir.</p><h4>Kapsam</h4><ul><li>Anonim semptom raporlama (kimlik istemez)</li><li>Çocuk profilleri: yaş + aşı durumu</li><li>6 yaygın hastalık takibi (kızamık, su çiçeği, vb.)</li><li>Mevsimsel takvim ve uyarılar</li><li>Glass morphism · pastel ton — panik yaratmaz</li></ul><h4>Aşama</h4><p>Geliştirme aşamasında. Public release yok. Doktor değil — bilgilendirme amaçlı.</p>`,
+    bodyEn: `<p>An app for parents. On a MapKit map, users anonymously report common childhood illnesses they see in their region; the app shows the seasonal distribution as a heatmap.</p><h4>Scope</h4><ul><li>Anonymous symptom reporting (no identity)</li><li>Child profiles: age + vaccine status</li><li>Tracking 6 common illnesses (measles, chickenpox, etc.)</li><li>Seasonal calendar and alerts</li><li>Glass morphism · pastel tones — no panic</li></ul><h4>Stage</h4><p>In development. No public release. Not a doctor — for awareness only.</p>`,
+    tags: ['SwiftUI', 'MapKit', 'iOS 17+', 'Anonymous'],
+    actions: [],
+  },
+  fightclub: {
+    titleTr: 'FightClub', titleEn: 'FightClub',
+    subTr: 'Dövüş Sporları Sosyal Ağı · iOS', subEn: 'Combat Sports Social Network · iOS',
+    bodyTr: `<p>Dövüş sporları meraklıları için bir sosyal ağ. Antrenman defteri tutmak, video paylaşmak, sparring partneri eşleşmek üzere 24 modül halinde inşa ediliyor.</p><h4>Modüller</h4><ul><li>Profil + spor geçmişi</li><li>Antrenman defteri (tekrar, ağırlık, video)</li><li>Sparring eşleşme + DM</li><li>Etkinlik takvimi</li><li>Gamification (rozet, seri)</li><li>Güvenlik: SSL pinning + jailbreak tespiti</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Supabase</code> · W3C tasarım tokenları</p><h4>Aşama</h4><p>Kapalı dev. Davet ile beta. Public release yok.</p>`,
+    bodyEn: `<p>A social network for combat sports fans. Built across 24 modules to keep a training journal, share videos, and match sparring partners.</p><h4>Modules</h4><ul><li>Profile + sport history</li><li>Training journal (reps, weight, video)</li><li>Sparring match + DM</li><li>Event calendar</li><li>Gamification (badges, streaks)</li><li>Security: SSL pinning + jailbreak detection</li></ul><h4>Stack</h4><p><code>SwiftUI</code> · <code>iOS 17+</code> · <code>Supabase</code> · W3C design tokens</p><h4>Stage</h4><p>Private dev. Invite-only beta. No public release.</p>`,
+    tags: ['SwiftUI', 'Supabase', 'iOS 17+', '24 modules'],
+    actions: [],
   },
   council: {
     titleTr: 'Altı kişilik konsey', titleEn: '6-AI Council',
@@ -1411,7 +1064,7 @@ document.addEventListener('keydown', (e) => {
 const COMMANDS = {
   help: () => "available: help, council, v4, digest, source, who, tweets, lang, theme, clear, exit",
   council: () => "Codex · DeepSeek · Qwen 14B · Qwen-smart · Qwen-coder · Hermes-4. HMAC-SHA256 signed.",
-  v4: () => "Cortex V4 · Sharpe 1.85 · Yearly +70% · MDD -22% · 5y BIST. State: paper-trade, forward-test in progress.",
+  v4: () => "Cortex V4 · BIST research engine · 14-layer risk gate · private dev.",
   digest: () => "tweets today: " + document.querySelector('#digest .digest-item .count-up')?.dataset.target + ", 251 council rounds (HMAC), 202/202 tests, 40 launchd jobs.",
   source: () => "Python · FastAPI · QuantStats · SwiftUI · vanilla JS · launchd · borsa-mcp · fastmcp.",
   who: () => "@cLauxed — Ersin Demirdağ. A small parliament of probabilistic minds.",
@@ -1445,277 +1098,7 @@ termInput.addEventListener('keydown', (e) => {
   }
 });
 
-// DRAWDOWN MRI
-const DD_DATA = {
-  5:  { title: { tr: "Hafif tedirginlik", en: "Mild unease" }, recovery: 12, note: { tr: "Tarihsel olarak BIST'te -%5 düşüş ortalama 12 günde geri gelmiştir. Sistem bu seviyeye tepki bile vermez.", en: "Historically a -5% drawdown on the BIST recovers in ~12 days on average. The system does not even react." }, exited: 31, held: 69, addedReturn: 8 },
-  10: { title: { tr: "Endişe başlıyor", en: "Concern begins" }, recovery: 28, note: { tr: "BIST'te -%10 düşüşler 4 ayda toparlanır. Çıkanlar genelde dipten %3-5 yukarıda satar, sonra geri girmek için ortalama 18 gün bekler.", en: "BIST -10% drawdowns recover in ~4 months. Exiters typically sell 3-5% above the bottom, then wait 18 days on average to re-enter." }, exited: 52, held: 48, addedReturn: 14 },
-  15: { title: { tr: "Korku zonu", en: "Fear zone" }, recovery: 47, note: { tr: "Ortalama yatırımcı tam burada çıkar. Akabinde piyasa 6 ayda %22 yukarı kalkar. Çıkış zarar+kaybedilen kazanç ortalama -%18'dir.", en: "The average investor exits right here. The market then rallies +22% in 6 months. The cost of exit + missed return averages -18%." }, exited: 71, held: 29, addedReturn: 22 },
-  25: { title: { tr: "Panik bölgesi", en: "Panic zone" }, recovery: 92, note: { tr: "2008 ve 2020 paralelliği. Sistem -%20'de halt verir, exit-only moda geçer. -%25'e gelmek için BIR HALT mekanizması kırılmalıdır.", en: "Echoes 2008 and 2020. The system halts at -20%, switching to exit-only. Reaching -25% means a halt mechanism failed." }, exited: 88, held: 12, addedReturn: 40 },
-  40: { title: { tr: "Kıyamet senaryosu", en: "Doomsday" }, recovery: 220, note: { tr: "Tarihsel olarak BIST'te -%40+ düşüşler 1 yıl-3 yıl arası toparlanır. Bu noktada insan hatası > sistem hatası. Çoğu fon kapanır.", en: "BIST -40%+ drawdowns recover in 1 to 3 years. Human error > system error here. Most funds close." }, exited: 95, held: 5, addedReturn: 75 },
-};
 
-function drawDD(level) {
-  const svg = document.getElementById('dd-chart');
-  if (!svg) return;
-  const cs = getComputedStyle(document.documentElement);
-  const accent = cs.getPropertyValue('--accent').trim() || '#c4452d';
-  const ink = cs.getPropertyValue('--ink').trim() || '#1a1612';
-  const inkFaded = cs.getPropertyValue('--ink-faded').trim() || '#6b5f4f';
-  const W = 800, H = 260, P = 30;
-  const N = 100;
-  const peak = 50;
-  const trough = peak + 25;
-  const points = [];
-  for (let i = 0; i < N; i++) {
-    let v;
-    if (i < peak) v = 100 + i * 0.6 + Math.sin(i * 0.3) * 1.5;
-    else if (i < trough) {
-      const t = (i - peak) / (trough - peak);
-      v = (100 + peak * 0.6) * (1 - level / 100 * t);
-    } else {
-      const recoveryDays = DD_DATA[level]?.recovery || 30;
-      const recoveryFactor = Math.min(1, (i - trough) / Math.max(recoveryDays / 3, 5));
-      const bottom = (100 + peak * 0.6) * (1 - level / 100);
-      const target = (100 + peak * 0.6) * 1.05;
-      v = bottom + (target - bottom) * recoveryFactor + Math.sin(i * 0.4) * 1;
-    }
-    points.push(v);
-  }
-  const minV = Math.min(...points), maxV = Math.max(...points);
-  const x = (i) => P + (W - 2*P) * i / (N - 1);
-  const y = (v) => H - P - (H - 2*P) * (v - minV) / (maxV - minV);
-  const path = points.map((v, i) => (i === 0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + y(v).toFixed(1)).join(' ');
-  let html = '';
-  for (let g = 0; g < 4; g++) {
-    const gy = P + (H - 2*P) * g / 3;
-    html += `<line x1="${P}" y1="${gy}" x2="${W-P}" y2="${gy}" stroke="${ink}" stroke-opacity="0.08" stroke-dasharray="2,4"/>`;
-  }
-  html += `<path d="${path} L ${x(N-1)},${H-P} L ${x(0)},${H-P} Z" fill="${accent}" fill-opacity="0.08"/>`;
-  html += `<path d="${path}" stroke="${accent}" stroke-width="2" fill="none"/>`;
-  const bottomY = y(points[trough]);
-  html += `<line x1="${x(trough)}" y1="${P}" x2="${x(trough)}" y2="${H-P}" stroke="${ink}" stroke-opacity="0.3" stroke-dasharray="3,3"/>`;
-  html += `<circle cx="${x(trough)}" cy="${bottomY}" r="6" fill="${accent}"/>`;
-  html += `<text x="${x(trough) + 10}" y="${bottomY + 4}" font-family="JetBrains Mono" font-size="11" fill="${accent}" font-weight="700">-${level}%</text>`;
-  html += `<text x="${P}" y="${H-8}" font-family="JetBrains Mono" font-size="9" fill="${inkFaded}">t-0</text>`;
-  html += `<text x="${W-P}" y="${H-8}" font-family="JetBrains Mono" font-size="9" fill="${inkFaded}" text-anchor="end">t+${N}</text>`;
-  svg.innerHTML = html;
-}
-
-function updateDD(level) {
-  const data = DD_DATA[level];
-  if (!data) return;
-  document.getElementById('dd-current').textContent = `-${level}%`;
-  document.querySelectorAll('.dd-stops .stop').forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) === level));
-  drawDD(level);
-  document.getElementById('dd-reveal').classList.remove('shown');
-  document.querySelectorAll('.dd-buttons button').forEach(b => b.classList.remove('selected'));
-}
-
-const ddSlider = document.getElementById('dd-slider');
-if (ddSlider) {
-  ddSlider.addEventListener('input', (e) => updateDD(parseInt(e.target.value)));
-  document.querySelectorAll('.dd-stops .stop').forEach(s => {
-    s.addEventListener('click', () => {
-      const v = parseInt(s.dataset.val);
-      ddSlider.value = v;
-      updateDD(v);
-    });
-  });
-  document.querySelectorAll('.dd-buttons button').forEach(b => {
-    b.addEventListener('click', () => {
-      document.querySelectorAll('.dd-buttons button').forEach(x => x.classList.remove('selected'));
-      b.classList.add('selected');
-      const level = parseInt(ddSlider.value);
-      const data = DD_DATA[level];
-      const tt2 = (tr, en) => STATE.lang === 'tr' ? tr : en;
-      const labels = { exit: { tr: "çıkış", en: "exit" }, hold: { tr: "bekleme", en: "hold" }, add: { tr: "ekleme", en: "add" } };
-      const userPick = b.dataset.pick;
-      const html = `
-        <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 12px;">${tt2(data.title.tr, data.title.en)}</div>
-        <p style="margin-bottom: 16px; font-family: 'EB Garamond', serif; font-size: 15px; line-height: 1.6;">${tt2(data.note.tr, data.note.en)}</p>
-        <div class="stat-line"><span>${tt2('Tarihsel olarak çıkanlar', 'Historically exited')}</span><span class="val">%${data.exited}</span></div>
-        <div class="stat-line"><span>${tt2('Tarihsel olarak bekleyenler', 'Historically held')}</span><span class="val">%${data.held}</span></div>
-        <div class="stat-line"><span>${tt2('Bekleyenlerin 6 ay sonraki getirisi', "Holders' 6-month return")}</span><span class="val">+%${data.addedReturn}</span></div>
-        <div class="stat-line"><span>${tt2('Toparlanma süresi (ortalama)', 'Recovery time (avg)')}</span><span class="val">${data.recovery} ${tt2('gün', 'days')}</span></div>
-        <div style="margin-top: 14px; padding: 10px; background: var(--bg-2); font-style: italic; font-family: 'EB Garamond', serif; font-size: 14px;">
-          ${tt2(`Senin tercihin: <strong>${labels[userPick].tr}</strong>. ${userPick === 'hold' ? 'Çoğunluğa karşı durdun — sistem de seninle.' : userPick === 'exit' ? 'Çoğunluk gibi davrandın. Bu noktada çıkmanın istatistiksel maliyeti var.' : 'Cesur seçim. Tarihsel olarak DCA bu seviyede en yüksek getiri verir.'}`, `Your pick: <strong>${labels[userPick].en}</strong>. ${userPick === 'hold' ? 'You stood against the crowd — so does the system.' : userPick === 'exit' ? 'You moved with the crowd. Exiting here has a measurable cost.' : 'Bold pick. Historically DCA at this level delivers the highest return.'}`)}
-        </div>
-      `;
-      const reveal = document.getElementById('dd-reveal');
-      reveal.innerHTML = html;
-      reveal.classList.add('shown');
-    });
-  });
-}
-
-// VOLATILITY WEATHER
-function updateWeather() {
-  const week = Math.floor(Date.now() / (7 * 86400000)) % 4;
-  const regimes = [
-    { icon: '☀', tr: ['Açık — momentum güçlü, BIST yukarı', 'BULL / TRENDING'], en: ['Sunny — momentum strong, BIST up', 'BULL / TRENDING'], note: { tr: 'V4 momentum sleeve\'ini öne alıyor; mean-reversion kısılıyor. Sektör rotasyonu hızlı.', en: 'V4 leans on the momentum sleeve; mean-reversion damped. Sector rotation fast.' } },
-    { icon: '🌫', tr: ['Sisli — düşük volatilite, BIST yatay', 'CHOP / RANGE-BOUND'], en: ['Foggy — low volatility, BIST flat', 'CHOP / RANGE-BOUND'], note: { tr: 'Mean-reversion ön planda; momentum pasif. Sektör rotasyonu yavaş.', en: 'Mean-reversion to the front; momentum passive. Sector rotation slow.' } },
-    { icon: '⛅', tr: ['Parçalı bulutlu — karışık sinyaller', 'MIXED / TRANSITION'], en: ['Partly cloudy — mixed signals', 'MIXED / TRANSITION'], note: { tr: 'Pairs trading öne çıkıyor; council "wait" kararı sıklığı artıyor.', en: 'Pairs trading takes the lead; council "wait" decisions rise.' } },
-    { icon: '⛈', tr: ['Fırtına — yüksek volatilite, panik riski', 'CRASH / RISK-OFF'], en: ['Storm — high volatility, panic risk', 'CRASH / RISK-OFF'], note: { tr: 'Drawdown halt yakın. Sistem nakit ağırlığını artırır; veto sayısı yükselir.', en: 'Drawdown halt near. System raises cash weight; veto count rises.' } },
-  ];
-  const r = regimes[week];
-  const wi = document.getElementById('weather-icon');
-  if (wi) wi.textContent = r.icon;
-  const wt = document.getElementById('weather-title');
-  if (wt) wt.textContent = STATE.lang === 'tr' ? r.tr[0] : r.en[0];
-  const wr = document.getElementById('weather-regime');
-  if (wr) wr.textContent = `REGIME: ${r.tr[1]}`;
-  const wn = document.getElementById('weather-note');
-  if (wn) wn.textContent = STATE.lang === 'tr' ? r.note.tr : r.note.en;
-}
-
-// HMAC CHAIN VIEWER
-const HMAC_DECISIONS = [
-  { id: "cd_1777916168_1adb", topic: { tr: "Site güvenlik + simülatör", en: "Site security + simulator" }, votes: "6/6 OK + 0 DUR", hash: "770aead2", time: "20:36" },
-  { id: "cd_1777903608_09d6", topic: { tr: "clauxe.com prod deploy", en: "clauxe.com prod deploy" }, votes: "6/6 OK + 0 DUR", hash: "f90b83ec", time: "17:06" },
-  { id: "cd_1777902305_788d", topic: { tr: "Sprint 4 onay paketi", en: "Sprint 4 package" }, votes: "6/6 OK + 0 DUR", hash: "599b15cb", time: "16:45" },
-  { id: "cd_1777901369_45da", topic: { tr: "Sprint 1+2+3 hızlı paket", en: "Sprint 1+2+3 fast pack" }, votes: "6/6 OK + 0 DUR", hash: "fa9c1632", time: "16:29" },
-  { id: "cd_1777900560_7491", topic: { tr: "Site brainstorm", en: "Site brainstorm" }, votes: "5/6 OK + 0 DUR", hash: "8a307c02", time: "16:16" },
-  { id: "cd_1777899972_3d81", topic: { tr: "Tweet kalite + TheInformation", en: "Tweet quality + TheInformation" }, votes: "6/6 OK + 0 DUR", hash: "8b694628", time: "13:02" },
-  { id: "cd_1777899269_03a4", topic: { tr: "TR akıcılık + dil + tema", en: "TR fluency + i18n + theme" }, votes: "6/6 OK + 0 DUR", hash: "8e635521", time: "12:50" },
-  { id: "cd_1777898163_5e61", topic: { tr: "UX/UI deep review", en: "UX/UI deep review" }, votes: "6/6 OK + 0 DUR", hash: "16dc7bd2", time: "12:31" },
-];
-
-function renderHmac() {
-  const list = document.getElementById('hmac-list');
-  if (!list) return;
-  const tt2 = (tr, en) => STATE.lang === 'tr' ? tr : en;
-  list.innerHTML = HMAC_DECISIONS.map((d, i) => `
-    <div role="listitem" style="display: grid; grid-template-columns: 60px 1fr auto auto; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--rule); align-items: center; transition: background 0.2s;" onmouseover="this.style.background='var(--bg-2)'" onmouseout="this.style.background='transparent'">
-      <span style="color: var(--ink-faded); font-size: 10px;">${String(i + 1).padStart(2, '0')}/08</span>
-      <span style="color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${tt2(d.topic.tr, d.topic.en)}</span>
-      <span style="color: var(--accent); font-weight: 700;">${d.votes}</span>
-      <span style="color: var(--ink-faded); font-size: 10px;" title="${d.id}">⛓ ${d.hash}</span>
-    </div>
-  `).join('');
-}
-
-// COUNCIL THEATER — typewriter animation in reveal
-function typeText(el, text, speed = 12) {
-  return new Promise(resolve => {
-    el.textContent = '';
-    let i = 0;
-    const tick = () => {
-      if (i < text.length) {
-        el.textContent += text[i++];
-        setTimeout(tick, speed);
-      } else { resolve(); }
-    };
-    tick();
-  });
-}
-
-async function animateCouncilReveal(reveal, sc, aligned) {
-  const tt2 = (tr, en) => STATE.lang === 'tr' ? tr : en;
-  reveal.innerHTML = `<div style="font-weight:700; margin-bottom:10px;">// ${tt2('Konsey sahneye çıkıyor…', 'Council takes the stage…')}</div><div id="council-rows"></div>`;
-  reveal.classList.add('shown');
-  const rowsContainer = document.getElementById('council-rows');
-  for (const a of sc.council) {
-    const row = document.createElement('div');
-    row.className = 'ai-row';
-    row.innerHTML = `<span class="ai-name">${a.name}</span><span class="ai-verdict" style="opacity:0.3;">…</span>`;
-    rowsContainer.appendChild(row);
-    await new Promise(r => setTimeout(r, 220));
-    const verdictSpan = row.querySelector('.ai-verdict');
-    verdictSpan.style.opacity = '1';
-    await typeText(verdictSpan, tt2(a.verdict.tr, a.verdict.en), 18);
-  }
-  await new Promise(r => setTimeout(r, 400));
-  // Notes (faster)
-  const notesDiv = document.createElement('div');
-  notesDiv.style.cssText = 'margin-top:14px; font-size:11px; color: var(--ink-faded);';
-  notesDiv.textContent = `// ${tt2('Notlar:', 'Notes:')}`;
-  rowsContainer.appendChild(notesDiv);
-  for (const a of sc.council) {
-    const note = document.createElement('div');
-    note.style.cssText = 'font-size:11px; padding:4px 0; color: var(--ink-2); opacity:0; transition: opacity 0.3s;';
-    note.textContent = `${a.name}: ${tt2(a.note.tr, a.note.en)}`;
-    rowsContainer.appendChild(note);
-    await new Promise(r => setTimeout(r, 80));
-    note.style.opacity = '1';
-  }
-  await new Promise(r => setTimeout(r, 300));
-  // Final verdict drum-roll
-  const verdictDiv = document.createElement('div');
-  verdictDiv.className = 'verdict';
-  verdictDiv.style.opacity = '0';
-  rowsContainer.appendChild(verdictDiv);
-  await typeText(verdictDiv, tt2(sc.verdict.tr, sc.verdict.en), 14);
-  verdictDiv.style.opacity = '1';
-  if (sc.market) {
-    const mr = document.createElement('div');
-    mr.className = 'market-result';
-    mr.innerHTML = `<strong>// ${tt2('Gerçek piyasa sonucu:', 'Actual market outcome:')}</strong> ${tt2(sc.market.tr, sc.market.en)}`;
-    rowsContainer.appendChild(mr);
-  }
-  // Tweet share + next
-  const shareText = STATE.lang === 'tr' ? `Sezgim CLAUXE konseyiyle ${alignedCount}/${SCENARIOS.length} kez örtüştü. Sen de dene:` : `My intuition matched the CLAUXE council ${alignedCount}/${SCENARIOS.length} times. Try it:`;
-  const tweetIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent('https://clauxe.com#wager')}&via=cLauxed`;
-  const verdictText = aligned
-    ? (STATE.lang === 'tr' ? '<strong style="color: var(--accent);">— Konseyle aynı düştün.</strong>' : '<strong style="color: var(--accent);">— You aligned with the council.</strong>')
-    : (STATE.lang === 'tr' ? '<em>— Onlar farklı düşünmüş.</em>' : '<em>— They saw it differently.</em>');
-  const nextLabel = scenarioIndex < SCENARIOS.length - 1 ? (STATE.lang === 'tr' ? 'Sıradaki ↓' : 'Next ↓') : (STATE.lang === 'tr' ? 'Bitir →' : 'Finish →');
-  const shareLabel = STATE.lang === 'tr' ? 'Tweet\'le ↗' : 'Tweet it ↗';
-  const actionDiv = document.createElement('div');
-  actionDiv.style.cssText = 'margin-top:14px; text-align:right;';
-  actionDiv.innerHTML = `${verdictText}
-    <a href="${tweetIntent}" target="_blank" rel="noopener" style="margin-left:8px; color: var(--accent); border: 1.5px solid var(--accent); padding: 8px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; min-height: 40px; text-decoration: none; display: inline-block;">${shareLabel}</a>
-    <button id="next-btn" style="margin-left:8px; background: var(--ink); color: var(--bg); border: none; padding: 10px 20px; font-family: inherit; font-size: 11px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; min-height: 40px;">${nextLabel}</button>`;
-  rowsContainer.appendChild(actionDiv);
-  document.getElementById('next-btn').addEventListener('click', () => {
-    scenarioIndex++;
-    if (scenarioIndex < SCENARIOS.length) {
-      renderScenario(scenarioIndex);
-      window.scrollTo({ top: document.querySelector('#wager').offsetTop - 80, behavior: 'smooth' });
-    } else { renderEnd(); }
-  });
-}
-
-// INIT
-applyLang(STATE.lang);
-applyTheme(STATE.theme);
-renderScenario(0);
-updateDD(15);
-updateWeather();
-renderHmac();
-
-// CAPITAL SIMULATOR
-const SIM_V4_MULT = 14.3918;
-const SIM_BIST_MULT = 9.20;
-function fmtTL(n) {
-  return Math.round(n).toLocaleString('tr-TR') + ' TL';
-}
-function updateSim() {
-  const inp = document.getElementById('sim-amount');
-  if (!inp) return;
-  let amt = parseFloat(inp.value) || 0;
-  if (amt < 0) amt = 0;
-  const v4Final = amt * SIM_V4_MULT;
-  const bistFinal = amt * SIM_BIST_MULT;
-  const v4El = document.getElementById('sim-v4');
-  const bistEl = document.getElementById('sim-bist');
-  const v4DeltaEl = document.getElementById('sim-v4-delta');
-  const bistDeltaEl = document.getElementById('sim-bist-delta');
-  if (v4El) v4El.textContent = fmtTL(v4Final);
-  if (bistEl) bistEl.textContent = fmtTL(bistFinal);
-  if (v4DeltaEl) v4DeltaEl.textContent = '+' + fmtTL(v4Final - amt) + ' · ×' + SIM_V4_MULT.toFixed(2).replace('.', ',');
-  if (bistDeltaEl) bistDeltaEl.textContent = '+' + fmtTL(bistFinal - amt) + ' · ×' + SIM_BIST_MULT.toFixed(2).replace('.', ',');
-}
-const simInput = document.getElementById('sim-amount');
-if (simInput) {
-  simInput.addEventListener('input', updateSim);
-  document.querySelectorAll('.sim-preset').forEach(btn => {
-    btn.addEventListener('click', () => {
-      simInput.value = btn.dataset.amt;
-      updateSim();
-    });
-  });
-  updateSim();
-}
 </script>
 
 </body>
